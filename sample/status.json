@@ -1,0 +1,10 @@
+{
+  "network": "SAMPLE",
+  "genesisTimestamp": 1667326380,
+  "epochSeconds": 30,
+  "activationEpoch": 4056659,
+  "epochsPerQuarter": 2880,
+  "swaTimelockEpochs": 720,
+  "lastEpoch": 4078313,
+  "lastRun": "2026-09-17T20:12:34.472Z"
+}

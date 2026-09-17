@@ -1,0 +1,15 @@
+{
+  "network": "calibnet",
+  "genesisTimestamp": 1667326380,
+  "epochSeconds": 30,
+  "activationEpoch": 0,
+  "epochsPerQuarter": 2880,
+  "swaTimelockEpochs": 720,
+  "lastEpoch": 4077771,
+  "lastRun": "2026-09-17T15:42:05.516Z",
+  "reads": {
+    "f02 state": "{\"BaselineTotal\":\"769999999891760986050180387\",\"Epoch\":4077778,\"SimpleTotal\":\"330000000000000000000000000\",\"ThisEpochReward\":\"23171066775556753460\",\"TotalStoragePowerReward\":\"109786514820930607405928998\"}",
+    "balance of f099 (burn)": "{\"address\":\"0xff00000000000000000000000000000000000063\",\"attoFil\":\"48709048363076331835419171\"}",
+    "balance of initialOrchestrator": "{\"address\":\"0x97A90f5696be5E3C8d3752C92Adac287c2b4484e\",\"attoFil\":\"100000000000000000000\"}"
+  }
+}
