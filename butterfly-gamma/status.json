@@ -8,11 +8,11 @@
   "activationEpoch": 5221,
   "epochsPerQuarter": 240,
   "swaTimelockEpochs": 40,
-  "lastEpoch": 1233,
-  "lastRun": "2026-09-19T19:20:05.690Z",
+  "lastEpoch": 1496,
+  "lastRun": "2026-09-19T21:31:03.467Z",
   "reads": {
-    "f02 state": "{\"ThisEpochReward\":\"36261345155040239373\",\"Epoch\":1240,\"TotalStoragePowerReward\":\"44481167051986601037338\",\"SimpleTotal\":\"330000000000000000000000000\",\"BaselineTotal\":\"770000000000000000000000000\"}",
-    "balance of f099 (burn)": "{\"address\":\"0xff00000000000000000000000000000000000063\",\"attoFil\":\"10680631009883966\"}",
+    "f02 state": "{\"ThisEpochReward\":\"36260301090041060751\",\"Epoch\":1502,\"TotalStoragePowerReward\":\"54242582904160532097927\",\"SimpleTotal\":\"330000000000000000000000000\",\"BaselineTotal\":\"770000000000000000000000000\"}",
+    "balance of f099 (burn)": "{\"address\":\"0xff00000000000000000000000000000000000063\",\"attoFil\":\"10680704312923266\"}",
     "balance of initialOrchestrator": "{\"address\":\"0x48C7DC38e74C9fA9eA6484Ad6Ad0520349dC9B40\",\"attoFil\":\"99995511269264216530\"}",
     "SRA admittedCount": "{\"result\":\"2\"}",
     "SRA orchestratorCount": "{\"result\":\"2\"}"
