@@ -8,15 +8,15 @@
   "activationEpoch": 5221,
   "epochsPerQuarter": 240,
   "swaTimelockEpochs": 40,
-  "lastEpoch": 7285,
-  "lastRun": "2026-09-21T21:45:51.032Z",
+  "lastEpoch": 7316,
+  "lastRun": "2026-09-21T22:01:11.709Z",
   "reads": {
-    "f02 state": "{\"TotalMintedReward\":\"262462767775757596048018\",\"TotalBurnMinted\":\"4041635905222515321656\",\"TotalExplicitMinted\":\"15554456664574507279229\",\"SWATimelockEpochs\":40,\"SWAActor\":\"t01016\",\"Accrued\":[{\"ID\":2,\"Amount\":\"3141807171210382722126\"}],\"StreamsRoot\":{\"/\":\"bafy2bzaceci7c4lrujd2uzbjbospnyqqcqiwfcgewh2gwvrusvluu553pakxq\"}}",
-    "balance of f099 (burn)": "{\"address\":\"0xff00000000000000000000000000000000000063\",\"attoFil\":\"4043392937800195663498\"}",
+    "f02 state": "{\"TotalMintedReward\":\"263709326732979250846649\",\"TotalBurnMinted\":\"4146888299324884057261\",\"TotalExplicitMinted\":\"16053080247463169198651\",\"SWATimelockEpochs\":40,\"SWAActor\":\"t01016\",\"Accrued\":[{\"ID\":2,\"Amount\":\"194231082201278808207\"}],\"StreamsRoot\":{\"/\":\"bafy2bzacec64jp5afyh7254juj674febgxbgpuwn4r5jfpzoyvvbwxpiuwis4\"}}",
+    "balance of f099 (burn)": "{\"address\":\"0xff00000000000000000000000000000000000063\",\"attoFil\":\"4148645331920502148704\"}",
     "balance of initialOrchestrator": "{\"address\":\"0x48C7DC38e74C9fA9eA6484Ad6Ad0520349dC9B40\",\"attoFil\":\"788831268268959063015\"}",
     "SRA admittedCount": "{\"result\":\"2\"}",
     "SRA orchestratorCount": "{\"result\":\"2\"}",
-    "f02 streams": "{\"streams\":[{\"id\":1,\"weight\":{\"vStart\":\"950000000000000000\",\"slope\":\"-208333333333334\",\"tStart\":5221,\"floor\":\"500000000000000000\",\"cap\":\"950000000000000000\"},\"distribution\":null},{\"id\":2,\"weight\":{\"vStart\":\"400000000000000000\",\"slope\":\"0\",\"tStart\":6901,\"floor\":\"400000000000000000\",\"cap\":\"400000000000000000\"},\"distribution\":{\"writer\":\"t01014\",\"shares\":[{\"recipient\":\"t01011\",\"share\":\"666666666666666667\"},{\"recipient\":\"t01018\",\"share\":\"333333333333333333\"}],\"payable\":[{\"recipient\":\"t01011\",\"amountAttoFil\":\"8861065300760550608020\"},{\"recipient\":\"t01018\",\"amountAttoFil\":\"995836842863284028798\"},{\"recipient\":\"t01026\",\"amountAttoFil\":\"110178286099\"}],\"claimedPeriod\":[]}}],\"tombstones\":[],\"pendingWrites\":[]}",
+    "f02 streams": "{\"streams\":[{\"id\":1,\"weight\":{\"vStart\":\"950000000000000000\",\"slope\":\"-208333333333334\",\"tStart\":5221,\"floor\":\"500000000000000000\",\"cap\":\"950000000000000000\"},\"distribution\":null},{\"id\":2,\"weight\":{\"vStart\":\"400000000000000000\",\"slope\":\"0\",\"tStart\":6901,\"floor\":\"400000000000000000\",\"cap\":\"400000000000000000\"},\"distribution\":{\"writer\":\"t01014\",\"shares\":[{\"recipient\":\"t01011\",\"share\":\"666666666666666667\"},{\"recipient\":\"t01018\",\"share\":\"333333333333333333\"}],\"payable\":[{\"recipient\":\"t01011\",\"amountAttoFil\":\"11158531748692394498062\"},{\"recipient\":\"t01018\",\"amountAttoFil\":\"2144570066829205972096\"},{\"recipient\":\"t01026\",\"amountAttoFil\":\"110178286099\"}],\"claimedPeriod\":[]}}],\"tombstones\":[],\"pendingWrites\":[{\"streamId\":null,\"op\":\"StepWeightRecords\",\"cancellable\":false,\"payload\":{\"updates\":[{\"id\":2,\"record\":{\"vStart\":\"450000000000000000\",\"slope\":\"0\",\"tStart\":7141,\"floor\":\"450000000000000000\",\"cap\":\"450000000000000000\"}}]},\"effectiveEpoch\":7347}]}",
     "SRA aggregatedFilecoinPayVolume(1)": "{\"usd\":\"4000000000000000000000\"}",
     "SRA aggregatedFilecoinPayVolume(2)": "{\"usd\":\"8000000064000000000000\"}",
     "SRA aggregatedFilecoinPayVolume(3)": "{\"usd\":\"20000000000000000000000\"}",
@@ -24,7 +24,26 @@
     "SRA aggregatedFilecoinPayVolume(5)": "{\"usd\":\"96000000000000000000000\"}",
     "SRA aggregatedFilecoinPayVolume(6)": "{\"usd\":\"390000000000000000000000\"}",
     "SRA aggregatedFilecoinPayVolume(7)": "{\"usd\":\"1050000000000000000000000\"}",
-    "SRA aggregatedFilecoinPayVolume(8)": "{\"reverted\":\"NotBound(8)\"}"
+    "SRA aggregatedFilecoinPayVolume(8)": "{\"usd\":\"2850000000000000000000000\"}"
   },
-  "pending": {}
+  "pending": {
+    "StepWeightRecords||7347": {
+      "op": "StepWeightRecords",
+      "effectiveEpoch": 7347,
+      "payload": {
+        "updates": [
+          {
+            "id": 2,
+            "record": {
+              "vStart": "450000000000000000",
+              "slope": "0",
+              "tStart": 7141,
+              "floor": "450000000000000000",
+              "cap": "450000000000000000"
+            }
+          }
+        ]
+      }
+    }
+  }
 }
