@@ -8,14 +8,15 @@
   "activationEpoch": 5221,
   "epochsPerQuarter": 240,
   "swaTimelockEpochs": 40,
-  "lastEpoch": 4877,
-  "lastRun": "2026-09-21T01:42:00.305Z",
+  "lastEpoch": 5242,
+  "lastRun": "2026-09-21T04:44:27.750Z",
   "reads": {
-    "f02 state": "{\"SimpleTotal\":\"330000000000000000000000000\",\"BaselineTotal\":\"770000000000000000000000000\"}",
-    "balance of f099 (burn)": "{\"address\":\"0xff00000000000000000000000000000000000063\",\"attoFil\":\"471432310706832876\"}",
+    "f02 state": "{\"TotalMintedReward\":\"189929451383621000327026\",\"TotalBurnMinted\":\"64\",\"TotalExplicitMinted\":\"54375695201093785804\",\"SWATimelockEpochs\":40,\"SWAActor\":\"t01016\",\"Accrued\":[{\"ID\":2,\"Amount\":\"54375695201093785804\"}],\"StreamsRoot\":{\"/\":\"bafy2bzacecsk32qcdylcgiu6s3vtqbdy2yoktw6atngzonimssjaxqxaiiqsc\"}}",
+    "balance of f099 (burn)": "{\"address\":\"0xff00000000000000000000000000000000000063\",\"attoFil\":\"471433648085686253\"}",
     "balance of initialOrchestrator": "{\"address\":\"0x48C7DC38e74C9fA9eA6484Ad6Ad0520349dC9B40\",\"attoFil\":\"99995511269264216530\"}",
     "SRA admittedCount": "{\"result\":\"2\"}",
-    "SRA orchestratorCount": "{\"result\":\"2\"}"
+    "SRA orchestratorCount": "{\"result\":\"2\"}",
+    "f02 streams": "{\"streams\":[{\"id\":1,\"weight\":{\"vStart\":\"950000000000000000\",\"slope\":\"-208333333333334\",\"tStart\":5221,\"floor\":\"500000000000000000\",\"cap\":\"950000000000000000\"},\"distribution\":null},{\"id\":2,\"weight\":{\"vStart\":\"50000000000000000\",\"slope\":\"208333333333334\",\"tStart\":5221,\"floor\":\"50000000000000000\",\"cap\":\"100000000000000000\"},\"distribution\":{\"writer\":\"t01014\",\"shares\":[{\"recipient\":\"t01011\",\"share\":\"1000000000000000000\"}],\"payable\":[],\"claimedPeriod\":[]}}],\"tombstones\":[],\"pendingWrites\":[]}"
   },
   "pending": {}
 }
