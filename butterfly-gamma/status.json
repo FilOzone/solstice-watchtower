@@ -8,39 +8,20 @@
   "activationEpoch": 5221,
   "epochsPerQuarter": 240,
   "swaTimelockEpochs": 40,
-  "lastEpoch": 6612,
-  "lastRun": "2026-09-21T16:09:25.860Z",
+  "lastEpoch": 6643,
+  "lastRun": "2026-09-21T16:24:32.913Z",
   "reads": {
-    "f02 state": "{\"TotalMintedReward\":\"238530815758151769708888\",\"TotalBurnMinted\":\"2447697030295342815400\",\"TotalExplicitMinted\":\"7297155300302893296529\",\"SWATimelockEpochs\":40,\"SWAActor\":\"t01016\",\"Accrued\":[{\"ID\":2,\"Amount\":\"255491863494446131487\"}],\"StreamsRoot\":{\"/\":\"bafy2bzacedv3cgzbog7hwi6k4luttvtou7evjxiwtxl54oafgxwgr6ccyxnms\"}}",
-    "balance of f099 (burn)": "{\"address\":\"0xff00000000000000000000000000000000000063\",\"attoFil\":\"2449454062633365988341\"}",
+    "f02 state": "{\"TotalMintedReward\":\"239625259542801382456241\",\"TotalBurnMinted\":\"2511977498706101606489\",\"TotalExplicitMinted\":\"7609542879373944244219\",\"SWATimelockEpochs\":40,\"SWAActor\":\"t01016\",\"Accrued\":[{\"ID\":2,\"Amount\":\"567879442565497079177\"}],\"StreamsRoot\":{\"/\":\"bafy2bzacecigddurym73lcszyqulysekxjtgkud4vqfr7n5ucmwfkst3mlxo2\"}}",
+    "balance of f099 (burn)": "{\"address\":\"0xff00000000000000000000000000000000000063\",\"attoFil\":\"2513734531055810053530\"}",
     "balance of initialOrchestrator": "{\"address\":\"0x48C7DC38e74C9fA9eA6484Ad6Ad0520349dC9B40\",\"attoFil\":\"788831288528398249415\"}",
     "SRA admittedCount": "{\"result\":\"2\"}",
     "SRA orchestratorCount": "{\"result\":\"2\"}",
-    "f02 streams": "{\"streams\":[{\"id\":1,\"weight\":{\"vStart\":\"950000000000000000\",\"slope\":\"-208333333333334\",\"tStart\":5221,\"floor\":\"500000000000000000\",\"cap\":\"950000000000000000\"},\"distribution\":null},{\"id\":2,\"weight\":{\"vStart\":\"250000000000000000\",\"slope\":\"0\",\"tStart\":6181,\"floor\":\"250000000000000000\",\"cap\":\"250000000000000000\"},\"distribution\":{\"writer\":\"t01014\",\"shares\":[{\"recipient\":\"t01011\",\"share\":\"1000000000000000000\"}],\"payable\":[{\"recipient\":\"t01011\",\"amountAttoFil\":\"4485916087068157244758\"},{\"recipient\":\"t01018\",\"amountAttoFil\":\"1866911541050909382295\"},{\"recipient\":\"t01026\",\"amountAttoFil\":\"110178286099\"}],\"claimedPeriod\":[]}}],\"tombstones\":[],\"pendingWrites\":[{\"streamId\":null,\"op\":\"StepWeightRecords\",\"cancellable\":false,\"payload\":{\"updates\":[{\"id\":2,\"record\":{\"vStart\":\"300000000000000000\",\"slope\":\"0\",\"tStart\":6421,\"floor\":\"300000000000000000\",\"cap\":\"300000000000000000\"}}]},\"effectiveEpoch\":6628}]}",
+    "f02 streams": "{\"streams\":[{\"id\":1,\"weight\":{\"vStart\":\"950000000000000000\",\"slope\":\"-208333333333334\",\"tStart\":5221,\"floor\":\"500000000000000000\",\"cap\":\"950000000000000000\"},\"distribution\":null},{\"id\":2,\"weight\":{\"vStart\":\"300000000000000000\",\"slope\":\"0\",\"tStart\":6421,\"floor\":\"300000000000000000\",\"cap\":\"300000000000000000\"},\"distribution\":{\"writer\":\"t01014\",\"shares\":[{\"recipient\":\"t01011\",\"share\":\"1000000000000000000\"}],\"payable\":[{\"recipient\":\"t01011\",\"amountAttoFil\":\"4485916087068157244758\"},{\"recipient\":\"t01026\",\"amountAttoFil\":\"110178286099\"}],\"claimedPeriod\":[]}}],\"tombstones\":[],\"pendingWrites\":[]}",
     "SRA aggregatedFilecoinPayVolume(1)": "{\"usd\":\"4000000000000000000000\"}",
     "SRA aggregatedFilecoinPayVolume(2)": "{\"usd\":\"8000000064000000000000\"}",
     "SRA aggregatedFilecoinPayVolume(3)": "{\"usd\":\"20000000000000000000000\"}",
     "SRA aggregatedFilecoinPayVolume(4)": "{\"usd\":\"54000000000000000000000\"}",
     "SRA aggregatedFilecoinPayVolume(5)": "{\"usd\":\"96000000000000000000000\"}"
   },
-  "pending": {
-    "StepWeightRecords||6628": {
-      "op": "StepWeightRecords",
-      "effectiveEpoch": 6628,
-      "payload": {
-        "updates": [
-          {
-            "id": 2,
-            "record": {
-              "vStart": "300000000000000000",
-              "slope": "0",
-              "tStart": 6421,
-              "floor": "300000000000000000",
-              "cap": "300000000000000000"
-            }
-          }
-        ]
-      }
-    }
-  }
+  "pending": {}
 }
