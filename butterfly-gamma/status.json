@@ -8,11 +8,11 @@
   "activationEpoch": 5221,
   "epochsPerQuarter": 240,
   "swaTimelockEpochs": 40,
-  "lastEpoch": 8125,
-  "lastRun": "2026-09-22T04:45:48.298Z",
+  "lastEpoch": 8156,
+  "lastRun": "2026-09-22T05:01:21.056Z",
   "reads": {
-    "f02 state": "{\"TotalMintedReward\":\"293212290100961700222546\",\"TotalBurnMinted\":\"6101022679995039147494\",\"TotalExplicitMinted\":\"28835295566754401810347\",\"SWATimelockEpochs\":40,\"SWAActor\":\"t01016\",\"Accrued\":[{\"ID\":2,\"Amount\":\"822511659193555300314\"}],\"StreamsRoot\":{\"/\":\"bafy2bzacebgdntl4b44xgep6e545x6fwbpvsrvirpmxky7ci7zdnm4yo2ydlu\"}}",
-    "balance of f099 (burn)": "{\"address\":\"0xff00000000000000000000000000000000000063\",\"attoFil\":\"6102779722857607801830\"}",
+    "f02 state": "{\"TotalMintedReward\":\"294328292138064893248421\",\"TotalBurnMinted\":\"6101022679995039147523\",\"TotalExplicitMinted\":\"29393296585305998323270\",\"SWATimelockEpochs\":40,\"SWAActor\":\"t01016\",\"Accrued\":[{\"ID\":2,\"Amount\":\"1380512677745151813237\"}],\"StreamsRoot\":{\"/\":\"bafy2bzacebgdntl4b44xgep6e545x6fwbpvsrvirpmxky7ci7zdnm4yo2ydlu\"}}",
+    "balance of f099 (burn)": "{\"address\":\"0xff00000000000000000000000000000000000063\",\"attoFil\":\"6102779722868720057859\"}",
     "balance of initialOrchestrator": "{\"address\":\"0x48C7DC38e74C9fA9eA6484Ad6Ad0520349dC9B40\",\"attoFil\":\"788831242572494371315\"}",
     "SRA admittedCount": "{\"result\":\"1\"}",
     "SRA orchestratorCount": "{\"result\":\"1\"}",
@@ -30,24 +30,5 @@
     "SRA aggregatedFilecoinPayVolume(11)": "{\"usd\":\"100000000000000000000\"}",
     "SRA aggregatedFilecoinPayVolume(12)": "{\"reverted\":\"NotBound(12)\"}"
   },
-  "pending": {
-    "SetWeightRecords||8127": {
-      "op": "SetWeightRecords",
-      "effectiveEpoch": 8127,
-      "payload": {
-        "updates": [
-          {
-            "id": 1,
-            "record": {
-              "vStart": "950000000000000000",
-              "slope": "-208333333333334",
-              "tStart": 5221,
-              "floor": "500000000000000000",
-              "cap": "950000000000000000"
-            }
-          }
-        ]
-      }
-    }
-  }
+  "pending": {}
 }
