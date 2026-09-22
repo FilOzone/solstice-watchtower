@@ -178,3 +178,4 @@
 {"kind":"read","epoch":4091314,"time":"2026-09-22T08:30:00.000Z","quarter":0,"source":"balance","name":"balance of f099 (burn)","fields":{"address":"0xff00000000000000000000000000000000000063","attoFil":"48713933860365622685667088"}}
 {"kind":"read","epoch":4091344,"time":"2026-09-22T08:45:00.000Z","quarter":0,"source":"balance","name":"balance of f099 (burn)","fields":{"address":"0xff00000000000000000000000000000000000063","attoFil":"48713933860721142037366085"}}
 {"kind":"read","epoch":4091375,"time":"2026-09-22T09:00:30.000Z","quarter":0,"source":"balance","name":"balance of f099 (burn)","fields":{"address":"0xff00000000000000000000000000000000000063","attoFil":"48713933860930691898604331"}}
+{"kind":"read","epoch":4091404,"time":"2026-09-22T09:15:00.000Z","quarter":0,"source":"balance","name":"balance of f099 (burn)","fields":{"address":"0xff00000000000000000000000000000000000063","attoFil":"48713933863187407162583796"}}
