@@ -8,11 +8,11 @@
   "activationEpoch": 5221,
   "epochsPerQuarter": 240,
   "swaTimelockEpochs": 40,
-  "lastEpoch": 11965,
-  "lastRun": "2026-09-23T12:45:54.395Z",
+  "lastEpoch": 11995,
+  "lastRun": "2026-09-23T13:01:29.449Z",
   "reads": {
-    "f02 state": "{\"TotalMintedReward\":\"431835670774301703597763\",\"TotalBurnMinted\":\"6101022679995039151887\",\"TotalExplicitMinted\":\"98146985903424403495759\",\"SWATimelockEpochs\":40,\"SWAActor\":\"t01016\",\"Accrued\":[{\"ID\":2,\"Amount\":\"70134201995863556985726\"}],\"StreamsRoot\":{\"/\":\"bafy2bzacebgdntl4b44xgep6e545x6fwbpvsrvirpmxky7ci7zdnm4yo2ydlu\"}}",
-    "balance of f099 (burn)": "{\"address\":\"0xff00000000000000000000000000000000000063\",\"attoFil\":\"6102779733768842105394\"}",
+    "f02 state": "{\"SWATimelockEpochs\":40,\"SWAActor\":\"t01016\",\"StreamsRoot\":{\"/\":\"bafy2bzacebgdntl4b44xgep6e545x6fwbpvsrvirpmxky7ci7zdnm4yo2ydlu\"}}",
+    "balance of f099 (burn)": "{\"address\":\"0xff00000000000000000000000000000000000063\",\"attoFil\":\"6102779733780313023228\"}",
     "balance of initialOrchestrator": "{\"address\":\"0x48C7DC38e74C9fA9eA6484Ad6Ad0520349dC9B40\",\"attoFil\":\"788831242572494371315\"}",
     "SRA admittedCount": "{\"result\":\"1\"}",
     "SRA orchestratorCount": "{\"result\":\"1\"}",
@@ -44,7 +44,12 @@
     "SRA aggregatedFilecoinPayVolume(25)": "{\"usd\":\"0\"}",
     "SRA aggregatedFilecoinPayVolume(26)": "{\"usd\":\"0\"}",
     "SRA aggregatedFilecoinPayVolume(27)": "{\"usd\":\"0\"}",
-    "SRA aggregatedFilecoinPayVolume(28)": "{\"reverted\":\"NotBound(28)\"}"
+    "SRA aggregatedFilecoinPayVolume(28)": "{\"reverted\":\"NotBound(28)\"}",
+    "SRA fpvOf(29, 0x48C7DC38e74C9fA9eA6484Ad6Ad0520349dC9B40)": "{\"fpv\":{\"usd\":\"0\"}}",
+    "SRA fpvOf(28, 0x48C7DC38e74C9fA9eA6484Ad6Ad0520349dC9B40)": "{\"fpv\":{\"usd\":\"0\"}}",
+    "SRA bindingOf(0x011a847733b1D4bdD3B4c86c36C9f40Ecd555772, 0x9C5e423cC44cB9a0c0BD9EAfa24E7F7c7eb1D908)": "{\"orchestrator\":\"0x48C7DC38e74C9fA9eA6484Ad6Ad0520349dC9B40\"}",
+    "SRA bindingOf(0x24ca9AE8b1fD712efe17B800946cA652C6723013, 0x9C5e423cC44cB9a0c0BD9EAfa24E7F7c7eb1D908)": "{\"orchestrator\":\"0x48C7DC38e74C9fA9eA6484Ad6Ad0520349dC9B40\"}",
+    "SRA bindingOf(0x5854d96532fcE23b10A7C6f683E7E1CdE7A97dE8, 0x9C5e423cC44cB9a0c0BD9EAfa24E7F7c7eb1D908)": "{\"orchestrator\":\"0x48C7DC38e74C9fA9eA6484Ad6Ad0520349dC9B40\"}"
   },
   "pending": {}
 }
