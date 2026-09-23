@@ -1,0 +1,21 @@
+{
+  "network": "mainnet",
+  "rpcUrl": "https://api.node.glif.io/rpc/v1",
+  "f02": "f02",
+  "addressPrefix": "f",
+  "genesisTimestamp": 1598306400,
+  "epochSeconds": 30,
+  "activationEpoch": 6450120,
+  "epochsPerQuarter": 262974,
+  "swaTimelockEpochs": 20160,
+  "lastEpoch": 6393944,
+  "lastRun": "2026-09-23T10:50:29.434Z",
+  "reads": {
+    "f02 state": "{\"BaselineTotal\":\"768335872210768889362796814\",\"SimpleTotal\":\"330000000000000000000000000\"}",
+    "balance of f099 (burn)": "{\"address\":\"0xff00000000000000000000000000000000000063\",\"attoFil\":\"42966651020001862374424914\"}",
+    "balance of initialOrchestrator": "{\"address\":\"0x97A90f5696be5E3C8d3752C92Adac287c2b4484e\",\"attoFil\":\"1000000000000000000\"}",
+    "SRA admittedCount": "{\"result\":\"1\"}",
+    "SRA orchestratorCount": "{\"result\":\"1\"}"
+  },
+  "pending": {}
+}
