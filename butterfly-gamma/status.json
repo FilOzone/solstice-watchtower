@@ -8,11 +8,11 @@
   "activationEpoch": 5221,
   "epochsPerQuarter": 240,
   "swaTimelockEpochs": 40,
-  "lastEpoch": 10645,
-  "lastRun": "2026-09-23T01:45:42.232Z",
+  "lastEpoch": 10676,
+  "lastRun": "2026-09-23T02:01:17.988Z",
   "reads": {
-    "f02 state": "{\"TotalMintedReward\":\"384748057563862419857092\",\"TotalBurnMinted\":\"6101022679995039150414\",\"TotalExplicitMinted\":\"74603179298204761626160\",\"SWATimelockEpochs\":40,\"SWAActor\":\"t01016\",\"Accrued\":[{\"ID\":2,\"Amount\":\"46590395390643915116127\"}],\"StreamsRoot\":{\"/\":\"bafy2bzacebgdntl4b44xgep6e545x6fwbpvsrvirpmxky7ci7zdnm4yo2ydlu\"}}",
-    "balance of f099 (burn)": "{\"address\":\"0xff00000000000000000000000000000000000063\",\"attoFil\":\"6102779728265418036341\"}",
+    "f02 state": "{\"TotalMintedReward\":\"385827526913907704810493\",\"TotalBurnMinted\":\"6101022679995039150455\",\"TotalExplicitMinted\":\"75142913973227404102840\",\"SWATimelockEpochs\":40,\"SWAActor\":\"t01016\",\"Accrued\":[{\"ID\":2,\"Amount\":\"47130130065666557592807\"}],\"StreamsRoot\":{\"/\":\"bafy2bzacebgdntl4b44xgep6e545x6fwbpvsrvirpmxky7ci7zdnm4yo2ydlu\"}}",
+    "balance of f099 (burn)": "{\"address\":\"0xff00000000000000000000000000000000000063\",\"attoFil\":\"6102779728278650511682\"}",
     "balance of initialOrchestrator": "{\"address\":\"0x48C7DC38e74C9fA9eA6484Ad6Ad0520349dC9B40\",\"attoFil\":\"788831242572494371315\"}",
     "SRA admittedCount": "{\"result\":\"1\"}",
     "SRA orchestratorCount": "{\"result\":\"1\"}",
@@ -38,7 +38,7 @@
     "SRA aggregatedFilecoinPayVolume(19)": "{\"usd\":\"0\"}",
     "SRA aggregatedFilecoinPayVolume(20)": "{\"usd\":\"0\"}",
     "SRA aggregatedFilecoinPayVolume(21)": "{\"usd\":\"0\"}",
-    "SRA aggregatedFilecoinPayVolume(22)": "{\"reverted\":\"NotBound(22)\"}"
+    "SRA aggregatedFilecoinPayVolume(22)": "{\"usd\":\"0\"}"
   },
   "pending": {}
 }
