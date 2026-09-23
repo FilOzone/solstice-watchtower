@@ -15,3 +15,4 @@
 {"kind":"gap","epoch":4093241,"time":"2026-09-23T00:33:30.000Z","quarter":0,"source":"reader","name":"f02 events could not be read","fields":{"fromEpoch":4093241,"toEpoch":4093960,"reason":"Filecoin.GetActorEventsRaw: block range exceeds maximum of 360 (got 719)"}}
 {"kind":"read","epoch":4094599,"time":"2026-09-23T11:52:30.000Z","quarter":0,"source":"balance","name":"balance of f099 (burn)","fields":{"address":"0xff00000000000000000000000000000000000063","attoFil":"48714915124710591937968906"}}
 {"kind":"read","epoch":4094615,"time":"2026-09-23T12:00:30.000Z","quarter":0,"source":"balance","name":"balance of f099 (burn)","fields":{"address":"0xff00000000000000000000000000000000000063","attoFil":"48714915249020789774112754"}}
+{"kind":"read","epoch":4094644,"time":"2026-09-23T12:15:00.000Z","quarter":0,"source":"balance","name":"balance of f099 (burn)","fields":{"address":"0xff00000000000000000000000000000000000063","attoFil":"48714915465192223464384978"}}
