@@ -12,3 +12,5 @@
 {"kind":"read","epoch":4094461,"time":"2026-09-23T10:43:30.000Z","quarter":0,"source":"balance","name":"balance of initialOrchestrator","fields":{"address":"0x97A90f5696be5E3C8d3752C92Adac287c2b4484e","attoFil":"100000000000000000000"}}
 {"kind":"read","epoch":4094461,"time":"2026-09-23T10:43:30.000Z","quarter":0,"source":"SRA","name":"SRA admittedCount","fields":{"result":"1"}}
 {"kind":"read","epoch":4094461,"time":"2026-09-23T10:43:30.000Z","quarter":0,"source":"SRA","name":"SRA orchestratorCount","fields":{"result":"1"}}
+{"kind":"gap","epoch":4093241,"time":"2026-09-23T00:33:30.000Z","quarter":0,"source":"reader","name":"f02 events could not be read","fields":{"fromEpoch":4093241,"toEpoch":4093960,"reason":"Filecoin.GetActorEventsRaw: block range exceeds maximum of 360 (got 719)"}}
+{"kind":"read","epoch":4094599,"time":"2026-09-23T11:52:30.000Z","quarter":0,"source":"balance","name":"balance of f099 (burn)","fields":{"address":"0xff00000000000000000000000000000000000063","attoFil":"48714915124710591937968906"}}
