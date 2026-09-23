@@ -928,3 +928,6 @@
 {"kind":"read","epoch":13081,"time":"2026-09-23T22:00:30.000Z","quarter":33,"source":"SRA","name":"SRA aggregatedFilecoinPayVolume(32)","fields":{"usd":"0"}}
 {"kind":"read","epoch":13110,"time":"2026-09-23T22:15:00.000Z","quarter":33,"source":"balance","name":"balance of f099 (burn)","fields":{"address":"0xff00000000000000000000000000000000000063","attoFil":"6102779734092364261421"}}
 {"kind":"read","epoch":13140,"time":"2026-09-23T22:30:00.000Z","quarter":33,"source":"balance","name":"balance of f099 (burn)","fields":{"address":"0xff00000000000000000000000000000000000063","attoFil":"6102779734105982533353"}}
+{"kind":"read","epoch":13170,"time":"2026-09-23T22:45:00.000Z","quarter":34,"source":"balance","name":"balance of f099 (burn)","fields":{"address":"0xff00000000000000000000000000000000000063","attoFil":"6102779734111537985587"}}
+{"kind":"read","epoch":13170,"time":"2026-09-23T22:45:00.000Z","quarter":34,"source":"SRA","name":"SRA aggregatedFilecoinPayVolume(33)","fields":{"reverted":"NotBound(33)"}}
+{"kind":"read","epoch":13170,"time":"2026-09-23T22:45:00.000Z","quarter":34,"source":"SRA","name":"SRA fpvOf(34, 0x48C7DC38e74C9fA9eA6484Ad6Ad0520349dC9B40)","fields":{"fpv":{"usd":"0"}}}
