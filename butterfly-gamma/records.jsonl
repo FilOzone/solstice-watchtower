@@ -1068,3 +1068,4 @@
 {"kind":"read","epoch":15961,"time":"2026-09-24T22:00:30.000Z","quarter":45,"source":"balance","name":"balance of f099 (burn)","fields":{"address":"0xff00000000000000000000000000000000000063","attoFil":"6102779736295075378266"}}
 {"kind":"read","epoch":15961,"time":"2026-09-24T22:00:30.000Z","quarter":45,"source":"SRA","name":"SRA aggregatedFilecoinPayVolume(44)","fields":{"usd":"0"}}
 {"kind":"read","epoch":15990,"time":"2026-09-24T22:15:00.000Z","quarter":45,"source":"balance","name":"balance of f099 (burn)","fields":{"address":"0xff00000000000000000000000000000000000063","attoFil":"6102779736300630220403"}}
+{"kind":"read","epoch":16020,"time":"2026-09-24T22:30:00.000Z","quarter":45,"source":"balance","name":"balance of f099 (burn)","fields":{"address":"0xff00000000000000000000000000000000000063","attoFil":"6102779736314249592138"}}
