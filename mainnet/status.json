@@ -8,11 +8,11 @@
   "activationEpoch": 6450120,
   "epochsPerQuarter": 262974,
   "swaTimelockEpochs": 20160,
-  "lastEpoch": 6397436,
-  "lastRun": "2026-09-24T06:01:07.041Z",
+  "lastEpoch": 6397465,
+  "lastRun": "2026-09-24T06:15:41.440Z",
   "reads": {
     "f02 state": "{\"BaselineTotal\":\"768335872210768889362796814\",\"SimpleTotal\":\"330000000000000000000000000\"}",
-    "balance of f099 (burn)": "{\"address\":\"0xff00000000000000000000000000000000000063\",\"attoFil\":\"42967942384861140994746083\"}",
+    "balance of f099 (burn)": "{\"address\":\"0xff00000000000000000000000000000000000063\",\"attoFil\":\"42967957818230656049912317\"}",
     "balance of initialOrchestrator": "{\"address\":\"0x97A90f5696be5E3C8d3752C92Adac287c2b4484e\",\"attoFil\":\"1000000000000000000\"}",
     "SRA admittedCount": "{\"result\":\"1\"}",
     "SRA orchestratorCount": "{\"result\":\"1\"}"
