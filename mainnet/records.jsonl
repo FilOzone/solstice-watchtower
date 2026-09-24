@@ -150,3 +150,4 @@
 {"kind":"read","epoch":6399001,"time":"2026-09-24T19:00:30.000Z","quarter":0,"source":"balance","name":"balance of f099 (burn)","fields":{"address":"0xff00000000000000000000000000000000000063","attoFil":"42969006982920991474019862"}}
 {"kind":"read","epoch":6399030,"time":"2026-09-24T19:15:00.000Z","quarter":0,"source":"balance","name":"balance of f099 (burn)","fields":{"address":"0xff00000000000000000000000000000000000063","attoFil":"42969068014263179050427332"}}
 {"kind":"read","epoch":6399060,"time":"2026-09-24T19:30:00.000Z","quarter":0,"source":"balance","name":"balance of f099 (burn)","fields":{"address":"0xff00000000000000000000000000000000000063","attoFil":"42969099550373661943562375"}}
+{"kind":"read","epoch":6399090,"time":"2026-09-24T19:45:00.000Z","quarter":0,"source":"balance","name":"balance of f099 (burn)","fields":{"address":"0xff00000000000000000000000000000000000063","attoFil":"42969171333582904505519981"}}
