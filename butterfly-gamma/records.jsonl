@@ -1129,3 +1129,4 @@
 {"kind":"read","epoch":17221,"time":"2026-09-25T08:30:30.000Z","quarter":51,"source":"SRA","name":"SRA fpvOf(51, 0x48C7DC38e74C9fA9eA6484Ad6Ad0520349dC9B40)","fields":{"fpv":{"usd":"0"}}}
 {"kind":"read","epoch":17250,"time":"2026-09-25T08:45:00.000Z","quarter":51,"source":"balance","name":"balance of f099 (burn)","fields":{"address":"0xff00000000000000000000000000000000000063","attoFil":"6102779742955095366696"}}
 {"kind":"read","epoch":17281,"time":"2026-09-25T09:00:30.000Z","quarter":51,"source":"balance","name":"balance of f099 (burn)","fields":{"address":"0xff00000000000000000000000000000000000063","attoFil":"6102779742955095366729"}}
+{"kind":"read","epoch":17310,"time":"2026-09-25T09:15:00.000Z","quarter":51,"source":"balance","name":"balance of f099 (burn)","fields":{"address":"0xff00000000000000000000000000000000000063","attoFil":"6102779742955095366766"}}
