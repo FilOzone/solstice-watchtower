@@ -8,8 +8,8 @@
   "activationEpoch": 4109134,
   "epochsPerQuarter": 2880,
   "swaTimelockEpochs": 720,
-  "lastEpoch": 4107332,
-  "lastRun": "2026-09-27T22:02:09.424Z",
+  "lastEpoch": 4107358,
+  "lastRun": "2026-09-27T22:15:41.500Z",
   "reads": {
     "f02 state": "{\"BaselineTotal\":\"769999999891760986050180387\",\"SimpleTotal\":\"330000000000000000000000000\"}",
     "balance of f099 (burn)": "{\"address\":\"0xff00000000000000000000000000000000000063\",\"attoFil\":\"48716952490984598903145205\"}",
