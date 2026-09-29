@@ -10,8 +10,8 @@
   "swaTimelockEpochs": 20160,
   "postPeriod": 8640,
   "verificationWindow": 20160,
-  "lastEpoch": 6413276,
-  "lastRun": "2026-09-29T18:01:14.737Z",
+  "lastEpoch": 6413305,
+  "lastRun": "2026-09-29T18:15:46.305Z",
   "reads": {
     "f02 state": "{\"BaselineTotal\":\"768335872210768889362796814\",\"SimpleTotal\":\"330000000000000000000000000\"}",
     "balance of f099 (burn)": "{\"address\":\"0xff00000000000000000000000000000000000063\",\"attoFil\":\"42970969265118239614733324\"}",
