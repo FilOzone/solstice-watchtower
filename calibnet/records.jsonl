@@ -1081,3 +1081,7 @@
 {"kind":"read","epoch":4126324,"time":"2026-10-04T12:15:00.000Z","quarter":6,"source":"f02","name":"burn share of the block reward (node)","fields":{"basisPoints":"984","note":"BurnAllocation / MintedReward, from Filecoin.StateRewardDistribution"}}
 {"kind":"read","epoch":4126354,"time":"2026-10-04T12:30:00.000Z","quarter":6,"source":"f02","name":"burn share of the block reward (node)","fields":{"basisPoints":"989","note":"BurnAllocation / MintedReward, from Filecoin.StateRewardDistribution"}}
 {"kind":"read","epoch":4126384,"time":"2026-10-04T12:45:00.000Z","quarter":6,"source":"f02","name":"burn share of the block reward (node)","fields":{"basisPoints":"994","note":"BurnAllocation / MintedReward, from Filecoin.StateRewardDistribution"}}
+{"kind":"read","epoch":4126414,"time":"2026-10-04T13:00:00.000Z","quarter":7,"source":"f02","name":"burn share of the block reward (node)","fields":{"basisPoints":"1000","note":"BurnAllocation / MintedReward, from Filecoin.StateRewardDistribution"}}
+{"kind":"read","epoch":4126414,"time":"2026-10-04T13:00:00.000Z","quarter":7,"source":"SRA","name":"SRA aggregatedFilecoinPayVolume(6)","fields":{"reverted":"NotBound(6)"}}
+{"kind":"read","epoch":4126414,"time":"2026-10-04T13:00:00.000Z","quarter":7,"source":"SRA","name":"SRA fpvOf(7, 0x97A90f5696be5E3C8d3752C92Adac287c2b4484e)","fields":{"fpv":{"usd":"0"}}}
+{"kind":"read","epoch":4126414,"time":"2026-10-04T13:00:00.000Z","quarter":7,"source":"SRA","name":"SRA fpvOf(7, 0x151F6f8d9A9Dae49c4746BBb63670BB9eb3CF1b7)","fields":{"fpv":{"usd":"0"}}}
