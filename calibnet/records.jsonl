@@ -1768,3 +1768,4 @@
 {"kind":"read","epoch":4149455,"time":"2026-10-12T13:00:30.000Z","quarter":15,"source":"SRA","name":"SRA aggregatedFilecoinPayVolume(14)","fields":{"reverted":"NotBound(14)"}}
 {"kind":"read","epoch":4149455,"time":"2026-10-12T13:00:30.000Z","quarter":15,"source":"SRA","name":"SRA fpvOf(15, 0xfF0000000000000000000000000000000000005a)","fields":{"fpv":{"usd":"0"}}}
 {"kind":"read","epoch":4149455,"time":"2026-10-12T13:00:30.000Z","quarter":15,"source":"SRA","name":"SRA fpvOf(15, 0x72ad7C4d27fC9C2bDF8fde34ddd9BcbE34648AF3)","fields":{"fpv":{"usd":"0"}}}
+{"kind":"read","epoch":4150175,"time":"2026-10-12T19:00:30.000Z","quarter":15,"source":"SRA","name":"SRA aggregatedFilecoinPayVolume(14)","fields":{"usd":"0"}}
