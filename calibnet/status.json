@@ -11,8 +11,8 @@
   "postPeriod": 240,
   "verificationWindow": 480,
   "swa": "0x66C11A9F6dfEC3c1557958cF9f575a023EB01421",
-  "lastEpoch": 4158779,
-  "lastRun": "2026-10-15T18:45:52.932Z",
+  "lastEpoch": 4158810,
+  "lastRun": "2026-10-15T19:01:22.823Z",
   "reads": {
     "f02 state": "{\"SWAActor\":\"t0200118\",\"SWATimelockEpochs\":720,\"StreamsRoot\":{\"/\":\"bafy2bzacedtivxwtnm6q3ce67gctesuncjuplxfcyyskc4dri664v4neywejq\"}}",
     "balance of f099 (burn)": "{\"address\":\"0xff00000000000000000000000000000000000063\",\"attoFil\":\"48716952490984598903145205\"}",
@@ -80,7 +80,7 @@
     "SRA aggregatedFilecoinPayVolume(16)": "{\"usd\":\"0\"}",
     "SRA fpvOf(17, 0xfF0000000000000000000000000000000000005a)": "{\"fpv\":{\"usd\":\"0\"}}",
     "SRA fpvOf(17, 0x72ad7C4d27fC9C2bDF8fde34ddd9BcbE34648AF3)": "{\"fpv\":{\"usd\":\"0\"}}",
-    "SRA aggregatedFilecoinPayVolume(17)": "{\"reverted\":\"NotBound(17)\"}",
+    "SRA aggregatedFilecoinPayVolume(17)": "{\"usd\":\"0\"}",
     "SRA fpvOf(18, 0xfF0000000000000000000000000000000000005a)": "{\"fpv\":{\"usd\":\"0\"}}",
     "SRA fpvOf(18, 0x72ad7C4d27fC9C2bDF8fde34ddd9BcbE34648AF3)": "{\"fpv\":{\"usd\":\"0\"}}"
   },
