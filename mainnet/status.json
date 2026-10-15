@@ -11,8 +11,8 @@
   "postPeriod": 8640,
   "verificationWindow": 20160,
   "swa": "0x66C11A9F6dfEC3c1557958cF9f575a023EB01421",
-  "lastEpoch": 6459325,
-  "lastRun": "2026-10-15T17:45:48.406Z",
+  "lastEpoch": 6459356,
+  "lastRun": "2026-10-15T18:01:23.460Z",
   "reads": {
     "f02 state": "{\"BaselineTotal\":\"768335872210768889362796814\",\"SimpleTotal\":\"330000000000000000000000000\"}",
     "balance of f099 (burn)": "{\"address\":\"0xff00000000000000000000000000000000000063\",\"attoFil\":\"42970969265118239614733324\"}",
@@ -20,7 +20,8 @@
     "SRA admittedCount": "{\"result\":\"1\"}",
     "SRA orchestratorCount": "{\"result\":\"1\"}",
     "balance of cranker (watchtower backup)": "{\"address\":\"0x0f1850C4805A45cbeC8E5F42743FCBE63B61DaB8\",\"attoFil\":\"1500001000000000000\"}",
-    "balance of claimer (watchtower backup)": "{\"address\":\"f1x5uqdow6zqtnrsmesuxd3gdbkze5g5iqkpc2lxq\",\"attoFil\":\"0\"}"
+    "balance of claimer (watchtower backup)": "{\"address\":\"f1x5uqdow6zqtnrsmesuxd3gdbkze5g5iqkpc2lxq\",\"attoFil\":\"0\"}",
+    "SRA bindingOf(0x5B27DbC6efeFbb5Ba8106fB19433048D60D6878F, 0xefA4ddBCe66B86B821A5A4238552b6F94C61d3fe)": "{\"orchestrator\":\"0x97A90f5696be5E3C8d3752C92Adac287c2b4484e\"}"
   },
   "pending": {},
   "slackPending": []
