@@ -1,5 +1,7 @@
 {
-  "possibleSince": {},
-  "lastRun": "2026-10-30T18:45:51.389Z",
-  "head": 4201984
+  "possibleSince": {
+    "submitShares(32)": 4202016
+  },
+  "lastRun": "2026-10-30T19:01:32.994Z",
+  "head": 4202016
 }
