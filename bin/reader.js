@@ -327,11 +327,12 @@ if (sra) {
   for (const past of [q - 1, q - 2].filter((x) => x >= 1)) {
     await read('SRA', `SRA aggregatedFilecoinPayVolume(${past})`, () => view(sra, 'aggregatedFilecoinPayVolume', [BigInt(past)]))
   }
-  // Per-Orchestrator posted value for the current quarter and the last one (fpvOf), and the Orchestrator each
-  // registered pair points to (bindingOf). Orchestrators and pairs come from the record's own events (rvagg's
+  // Per-Orchestrator posted value for the quarter being posted now (q-1) and the bound one before it (q-2):
+  // quarter q's own values are posted only in quarter q+1, and the SRA keeps two slots (fpvOf). Also the Orchestrator
+  // each registered pair points to (bindingOf). Orchestrators and pairs come from the record's own events (rvagg's
   // suggested reads, 2026-09-21). fpvOf reads 0 for a quarter whose slot was erased by a newer write.
   const { orchestrators, pairs } = knownFromRecord()
-  for (const orch of orchestrators) for (const qq of [q, q - 1].filter((x) => x >= 1)) {
+  for (const orch of orchestrators) for (const qq of [q - 1, q - 2].filter((x) => x >= 1)) {
     await read('SRA', `SRA fpvOf(${qq}, ${orch})`, () => view(sra, 'fpvOf', [BigInt(qq), orch]))
   }
   for (const [payer, operator] of pairs) {

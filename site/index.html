@@ -220,7 +220,7 @@ async function main() {
     const quarters = [...new Set(rows.map((r) => r.quarter))].sort((a, b) => b - a)
     $('landed').innerHTML = rows.length === 0 ? '<p>Nothing yet.</p>' : quarters.map((q, i) => {
       const label = q === 0 ? 'Before activation' :
-        `Quarter ${q} · ${utc(epochTime(quarterStart(q)))} to ${utc(epochTime(quarterStart(q + 1)))}` + (dataset === 'calibnet' ? ` · rehearsal plan: ${q === 1 ? 'Activation day' : `Q${q - 1} cycle`}` : '')
+        `Quarter ${q} · ${utc(epochTime(quarterStart(q)))} to ${utc(epochTime(quarterStart(q + 1)))}` + (q > 1 ? ` · settlement cycle of quarter ${q - 1}: its SharesSubmitted and gate check land here` : '')
       const body = rows.filter((r) => r.quarter === q).reverse().map(landedRow).join('')
       return `<details class="quarter" ${i === 0 ? 'open' : ''}><summary>${label} <span class="muted">(${rows.filter((r) => r.quarter === q).length})</span></summary>
         <div class="scroll"><table><tr><th>time</th><th>source</th><th>what</th><th>result</th><th>link</th></tr>${body}</table></div></details>`
@@ -453,8 +453,8 @@ function footnote(live, status) {
   if (t === undefined || !status.activationEpoch) return
   const d = Math.abs(t - status.activationEpoch)
   const rel = d === 0 ? 'equal' : d === 1 ? 'one epoch apart, which changes nothing here' : `<span class="bad">${d} epochs apart, which is unexpected</span>`
-  $('foot').innerHTML = `Quarter numbers on this page follow the SRA: Start(Q) = activationEpoch + (Q-1) · EPOCHS_PER_QUARTER, with activationEpoch ${status.activationEpoch} ` +
-    `from solstice deployments.json. f02's own ramp starts at t_start of stream 1, set by the migration to the upgrade epoch + 1: here ${t}. ` +
+  $('foot').innerHTML = `Quarter numbers on this page follow FIP-0118 §2.2: Start(Q) = activationEpoch + (Q-1) · EPOCHS_PER_QUARTER, with activationEpoch ${status.activationEpoch} ` +
+    `from solstice deployments.json; the SRA's own quarterStart(q) returns Start(q+1), where quarter q's settlement cycle opens. f02's own ramp starts at t_start of stream 1, set by the migration to the upgrade epoch + 1: here ${t}. ` +
     `The two are ${rel}. FIP-0118 §2.4.10 expects them equal.`
 }
 
