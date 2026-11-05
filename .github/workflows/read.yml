@@ -1,5 +1,7 @@
 # Runs the reader every 10 minutes and commits the record, then the backup cranker. The reader only reads from the
 # public endpoints and holds no key; the cranker step holds CRANK_KEY. Rules for when it fails are in DESIGN.md.
+
+
 name: read
 on:
   schedule:
