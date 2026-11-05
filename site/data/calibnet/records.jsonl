@@ -2136,3 +2136,4 @@
 {"kind":"read","epoch":4216415,"time":"2026-11-04T19:00:30.000Z","quarter":38,"source":"SRA","name":"SRA aggregatedFilecoinPayVolume(37)","fields":{"usd":"0"}}
 {"kind":"message","epoch":4216507,"time":"2026-11-04T19:46:30.000Z","quarter":38,"source":"SRA","name":"submitShares","fields":{"q":"37"},"from":"0x049ba5f9551c4372e1f9dcde82146e39d6689c7e","ok":true,"tx":"0x8d2ed9827d20ee87b93258dbaddfac64cdaaf229ee5462f0654ef6721244001a","raw":{"input":"0x6e78e1d50000000000000000000000000000000000000000000000000000000000000025"}}
 {"kind":"read","epoch":4216535,"time":"2026-11-04T20:00:30.000Z","quarter":38,"source":"balance","name":"balance of cranker (watchtower backup)","fields":{"address":"0x049Ba5f9551c4372E1F9dCde82146E39D6689c7E","attoFil":"104999934233991298604"}}
+{"kind":"read","epoch":4218575,"time":"2026-11-05T13:00:30.000Z","quarter":39,"source":"SRA","name":"SRA aggregatedFilecoinPayVolume(38)","fields":{"reverted":"NotBound(38)"}}
