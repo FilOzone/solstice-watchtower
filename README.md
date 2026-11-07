@@ -60,3 +60,23 @@ Needs Node.js 22 or newer.
 | `npm test` | Runs the decoder tests on hand-written sample inputs. |
 
 The contract addresses and the activation epoch in `config/calibnet.json` come from solstice `deployments.json`.
+
+## Ownership handoff to FilOzone
+
+The page source is prepared to fetch records from `FilOzone/solstice-watchtower`. **Do not publish this page
+or update ENS until the repository has been transferred and the destination serves the expected `site/data/`
+files.** The currently published CID keeps its existing data URL until the page is republished.
+
+For the cutover, pause the outside timer and scheduled workflow, let active or queued runs finish and commit,
+and preserve the latest records and matching `status.json` files, including pending writes and Slack notifications.
+Also preserve `site/data/calibnet/crank.json`, which records how long a call has been possible. Resume only one
+writer after checking the destination's Actions permissions, timer authorization and repository secrets.
+
+After these changes are on `main`, manually run the `read` workflow with **`skip_crank: true`** to check the reader
+without invoking the transaction-sending cranker. This still reads RPC endpoints, commits updated records and
+can post normal Slack notifications; `test_slack: true` additionally sends a marked test message. It is not a
+dry run. `skip_crank` defaults to `false`, preserving scheduled runs and existing timer dispatches.
+
+Before publishing, verify that every live network's records and cursor are current at the destination. After
+publishing and updating ENS, check that the page reports `record from the repo`, rather than the bundled copy.
+Keep the previous CID and data URL for rollback; reverting ENS alone does not restore the old timer or data source.

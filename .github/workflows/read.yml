@@ -14,6 +14,10 @@ on:
         description: 'post one marked test line to Slack before reading'
         type: boolean
         default: false
+      skip_crank:
+        description: 'skip the transaction-sending cranker for a manual reader check'
+        type: boolean
+        default: false
 
 permissions:
   contents: write # to commit the record
@@ -56,7 +60,8 @@ jobs:
       # Backup cranker (bin/crank.js): sends submitShares / quarterlyGateCheck on calibnet when a call has been
       # possible for 30 minutes and is still missing. Needs the repository secret CRANK_KEY (a calibnet account
       # with tFIL, used for nothing else); without it the step is a dry run. Its state file lands in the commit below.
-      - run: node bin/crank.js config/calibnet.json
+      - if: ${{ !inputs.skip_crank }}
+        run: node bin/crank.js config/calibnet.json
         env:
           CRANK_KEY: ${{ secrets.CRANK_KEY }}
         continue-on-error: true
