@@ -16,6 +16,7 @@ Reads what landed on chain in f02, the SWA and the SRA (FIP-0118) and shows it o
 
   | Published | Link | Views |
   |---|---|---|
+  | 2026-10-16 | https://inbrowser.link/ipfs/bafybeibpjdfax3e62ivmkoi47rk2izepkcbxzwrycrvfzwxej7wwn7ffxa/ | mainnet (default), calibnet; restyle, activation banner; replaced on 2026-11-10 by the version with the fpv-indexer count on the gate line and part 4 (sector upgrades) |
   | 2026-10-08 | https://inbrowser.link/ipfs/bafybeidkctdb4tvrzaxo4frph2bljl5mnnizwvciziakfxlaxt7jbsjsqu/ | calibnet (default), mainnet, butterfly gamma; pending governance tasks list, gate line |
   | 2026-09-30 | https://inbrowser.link/ipfs/bafybeihynojfvudvqsjisgqvlkhcx2fw7my4he4k6qdv5z6sjgjjayxpzm/ | calibnet (default), mainnet, butterfly gamma; gate line, "failed" label |
   | 2026-09-28 (afternoon) | https://inbrowser.link/ipfs/bafybeicy5n4zdzhnycdjktlscdxxapziqdhkvq5fyuzhztwcxpxgivya5u/ | calibnet, mainnet, butterfly gamma, with the "At a glance" block |
