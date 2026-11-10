@@ -346,7 +346,16 @@ function glanceQuarter(status, records, nowEpoch, epochTime, quarterStart) {
 // state, so this reads the four storage slots of GateParamsInfo (solstice src/lib/GateParams.sol: GATE_PARAMS_SLOT,
 // then lastCheckedQuarter, target.base, target.stepRatio, steps). The check reads quarter lastCheckedQuarter + 1 and
 // passes when AggregatedFPV >= base * stepRatio^steps (nextThreshold). Posted values come from this record.
+// Before anything is posted on chain, the distance to the target is only visible off chain: Neti's fpv-indexer (read-only)
+// counts the Filecoin Pay settlements between registered pairs and answers cross-origin. Its count for the quarter the
+// next check reads is added to the line (Jennifer's ask, 2026-11-07); a failed read leaves that part out.
 const GATE_PARAMS_SLOT = 0xf9abab00248d945495524c8caf6be2b837274c1becd1964fb3775f62fd6e4600n, GATE_STEPS = 8n
+const FPV_INDEXER = { mainnet: 'https://fpv-indexer.allocator.tech' }
+async function indexerCount(network, q) {
+  const get = (p) => fetch(FPV_INDEXER[network] + p, { signal: AbortSignal.timeout(10000) }).then((r) => r.ok ? r.json() : Promise.reject(new Error(`${r.status}`)))
+  const [vol, st] = await Promise.all([get(`/volume/${q}`), get('/status')])
+  return { attoUsd: vol.volumeAttoUsd, epoch: st.indexedUpTo }
+}
 async function glanceGate(status, rpc) {
   if (!status.swa || !status.activationEpoch) return
   const [last, base, ratio, steps] = await Promise.all([0n, 1n, 2n, 3n].map(async (i) => BigInt(await rpc('eth_getStorageAt', [status.swa, '0x' + (GATE_PARAMS_SLOT + i).toString(16), 'latest']))))
@@ -363,7 +372,13 @@ async function glanceGate(status, rpc) {
     `posted for Q${q}: ${posted.size ? [...posted].map(([o, v]) => `${short(o)} ${v}`).join(', ') : 'none yet'}`,
     bound ? `Q${q} bound: ${usd(bound.fields.usd)}, ${BigInt(bound.fields.usd) >= target ? 'at or above' : 'below'} the target` : `Q${q} not bound yet`]
   if (lastCheck) parts.push(`last check: Q${lastCheck.fields.quarter} ${lastCheck.fields.passed ? 'passed' : 'failed'}`)
-  $('glanceGate').innerHTML = `<div class="glance-row"><b>Gate:</b> ${parts.join(' · ')}</div>`
+  let note = ''
+  const counted = steps < GATE_STEPS && FPV_INDEXER[status.network] ? await indexerCount(status.network, q).catch(() => null) : null
+  if (counted) {
+    parts.push(`counted so far by the fpv-indexer: ${usd(counted.attoUsd)} of the ${usd(target)} target for Q${q} (indexed to epoch ${counted.epoch})`)
+    note = `<div class="muted" style="font-size:12px">The fpv-indexer count is Neti's index of the Filecoin Pay settlements between registered pairs, not an on-chain value. The posted and bound values in this line are the on-chain ones, once posted.</div>`
+  }
+  $('glanceGate').innerHTML = `<div class="glance-row"><b>Gate:</b> ${parts.join(' · ')}</div>${note}`
   const cell = $('gateParamsCell'); if (cell) cell.textContent = `target.base ${scaled(base, E18, 2)} USD · target.stepRatio ${scaled(ratio, E18, 2)} · steps ${steps} (as set at deployment, read live from the SWA)`
 }
 
