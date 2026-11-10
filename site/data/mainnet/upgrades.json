@@ -1,0 +1,618 @@
+{
+  "network": "mainnet",
+  "lastRun": "2026-11-10T09:52:51.600Z",
+  "source": "https://filfox.info/api/v1/message/list?method=UpgradeSectorQuality, then /message/<cid>/subcalls and /address/<miner>",
+  "unread": 0,
+  "messages": {
+    "bafy2bzacebpjxjyvp6xccoolgw7wdslzbxaeb7ity3ubswm7fyij4ugk3xa6w": {
+      "height": 6470458,
+      "time": "2026-10-19T14:29:00.000Z",
+      "miner": "f03046733",
+      "exitCode": 0,
+      "qapDeltaBytes": "155751832092672",
+      "pledgeDeltaAttoFil": "1211331776686556052203"
+    },
+    "bafy2bzacearc6k6noggigp6l3yhd4kqrc5rdzl4kvmaynwoz55k42dg7wub3i": {
+      "height": 6470648,
+      "time": "2026-10-19T16:04:00.000Z",
+      "miner": "f02860778",
+      "exitCode": 0,
+      "qapDeltaBytes": "1236950581248",
+      "pledgeDeltaAttoFil": "9169840004554278885"
+    },
+    "bafy2bzaceb6nxlmkdr4nbkxn7nacikfvlyxkb4e7xq6hrmbajx3pfhwkebg6u": {
+      "height": 6471770,
+      "time": "2026-10-20T01:25:00.000Z",
+      "miner": "f0448660",
+      "exitCode": 0,
+      "qapDeltaBytes": "618475290624",
+      "pledgeDeltaAttoFil": "4500886829871754248"
+    },
+    "bafy2bzacebq2337yznryvjbsgdczi56czqbxhm5n2wh7vs6xxtwh36tzstrlq": {
+      "height": 6472006,
+      "time": "2026-10-20T03:23:00.000Z",
+      "miner": "f01081439",
+      "exitCode": 0,
+      "qapDeltaBytes": "3092376453120",
+      "pledgeDeltaAttoFil": "22364784922898182708"
+    },
+    "bafy2bzaceda4v74diveohtihsdi2nkaknqxvyoet64wji3hale3tvuufl35ui": {
+      "height": 6472009,
+      "time": "2026-10-20T03:24:30.000Z",
+      "miner": "f01081439",
+      "exitCode": 0,
+      "qapDeltaBytes": "309237645312000",
+      "pledgeDeltaAttoFil": "2238477956778781982513"
+    },
+    "bafy2bzaceahylpfju4wp4sb7cize7qddbmcqbbg7kln2r66dr76mlpi2pugnk": {
+      "height": 6472013,
+      "time": "2026-10-20T03:26:30.000Z",
+      "miner": "f01081439",
+      "exitCode": 0,
+      "qapDeltaBytes": "3092376453120000",
+      "pledgeDeltaAttoFil": "22392039093390763477939"
+    },
+    "bafy2bzaceas3negid3ict5t5myqnxmavi6gzijajy25uyj6oessmtnrhlhkvm": {
+      "height": 6472017,
+      "time": "2026-10-20T03:28:30.000Z",
+      "miner": "f01081439",
+      "exitCode": 0,
+      "qapDeltaBytes": "2164663517184000",
+      "pledgeDeltaAttoFil": "15693856326760434356369"
+    },
+    "bafy2bzacebxb7hrlhx7jozta4z4ab3etd4qdzbnaclncy2btzucdvppsk75wq": {
+      "height": 6472019,
+      "time": "2026-10-20T03:29:30.000Z",
+      "miner": "f01082688",
+      "exitCode": 0,
+      "qapDeltaBytes": "2164663517184000",
+      "pledgeDeltaAttoFil": "15707152889418065673601"
+    },
+    "bafy2bzaceb7r6bvrrvwgbxwch3ppxskcffmg4yggs5hj6pscmo35fk3jqobpa": {
+      "height": 6472023,
+      "time": "2026-10-20T03:31:30.000Z",
+      "miner": "f01082688",
+      "exitCode": 0,
+      "qapDeltaBytes": "1082331758592000",
+      "pledgeDeltaAttoFil": "7853647657972136294423"
+    },
+    "bafy2bzacec4tzoecz5ya3qxprqomnsp4wjl6h2vmd3rcg32nqkxix2zwnezik": {
+      "height": 6472180,
+      "time": "2026-10-20T04:50:00.000Z",
+      "miner": "f01082688",
+      "exitCode": 0,
+      "qapDeltaBytes": "77309411328000",
+      "pledgeDeltaAttoFil": "561676028955103851125"
+    },
+    "bafy2bzacec7xyy4sytcug4374rtecilijfe6t5ho5bxkjds2gxgsrlnlui63a": {
+      "height": 6472184,
+      "time": "2026-10-20T04:52:00.000Z",
+      "miner": "f01082688",
+      "exitCode": 0,
+      "qapDeltaBytes": "30923764531200",
+      "pledgeDeltaAttoFil": "224685910973550435083"
+    },
+    "bafy2bzacedjmh2qyry2cqnumju57b6lyyd2kvdyzhv2sitieijpd4vcbmd5r2": {
+      "height": 6473067,
+      "time": "2026-10-20T12:13:30.000Z",
+      "miner": "f02860783",
+      "exitCode": 0,
+      "qapDeltaBytes": "1236950581248",
+      "pledgeDeltaAttoFil": "9259586507271857349"
+    },
+    "bafy2bzacebhvr75hjvom4o4nvlu3w6zpngb7ocfb7qkfmnv26j66jmn3ifyl6": {
+      "height": 6473070,
+      "time": "2026-10-20T12:15:00.000Z",
+      "miner": "f02860783",
+      "exitCode": 0,
+      "qapDeltaBytes": "1236950581248",
+      "pledgeDeltaAttoFil": "9259880987398324263"
+    },
+    "bafy2bzacedrt2vhf2nzsrc2sqsi5bsatu5ciwgqo6a4xhlnzeauvn7gyt2ixu": {
+      "height": 6473075,
+      "time": "2026-10-20T12:17:30.000Z",
+      "miner": "f02860783",
+      "exitCode": 0,
+      "qapDeltaBytes": "1236950581248",
+      "pledgeDeltaAttoFil": "9260231605276893112"
+    },
+    "bafy2bzacecq7535jye7qumsv7akvm2em4yoh6edcn7evg3yshwwkxkjvs7le6": {
+      "height": 6473079,
+      "time": "2026-10-20T12:19:30.000Z",
+      "miner": "f02860783",
+      "exitCode": 0,
+      "qapDeltaBytes": "1236950581248",
+      "pledgeDeltaAttoFil": "9260568650703311538"
+    },
+    "bafy2bzacecx5ictqzsfu6wl2jgub7gl666pfyijtkmjlvrafzgi5abr3nfeym": {
+      "height": 6473371,
+      "time": "2026-10-20T14:45:30.000Z",
+      "miner": "f02860783",
+      "exitCode": 0,
+      "qapDeltaBytes": "95863670046720",
+      "pledgeDeltaAttoFil": "719258842002858845737"
+    },
+    "bafy2bzacebgsnyxtu6ijchkfulbxrdk74tljk46o5giyqsuj4y5lt6unnhigc": {
+      "height": 6473386,
+      "time": "2026-10-20T14:53:00.000Z",
+      "miner": "f03623017",
+      "exitCode": 0,
+      "qapDeltaBytes": "30923764531200",
+      "pledgeDeltaAttoFil": "237379552202376049609"
+    },
+    "bafy2bzacedo6avj6zmslldq57em2ihs35cthhzzdk2jlqdkhesz4jvjd5uluq": {
+      "height": 6473398,
+      "time": "2026-10-20T14:59:00.000Z",
+      "miner": "f03623017",
+      "exitCode": 0,
+      "qapDeltaBytes": "1546188226560000",
+      "pledgeDeltaAttoFil": "11867204781474905385490"
+    },
+    "bafy2bzaceatygudvkac3fmt5f5vlmcwvpsmfgo2fuk4kwcta7bcyrjzafbh3u": {
+      "height": 6473402,
+      "time": "2026-10-20T15:01:00.000Z",
+      "miner": "f03623017",
+      "exitCode": 0,
+      "qapDeltaBytes": "1546033607737344",
+      "pledgeDeltaAttoFil": "11814091411154336490146"
+    },
+    "bafy2bzacec3ytuza5lie6viihlpjoiq5xiqehtbcy6srdq4x3yhmbigogchqu": {
+      "height": 6473406,
+      "time": "2026-10-20T15:03:00.000Z",
+      "miner": "f03623017",
+      "exitCode": 0,
+      "qapDeltaBytes": "1546188226560000",
+      "pledgeDeltaAttoFil": "11869854552764907583750"
+    },
+    "bafy2bzaceavkc55666mbniya6a2fw4f4ic6ktqk3jma2vusj2d7buuu7nnmd2": {
+      "height": 6473410,
+      "time": "2026-10-20T15:05:00.000Z",
+      "miner": "f03623017",
+      "exitCode": 0,
+      "qapDeltaBytes": "1218396322529280",
+      "pledgeDeltaAttoFil": "9353443754321544345430"
+    },
+    "bafy2bzacedrxbutkuptyml3nvxeqotheeawfketto3qloiqoomrwumdqjlp4w": {
+      "height": 6473421,
+      "time": "2026-10-20T15:10:30.000Z",
+      "miner": "f03644168",
+      "exitCode": 0,
+      "qapDeltaBytes": "1546110917148672",
+      "pledgeDeltaAttoFil": "11811288084581354150740"
+    },
+    "bafy2bzacebw2dcuiyoi6zryehqtt5b5mornbhwnbc62gzhsktfg73vwrj5wlu": {
+      "height": 6473425,
+      "time": "2026-10-20T15:12:30.000Z",
+      "miner": "f03644168",
+      "exitCode": 0,
+      "qapDeltaBytes": "850712762253312",
+      "pledgeDeltaAttoFil": "6491565146077829579927"
+    },
+    "bafy2bzaceczgyp3jgfuhezj3gbt6dngvh6dlr5wmdallrmh5fs6txr3dffj7c": {
+      "height": 6473429,
+      "time": "2026-10-20T15:14:30.000Z",
+      "miner": "f03644168",
+      "exitCode": 0,
+      "qapDeltaBytes": "695475464306688",
+      "pledgeDeltaAttoFil": "5279687472339982312681"
+    },
+    "bafy2bzacedd4cg6ul7dcfp3g5j4xgt5ras7iqr26d3tx4sxfakl42lonx6yy6": {
+      "height": 6473433,
+      "time": "2026-10-20T15:16:30.000Z",
+      "miner": "f03644168",
+      "exitCode": 0,
+      "qapDeltaBytes": "1546188226560000",
+      "pledgeDeltaAttoFil": "11475914581408690906191"
+    },
+    "bafy2bzacec4nvmceqky6cec65z6amlnnxmdp3jobmsaaxx22xvivoyjtedqe4": {
+      "height": 6473437,
+      "time": "2026-10-20T15:18:30.000Z",
+      "miner": "f03644168",
+      "exitCode": 0,
+      "qapDeltaBytes": "597447130742784",
+      "pledgeDeltaAttoFil": "4362099385752448740385"
+    },
+    "bafy2bzaced2hgifjex63cvcqhib6kfmlooxd53p3yr3kiyn2dnarjttohuuis": {
+      "height": 6473451,
+      "time": "2026-10-20T15:25:30.000Z",
+      "miner": "f03644166",
+      "exitCode": 0,
+      "qapDeltaBytes": "1546110917148672",
+      "pledgeDeltaAttoFil": "11810866099768664256309"
+    },
+    "bafy2bzacecappbjj25tgegc5td52estwfjqmxlzn6ucqzym3bhzw7b7f6jfjm": {
+      "height": 6473456,
+      "time": "2026-10-20T15:28:00.000Z",
+      "miner": "f03644166",
+      "exitCode": 0,
+      "qapDeltaBytes": "1545878988914688",
+      "pledgeDeltaAttoFil": "11770199787614161708899"
+    },
+    "bafy2bzacec7pyxbdnqzxbz5k2ogtvnjweqamcpmwrzadqwsginzg7gkphu3su": {
+      "height": 6473460,
+      "time": "2026-10-20T15:30:00.000Z",
+      "miner": "f03644166",
+      "exitCode": 0,
+      "qapDeltaBytes": "1284495869214720",
+      "pledgeDeltaAttoFil": "9647392379872113677360"
+    },
+    "bafy2bzacebumblplwwjo6ojquhv64teqfkkpyg2z6rn5w6w2bcz6zlv6tudoo": {
+      "height": 6473500,
+      "time": "2026-10-20T15:50:00.000Z",
+      "miner": "f03623016",
+      "exitCode": 0,
+      "qapDeltaBytes": "1546033607737344",
+      "pledgeDeltaAttoFil": "11842249329645848221640"
+    },
+    "bafy2bzacectgux7tmik6xgqbfabwydwu22ecagpm5pkl3hhxm5i4u5dqg2ifo": {
+      "height": 6473504,
+      "time": "2026-10-20T15:52:00.000Z",
+      "miner": "f03623016",
+      "exitCode": 0,
+      "qapDeltaBytes": "1545724370092032",
+      "pledgeDeltaAttoFil": "11863146668637481846218"
+    },
+    "bafy2bzacebp7lqlplxaz24yl6knxmxrdwbgqa2bbo4bgyofucw2tmdizshzbk": {
+      "height": 6473508,
+      "time": "2026-10-20T15:54:00.000Z",
+      "miner": "f03623016",
+      "exitCode": 0,
+      "qapDeltaBytes": "1546188226560000",
+      "pledgeDeltaAttoFil": "11854706792969322058932"
+    },
+    "bafy2bzaceasj3l4td3oauikjkxabyd6kgnelxyhq5uu6cdyqssgpn66ez6mlu": {
+      "height": 6473513,
+      "time": "2026-10-20T15:56:30.000Z",
+      "miner": "f03623016",
+      "exitCode": 0,
+      "qapDeltaBytes": "1546188226560000",
+      "pledgeDeltaAttoFil": "11864661921804118870002"
+    },
+    "bafy2bzacebf66gw5buacshuj3kbwzmnlbuk3nudzaqjf3f3bis3er7u55dzpy": {
+      "height": 6473517,
+      "time": "2026-10-20T15:58:30.000Z",
+      "miner": "f03623016",
+      "exitCode": 0,
+      "qapDeltaBytes": "1066869876326400",
+      "pledgeDeltaAttoFil": "8185850102209951514522"
+    },
+    "bafy2bzacebqyrrj5jzfkpdjw6uuso7yhtreigondsgetvnlqgwkrx3vbs6hwc": {
+      "height": 6474489,
+      "time": "2026-10-21T00:04:30.000Z",
+      "miner": "f0448660",
+      "exitCode": 0,
+      "qapDeltaBytes": "618475290624",
+      "pledgeDeltaAttoFil": "4514613689199982936"
+    },
+    "bafy2bzacedbtbwkbexn6eb6tpdwrobbdts56isjn3g2byl4ss5kpooz4p3v4k": {
+      "height": 6474490,
+      "time": "2026-10-21T00:05:00.000Z",
+      "miner": "f0448660",
+      "exitCode": 0,
+      "qapDeltaBytes": "618475290624",
+      "pledgeDeltaAttoFil": "4517016774598483798"
+    },
+    "bafy2bzacecuchs3g5uvab3bzxikyygntndqgvd5dphy7p4bsasrxxjqer4zpy": {
+      "height": 6474491,
+      "time": "2026-10-21T00:05:30.000Z",
+      "miner": "f0448660",
+      "exitCode": 0,
+      "qapDeltaBytes": "1236950581248",
+      "pledgeDeltaAttoFil": "9032237272324465186"
+    },
+    "bafy2bzacec54yc6meqho2u2dikgojywzkyf6qykscvnmkvz3h75tsj2hozfvy": {
+      "height": 6474491,
+      "time": "2026-10-21T00:05:30.000Z",
+      "miner": "f0448660",
+      "exitCode": 0,
+      "qapDeltaBytes": "618475290624",
+      "pledgeDeltaAttoFil": "4509363957238077525"
+    },
+    "bafy2bzaced5tckovs6gfqng4rbgjker6jmq7eyvuwmwd4tuxxjsgchq5vwzdm": {
+      "height": 6474491,
+      "time": "2026-10-21T00:05:30.000Z",
+      "miner": "f0448660",
+      "exitCode": 0,
+      "qapDeltaBytes": "618475290624",
+      "pledgeDeltaAttoFil": "4509100076168596700"
+    },
+    "bafy2bzacedomretzdm3q6uggg5kty7cqxvbsx4s5lzxm5zqgkrtrugbnvnz64": {
+      "height": 6474495,
+      "time": "2026-10-21T00:07:30.000Z",
+      "miner": "f0448660",
+      "exitCode": 0,
+      "qapDeltaBytes": "3092376453120",
+      "pledgeDeltaAttoFil": "22583111807496421993"
+    },
+    "bafy2bzacecmyqwjtelzrih63xl2kxu4m7hxk6i4boo3v2znezluua6humxz6y": {
+      "height": 6474681,
+      "time": "2026-10-21T01:40:30.000Z",
+      "miner": "f02846602",
+      "exitCode": 0,
+      "qapDeltaBytes": "143344407674880",
+      "pledgeDeltaAttoFil": "1386133883087420951524"
+    },
+    "bafy2bzaced24jf5yjlagwaywphodcgijgu5fxqw3olyxlcjyzt5pv4xyuwxpq": {
+      "height": 6475005,
+      "time": "2026-10-21T04:22:30.000Z",
+      "miner": "f03234631",
+      "exitCode": 0,
+      "qapDeltaBytes": "18554258718720",
+      "pledgeDeltaAttoFil": "141534188706698538458"
+    },
+    "bafy2bzacec54oj3jt7kp3ebbipltsrrsabqfm5h37tcv3qs4eplhyocewv25a": {
+      "height": 6475186,
+      "time": "2026-10-21T05:53:00.000Z",
+      "miner": "f02826602",
+      "exitCode": 0,
+      "qapDeltaBytes": "309237645312",
+      "pledgeDeltaAttoFil": "2352070851280228198"
+    },
+    "bafy2bzaceafjyh52vzuasaayb5dfzzlegm3jfb3gumjstmzfof5uttkjc5mo6": {
+      "height": 6475580,
+      "time": "2026-10-21T09:10:00.000Z",
+      "miner": "f02860783",
+      "exitCode": 0,
+      "qapDeltaBytes": "402008938905600",
+      "pledgeDeltaAttoFil": "3007156809903664190503"
+    },
+    "bafy2bzacea7myrs3xa73r4x34zypyaygdxliqoysef3xunnonivxuz3glwjzs": {
+      "height": 6477865,
+      "time": "2026-10-22T04:12:30.000Z",
+      "miner": "f02860783",
+      "exitCode": 0,
+      "qapDeltaBytes": "401081225969664",
+      "pledgeDeltaAttoFil": "2999016779804070512243"
+    },
+    "bafy2bzaceao3yzurq3oitypkzuviimctglnodkm44oaboe37jveqakfbcs5xa": {
+      "height": 6479013,
+      "time": "2026-10-22T13:46:30.000Z",
+      "miner": "f02860783",
+      "exitCode": 0,
+      "qapDeltaBytes": "405719790649344",
+      "pledgeDeltaAttoFil": "2999487748390697485150"
+    },
+    "bafy2bzaceaa6q5es2k74xdkeknkifezbxh6ki3imyag6eudml3d6h2gw6yaps": {
+      "height": 6480443,
+      "time": "2026-10-23T01:41:30.000Z",
+      "miner": "f01104909",
+      "exitCode": 0,
+      "qapDeltaBytes": "4638564679680",
+      "pledgeDeltaAttoFil": "33551822829860398844"
+    },
+    "bafy2bzacebigqvpje2sa4fchbj4tk6rjkdvnyetgwkeichy7hzvf7gw2h3slq": {
+      "height": 6487666,
+      "time": "2026-10-25T13:53:00.000Z",
+      "miner": "f0448660",
+      "exitCode": 0,
+      "qapDeltaBytes": "618475290624",
+      "pledgeDeltaAttoFil": "4511367809856050958"
+    },
+    "bafy2bzacecqgbezoyy64ssqaphmwp4wn5z5g3mbsosoq4ra5dfcvcs3tw2wy2": {
+      "height": 6490655,
+      "time": "2026-10-26T14:47:30.000Z",
+      "miner": "f01081439",
+      "exitCode": 0,
+      "qapDeltaBytes": "3092376453120000",
+      "pledgeDeltaAttoFil": "22416617517154903349610"
+    },
+    "bafy2bzacedvpmn25izoqbpy2agjflnghpfrjop7atr7qwwdishwvzrqhyuc6k": {
+      "height": 6490676,
+      "time": "2026-10-26T14:58:00.000Z",
+      "miner": "f01081439",
+      "exitCode": 0,
+      "qapDeltaBytes": "3865470566400000",
+      "pledgeDeltaAttoFil": "28016473798587208385681"
+    },
+    "bafy2bzacecat4p4ps5zyyncsvzk7jlf5bs6tcakujaip7of4i3w5kqwnr447g": {
+      "height": 6490687,
+      "time": "2026-10-26T15:03:30.000Z",
+      "miner": "f01081439",
+      "exitCode": 0,
+      "qapDeltaBytes": "3865470566400000",
+      "pledgeDeltaAttoFil": "28032692299403806986734"
+    },
+    "bafy2bzacebdd6oy7sgnnwohke2dmnbzacuo43cvwi7uky2kzee5ynehpajhsq": {
+      "height": 6490688,
+      "time": "2026-10-26T15:04:00.000Z",
+      "miner": "f01081439",
+      "exitCode": 0,
+      "qapDeltaBytes": "1613602033238016",
+      "pledgeDeltaAttoFil": "11687302470013005207243"
+    },
+    "bafy2bzacebpkn6s34upbfi7ssib2onfo4k5v24obt5o4qxmzvlfku4xyux5d2": {
+      "height": 6490706,
+      "time": "2026-10-26T15:13:00.000Z",
+      "miner": "f01082688",
+      "exitCode": 0,
+      "qapDeltaBytes": "1789249015775232",
+      "pledgeDeltaAttoFil": "12949289724131221271529"
+    },
+    "bafy2bzaceb2w6hkhwaosywe5uybwwhswnsg4lsawsy7wzxap7nkqvtsz3sahm": {
+      "height": 6491931,
+      "time": "2026-10-27T01:25:30.000Z",
+      "miner": "f01104909",
+      "exitCode": 0,
+      "qapDeltaBytes": "12369505812480",
+      "pledgeDeltaAttoFil": "89875031684552339382"
+    },
+    "bafy2bzaceawba5b3e6iavki3wvnh4cc5worzx7epihdvyjzv7s75lkfl4sf4y": {
+      "height": 6491950,
+      "time": "2026-10-27T01:35:00.000Z",
+      "miner": "f01104909",
+      "exitCode": 0,
+      "qapDeltaBytes": "30923764531200",
+      "pledgeDeltaAttoFil": "224702416297997331512"
+    },
+    "bafy2bzacea76qgu6fjwsadrvfrsetbxiuumvjzwnjgm6e5r5m32qhbvi2ijmy": {
+      "height": 6491981,
+      "time": "2026-10-27T01:50:30.000Z",
+      "miner": "f01104909",
+      "exitCode": 0,
+      "qapDeltaBytes": "30923764531200",
+      "pledgeDeltaAttoFil": "224543813794129404957"
+    },
+    "bafy2bzacebrgmn4kxzwjxtgnh4baj6id76xax5hmn6tzk5oykcqs7vy3c27ee": {
+      "height": 6493165,
+      "time": "2026-10-27T11:42:30.000Z",
+      "miner": "f01878411",
+      "exitCode": 0,
+      "qapDeltaBytes": "309237645312",
+      "pledgeDeltaAttoFil": "2375107736889885569"
+    },
+    "bafy2bzacebha4ztqfngb5irfplmmzwn2tvznyajqzkqjgddu5w7y5lw4o5kik": {
+      "height": 6497973,
+      "time": "2026-10-29T03:46:30.000Z",
+      "miner": "f02860783",
+      "exitCode": 0,
+      "qapDeltaBytes": "136064563937280",
+      "pledgeDeltaAttoFil": "1032245392077561927882"
+    },
+    "bafy2bzacealmx3hkbkaadcvw2pd4wxpk42jvpzfipudvquezhygh52a6vrfru": {
+      "height": 6500401,
+      "time": "2026-10-30T00:00:30.000Z",
+      "miner": "f0448660",
+      "exitCode": 0,
+      "qapDeltaBytes": "618475290624",
+      "pledgeDeltaAttoFil": "4577632031544707330"
+    },
+    "bafy2bzaced4tzufvlbeahcy2pducqeajcgqyqm6adr6uu3tt7df7ucwouafvy": {
+      "height": 6501122,
+      "time": "2026-10-30T06:01:00.000Z",
+      "miner": "f01104909",
+      "exitCode": 0,
+      "qapDeltaBytes": "10823317585920",
+      "pledgeDeltaAttoFil": "79823869364171258387"
+    },
+    "bafy2bzaceai432vt2h42qu75zw3dk2zctxm5je5xnqscpqccpeh7efmlmw2uo": {
+      "height": 6506355,
+      "time": "2026-11-01T01:37:30.000Z",
+      "miner": "f01878411",
+      "exitCode": 0,
+      "qapDeltaBytes": "309237645312",
+      "pledgeDeltaAttoFil": "2540290889095767782"
+    },
+    "bafy2bzacebzj72xrwehliupbpiafx472ynazjbqq2usm33ky7kgc2rhqtef7k": {
+      "height": 6510281,
+      "time": "2026-11-02T10:20:30.000Z",
+      "miner": "f0448660",
+      "exitCode": 0,
+      "qapDeltaBytes": "618475290624",
+      "pledgeDeltaAttoFil": "4870864995337925867"
+    },
+    "bafy2bzacealpnbyorpy7f6hyy2f6dtll7e7pmtbt4tnyadltwcxu57cj5rhyq": {
+      "height": 6512510,
+      "time": "2026-11-03T04:55:00.000Z",
+      "miner": "f01104909",
+      "exitCode": 0,
+      "qapDeltaBytes": "48859547959296",
+      "pledgeDeltaAttoFil": "382608344680918915444"
+    },
+    "bafy2bzaceczvk3fya2bsyva3hsh74kwomeja7q77evkhve5kcokvwysclljoy": {
+      "height": 6512790,
+      "time": "2026-11-03T07:15:00.000Z",
+      "miner": "f01878411",
+      "exitCode": 0,
+      "qapDeltaBytes": "309237645312",
+      "pledgeDeltaAttoFil": "2538569944861388399"
+    },
+    "bafy2bzacec3ixpmybfowvdbbh3pswwcqte5gzfxgdbdpkfbkjhxdeqmo6jzd4": {
+      "height": 6517753,
+      "time": "2026-11-05T00:36:30.000Z",
+      "miner": "f0448660",
+      "exitCode": 0,
+      "qapDeltaBytes": "618475290624",
+      "pledgeDeltaAttoFil": "4875387807839346396"
+    },
+    "bafy2bzaceadob3mvqjserphl5tneovgaul25ewe44jxctufcy5smhoagoqhhy": {
+      "height": 6521228,
+      "time": "2026-11-06T05:34:00.000Z",
+      "miner": "f01104909",
+      "exitCode": 0,
+      "qapDeltaBytes": "51024211476480",
+      "pledgeDeltaAttoFil": "400843933138252366582"
+    },
+    "bafy2bzacea4hgpv7bgokssdj3u652wmmrols7idm3nuivajlkg2srovvva67y": {
+      "height": 6527861,
+      "time": "2026-11-08T12:50:30.000Z",
+      "miner": "f0448660",
+      "exitCode": 0,
+      "qapDeltaBytes": "618475290624",
+      "pledgeDeltaAttoFil": "4879649628776656470"
+    },
+    "bafy2bzaceakmatdxhs2tb2st727cmp4gisshacij7izrrwy3e57r3fszodcti": {
+      "height": 6531055,
+      "time": "2026-11-09T15:27:30.000Z",
+      "miner": "f0137489",
+      "exitCode": 0,
+      "qapDeltaBytes": "3092376453120",
+      "pledgeDeltaAttoFil": "25437798460952403661"
+    }
+  },
+  "miners": {
+    "f0137489": {
+      "owner": "f3wuksx4zuchtmu4r7lcvzkkrzl53zlxuut4a5ijied6kgytwsnkdvg6pyse6ur3d3qdunyofqkwvr4z36bjya",
+      "sectorSize": 34359738368
+    },
+    "f0448660": {
+      "owner": "f3wis5ehco4omtxzu3hhjxul7mq6bvv6yxg2ukvbt2aydmvrvlyoryndpxodwf6saopatupyg3qinv2gp5z2ja",
+      "sectorSize": 68719476736
+    },
+    "f01104909": {
+      "owner": "f1dnfppjrehzwrj6jpsxfxvvyfyjtjfa5gp6rgvkq",
+      "sectorSize": 34359738368
+    },
+    "f01878411": {
+      "owner": "f3q64itjjiepocygnncl4s2phfoyt5tfco3enhwlg2eum7oeyj2z557cvtv4xukmewy2xctvvdt4yeycuqgjha",
+      "sectorSize": 34359738368
+    },
+    "f02860783": {
+      "owner": "f3qm6c6jx3vuqilrz3gnaq76xy7jec6tjqrnzqtbl3lfcrg56x4grk6wz6rvczahtzmdyz5ftis7oeryxomcaq",
+      "sectorSize": 68719476736
+    },
+    "f01082688": {
+      "owner": "f03338164",
+      "sectorSize": 34359738368
+    },
+    "f01081439": {
+      "owner": "f03338164",
+      "sectorSize": 34359738368
+    },
+    "f02826602": {
+      "owner": "f3scf6h3yspsldzxvy5qnmptpvmzg6qujiw7goxshc56hlaoptrre2p2b3ffrhi5mw34fylojiyllxoynmyd3a",
+      "sectorSize": 34359738368
+    },
+    "f03234631": {
+      "owner": "f1tttrzvex4cdlhbl47r2ncr24bsa7u2yyypy4teq",
+      "sectorSize": 34359738368
+    },
+    "f02846602": {
+      "owner": "f1xbn7bsiptvwwpmt2sh6bmasxh4bor5td4rn7x5i",
+      "sectorSize": 34359738368
+    },
+    "f03623016": {
+      "owner": "f17v3wd25oo7ks2sq42xnrlgd4izsylkge2bvqmky",
+      "sectorSize": 34359738368
+    },
+    "f03644166": {
+      "owner": "f17v3wd25oo7ks2sq42xnrlgd4izsylkge2bvqmky",
+      "sectorSize": 34359738368
+    },
+    "f03644168": {
+      "owner": "f17v3wd25oo7ks2sq42xnrlgd4izsylkge2bvqmky",
+      "sectorSize": 34359738368
+    },
+    "f03623017": {
+      "owner": "f17v3wd25oo7ks2sq42xnrlgd4izsylkge2bvqmky",
+      "sectorSize": 34359738368
+    },
+    "f02860778": {
+      "owner": "f3sthlfdg2q5ltsi77wvfegqvvzuu4c6m5r3vd6cpgiuooaaqymvrublc6vkvxdsfvl3flh2r5wpiqubgzp6bq",
+      "sectorSize": 68719476736
+    },
+    "f03046733": {
+      "owner": "f1a6cnxhc7cj2hcwjjkijh5cpvfnodyafn64fdsha",
+      "sectorSize": 34359738368
+    }
+  }
+}

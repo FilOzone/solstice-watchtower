@@ -49,6 +49,10 @@ the f02 `Claim` once a day for every wallet that has something to collect; its k
 account. Both steps also run for mainnet (secrets `CRANK_KEY_MAINNET`, `CLAIM_KEY_MAINNET`; dry runs until the
 secrets exist). Details in DESIGN.md.
 
+A last step (`bin/upgrades.js`, since 2026-11-10) collects the mainnet `UpgradeSectorQuality` messages (FIP-0118 §1.2:
+committed-capacity sectors raised to the 10x quality against a pledge top-up) from Filfox's public API, with the power
+and pledge each one added, into `site/data/mainnet/upgrades.json`; the page sums them in part 4.
+
 Needs Node.js 22 or newer.
 
 | Command | What it does |
@@ -58,5 +62,6 @@ Needs Node.js 22 or newer.
 | `npm run sample` | Writes a SAMPLE record to `site/data/sample/` for local development (`?data=sample` is no longer linked from the page). |
 | `npm run page` | Serves the page at http://localhost:8000 (sample view: http://localhost:8000/?data=sample). Stop with Ctrl+C. |
 | `npm test` | Runs the decoder tests on hand-written sample inputs. |
+| `node bin/upgrades.js config/mainnet.json` | Fetches the new `UpgradeSectorQuality` messages from Filfox into `site/data/mainnet/upgrades.json`. |
 
 The contract addresses and the activation epoch in `config/calibnet.json` come from solstice `deployments.json`.

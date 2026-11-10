@@ -76,6 +76,11 @@ jobs:
         env:
           CLAIM_KEY: ${{ secrets.CLAIM_KEY_MAINNET }}
         continue-on-error: true
+      # Sector upgrades (bin/upgrades.js, 2026-11-10): the UpgradeSectorQuality messages and what they added, from
+      # Filfox's public API, into site/data/mainnet/upgrades.json. Only new messages are fetched; a failed read keeps
+      # the last file.
+      - run: node bin/upgrades.js config/mainnet.json
+        continue-on-error: true
       - name: Commit the record if it changed
         run: |
           git config user.name "watchtower reader"

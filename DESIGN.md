@@ -255,6 +255,20 @@ A step of the read workflow runs it on calibnet after the readers:
 - Limit: both crankers run on GitHub Actions. They differ in code, key, operator and trigger, but a GitHub outage
   stops both; said to Phi-rjan for the operational setup.
 
+## Sector upgrades (`bin/upgrades.js`, 2026-11-10)
+
+Molly's question (2026-11-10): how many SPs converted committed-capacity sectors to the 10x quality, and how much extra
+FIL they locked. FIP-0118 §1.2 adds the miner method `UpgradeSectorQuality` (37) for this; it emits no event (decided
+2026-08-25), so the trace is the message and its two subcalls into f04: `UpdateClaimedPower` (the QAP added, bytes) and
+`UpdatePledgeTotal` (the pledge added, attoFIL). No public dashboard shows this, so a workflow step collects it from
+Filfox's public API (`/message/list?method=UpgradeSectorQuality`, `/message/<cid>/subcalls`, `/address/<miner>` for the
+owner and sector size) into `site/data/mainnet/upgrades.json`, cached per message cid; a failed read keeps the last
+file and the page says what could not be read. Part 4 of the page sums it: messages, miner ids, owner addresses, QAP
+added, pledge added, a per-miner table. The raw-equivalent figure (QAP ÷ 9) assumes every upgraded sector went from 1x
+to 10x. Not counted: CC sectors raised to 10x through SnapDeals (`ProveReplicaUpdates3`). Checked on 2026-11-10: the 68
+messages of 2026-10-19 to 2026-11-09 gave 16 miners, 12 owners, 42.52 PiB QAP, 356,289 FIL; one message (f0137489,
+height 6531055) replayed on Glif with `Filecoin.StateReplay` gave the same 2.81 TiB and 25.4378 FIL as Filfox.
+
 ## Later steps (not built)
 
 1. Done 2026-09-18, again 2026-09-20 (adds the butterfly views): one manual publish of `site/` to Filecoin with

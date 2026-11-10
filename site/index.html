@@ -76,6 +76,8 @@
   <h2>3. State</h2>
   <div class="muted">Values that leave no event. Each line shows the last value read and when it last changed.</div>
   <div id="state"></div>
+
+  <div id="upgrades"></div>
   <footer class="muted"><div id="netnote"></div><div id="foot"></div></footer>
 </main>
 
@@ -246,6 +248,35 @@ async function main() {
     return `<tr><td class="nowrap">${esc(r.name)}</td><td><details class="row"><summary>${value}</summary><pre>${esc(JSON.stringify(r.fields, null, 2))}</pre></details></td>
       <td class="nowrap">${utc(r.time)}<br><span class="muted">epoch ${r.epoch}</span></td></tr>`
   }).join('') + '</table></div>'
+
+  // 4. sector upgrades, from upgrades.json (bin/upgrades.js); the section exists only where that file does (mainnet)
+  const loadUp = (base) => fetch(base + dir + 'upgrades.json').then((r) => r.ok ? r.json() : Promise.reject(r.status))
+  const up = await (useRepo ? loadUp(REPO_RAW).catch(() => loadUp('')) : loadUp('')).catch(() => null)
+  if (up) sectorUpgrades(up)
+}
+
+// 4. Sector upgrades (Molly's question, 2026-11-10: how many SPs converted CC sectors to 10x, how much FIL they locked).
+// FIP-0118 §1.2 adds the miner method UpgradeSectorQuality (37), which raises committed-capacity sectors to the 10x quality
+// against a pledge top-up. It emits no event, so bin/upgrades.js collects the messages and their two f04 subcalls from
+// Filfox. The raw-equivalent line assumes every upgraded sector went from 1x to 10x (QAP delta = 9 x raw size).
+function sectorUpgrades(up) {
+  const all = Object.values(up.messages), ok = all.filter((m) => m.exitCode === 0 && m.qapDeltaBytes !== undefined)
+  const sum = (rows, k) => rows.reduce((a, m) => a + BigInt(m[k]), 0n)
+  const group = (s) => { const [i, f] = s.split('.'); return i.replace(/\B(?=(\d{3})+(?!\d))/g, ',') + (f ? '.' + f : '') }
+  const pib = (b) => group(scaled(b, 2n ** 50n, 2)) + ' PiB', size = (b) => b >= 2n ** 50n ? pib(b) : group(scaled(b, 2n ** 40n, 2)) + ' TiB', fil = (a) => group(scaled(a, E18, 2)) + ' FIL'
+  const qap = sum(ok, 'qapDeltaBytes'), pledge = sum(ok, 'pledgeDeltaAttoFil')
+  const miners = [...new Set(ok.map((m) => m.miner))].map((id) => { const rows = ok.filter((m) => m.miner === id); return { id, ...up.miners[id], n: rows.length, qap: sum(rows, 'qapDeltaBytes'), pledge: sum(rows, 'pledgeDeltaAttoFil') } }).sort((a, b) => (b.pledge > a.pledge) - (b.pledge < a.pledge))
+  const owners = new Set(miners.map((m) => m.owner).filter(Boolean)).size
+  const short = (a) => a ? a.slice(0, 8) + '…' + a.slice(-4) : '–'
+  const failed = all.length - ok.length - up.unread
+  $('upgrades').innerHTML = `<h2>4. Sector upgrades (${esc(up.network)})</h2>
+    <div class="muted">Committed-capacity sectors raised to the 10x quality with the miner method <code>UpgradeSectorQuality</code> (FIP-0118 §1.2, method 37), which costs the miner a pledge top-up and emits no event.
+      Collected from Filfox's public API by <code>bin/upgrades.js</code>: each message's two calls into f04 give the power and the pledge it added. Last fetched ${utc(up.lastRun)}.</div>
+    <div class="glance-row">${ok.length ? `<b>${ok.length}</b> successful upgrade messages · <b>${miners.length}</b> miner ids · <b>${owners}</b> owner addresses · QAP added <b>${pib(qap)}</b> · pledge added <b>${fil(pledge)}</b> · ${utc(ok[0].time)} to ${utc(ok.at(-1).time)}` : 'No upgrade message yet.'}</div>
+    <div class="muted" style="font-size:12px">Raw-equivalent at 1x: ${pib(qap / 9n)}, assuming every upgraded sector went from 1x to 10x (QAP delta = 9 × raw size).
+      Not counted: CC sectors raised to 10x through SnapDeals (<code>ProveReplicaUpdates3</code>).${failed ? ` ${failed} failed message(s) not counted.` : ''}${up.unread ? ` <span class="bad">${up.unread} message(s) or miner(s) could not be read from Filfox on the last run; they are tried again on the next.</span>` : ''}</div>
+    ${miners.length ? `<div class="scroll"><table><tr><th>miner</th><th>owner</th><th>sector size</th><th>messages</th><th>QAP added</th><th>pledge added</th></tr>` +
+      miners.map((m) => `<tr><td class="nowrap"><a href="${explorer.replace('/message/', '/address/')}${m.id}">${m.id}</a></td><td class="nowrap" title="${esc(m.owner ?? '')}">${short(m.owner)}</td><td class="nowrap">${m.sectorSize ? m.sectorSize / 2 ** 30 + ' GiB' : '–'}</td><td>${m.n}</td><td class="nowrap">${size(m.qap)}</td><td class="nowrap">${fil(m.pledge)}</td></tr>`).join('') + '</table></div>' : ''}`
 }
 
 // Live read: the f02 state as of now, asked from the chain by this browser. Shown above the recorded values.
