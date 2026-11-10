@@ -283,6 +283,10 @@ height 6531055) replayed on Glif with `Filecoin.StateReplay` gave the same 2.81 
      epochs (6 hours of chain), so one run heals a stop of up to 6 hours. The limit was 120 epochs until
      2026-09-18. That day GitHub started the job once in the first 5.5 hours (its scheduler is "best effort"),
      and with runs an hour or more apart a 1-hour limit meant the record fell further behind on every run.
+     Mainnet reads up to 2160 epochs (18 hours) per run since 2026-11-10 (`maxEpochsPerRun` in its config):
+     after the 2026-11-05 transfer only GitHub's schedule started the job, 4 to 10 hours apart, and the
+     record fell 14 hours behind. A run that starts with more than 6 hours unread says so in Slack
+     ("late run"). A job that is never started still needs an outside check.
    - A gap that cannot be healed is recorded, not hidden. If the endpoint no longer serves the blocks of the
      gap (limit 2 above), the job writes one record "epochs X to Y could not be read", and the page shows it
      in the history, so silence is never taken for "nothing happened".
