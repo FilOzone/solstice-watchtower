@@ -23,6 +23,8 @@
     "claimer (watchtower backup)": "f1x5uqdow6zqtnrsmesuxd3gdbkze5g5iqkpc2lxq"
   },
   "crankDelayEpochs": 2880,
+  "maxEpochsPerRun": 2160,
+  "maxEpochsPerRunNote": "18 hours of chain per run instead of the default 6 (2026-11-10): since the 2026-11-05 transfer only GitHub's schedule starts the job, 4 to 10 hours apart, and with 6 hours per run the record fell 14 hours behind.",
   "crankNote": "backup cranker and Claim keeper: a call is sent only after it has been possible for one day (2880 epochs), so the primary cranker goes first; the keys are the secrets CRANK_KEY_MAINNET (an f410 account, label 'cranker (watchtower backup)') and CLAIM_KEY_MAINNET (an f1 account, label 'claimer (watchtower backup)'); without them the steps are dry runs; add both wallets here when the keys exist",
   "dataDir": "site/data/mainnet",
   "startEpoch": 6393225,

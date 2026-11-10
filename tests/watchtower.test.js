@@ -9,7 +9,7 @@ import { quarterOf, epochToTime } from '../lib/chain.js'
 import { decodeActorEvent, decodeStreamsState, decodeF02Params, computeWeight, bigFromBytes, idToEthAddress, writeOutcome } from '../site/lib/f02.js'
 import { abi, decodeLog, decodeCall, decodeRevert } from '../lib/evm.js'
 import { PCT, entry, idAddress, tokenBytes, flat, sampleLog } from './samples.js'
-import { slackText, notify } from '../lib/notify.js'
+import { slackText, notify, lateLine } from '../lib/notify.js'
 
 const cfg = JSON.parse(readFileSync(new URL('../config/calibnet.json', import.meta.url), 'utf8'))
 const stepTo15 = dagCbor.encode([[[2, flat(15n, 4100000)]]]) // payload of a StepWeightRecords write: stream 2 to 15%
@@ -173,6 +173,10 @@ test('slack text: one message per run, notable records only, reverted and gap ma
   assert.doesNotMatch(text, /balance/)
   assert.match(text, /\?data=calibnet$/) // calibnet is a secondary view since 2026-10-16
   assert.equal(slackText([records[0]], { network: 'calibnet' }, 1, 5), null) // nothing notable: no message
+  assert.equal(lateLine({ epochSeconds: 30 }, 720, 0), null) // 6 hours unread at the start: not late
+  const late = lateLine({ epochSeconds: 30 }, 1680, 960)
+  assert.match(late, /14 h of chain were unread when it started, 8 h are still unread/)
+  assert.match(slackText([records[0]], { network: 'mainnet' }, 1, 5, late), /0 new\n⚠ late run/) // a late run is reported even with nothing notable
   assert.match(slackText(records, { network: 'mainnet' }, 1, 5), /solsticewatchtower\.eth\.limo\/$/) // mainnet is the default view
   const withTx = [{ kind: 'event', epoch: 1, time: t, source: 'SRA', name: 'VolumePosted', fields: { q: 1 }, tx: '0xabc' }]
   assert.match(slackText(withTx, { network: 'calibnet' }, 1, 1), /<https:\/\/calibration\.filfox\.info\/en\/message\/0xabc\|message>/)
