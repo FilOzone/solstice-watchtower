@@ -42,13 +42,14 @@ Mon 2026-09-28 13:00 UTC. Until then the real record holds the deployment events
 A scheduled job (`.github/workflows/read.yml`) runs the reader every 15 minutes (started by an outside timer) and commits the records to
 `site/data/calibnet/`, `site/data/mainnet/` and `site/data/butterfly-gamma/`. The reader only reads from a public endpoint and holds no key.
 
-The same job ends with a backup cranker (`bin/crank.js`, since 2026-10-08): on calibnet it sends `submitShares(q)` and
-`quarterlyGateCheck()` when a call has been possible for 30 minutes and nobody sent it, so the primary cranker
-(https://github.com/decentramike/solstice-cranker) goes first. It needs the repository secret `CRANK_KEY` (a calibnet
-account used for nothing else); without it, it only simulates. A second step (`bin/claim.js`, since 2026-10-12) sends
-the f02 `Claim` once a day for every wallet that has something to collect; its key is the secret `CLAIM_KEY`, an f1
-account. Both steps also run for mainnet (secrets `CRANK_KEY_MAINNET`, `CLAIM_KEY_MAINNET`; dry runs until the
-secrets exist). Details in DESIGN.md.
+The same job ends with a backup cranker (`bin/crank.js`, since 2026-10-08): it sends `submitShares(q)` and
+`quarterlyGateCheck()` when a call has been possible for 30 minutes (one day on mainnet) and nobody sent it, so the
+primary cranker (https://github.com/decentramike/solstice-cranker) goes first. A second step (`bin/claim.js`, since
+2026-10-12) sends the f02 `Claim` once a day for every wallet that has something to collect. Since 2026-11 both steps
+send from one f1 account per network, label `sender (watchtower backup)` in the config, whose key is the repository
+secret `SENDER_KEY_CALIBRATION` or `SENDER_KEY_MAINNET`; the crank calls go out as native InvokeEVM messages. Without the
+secret, with a placeholder address in the config, or while the account has no FIL, the steps only simulate. New keys
+come from `node bin/newkey.js mainnet|calibration`, run in your own terminal. Details in DESIGN.md.
 
 A last step (`bin/upgrades.js`, since 2026-11-10) collects the mainnet `UpgradeSectorQuality` messages (FIP-0118 §1.2:
 committed-capacity sectors raised to the 10x quality against a pledge top-up) from Filfox's public API, with the power
@@ -62,7 +63,8 @@ Needs Node.js 22 or newer.
 | `npm run read` | One run of the reader against calibnet. Only reads from the public RPC endpoint. Appends to `site/data/calibnet/records.jsonl`. |
 | `npm run sample` | Writes a SAMPLE record to `site/data/sample/` for local development (`?data=sample` is no longer linked from the page). |
 | `npm run page` | Serves the page at http://localhost:8000 (sample view: http://localhost:8000/?data=sample). Stop with Ctrl+C. |
-| `npm test` | Runs the decoder tests on hand-written sample inputs. |
+| `npm test` | Runs the decoder tests on hand-written sample inputs, and the sender tests (message building, key checks) on mocks. |
+| `node bin/newkey.js mainnet\|calibration` | Creates the network's sender key, stores it in the repo secret and on the clipboard (for 1Password), prints only the address. Needs `gh` and macOS `pbcopy`; refuses to replace an existing secret without `--overwrite`. |
 | `node bin/upgrades.js config/mainnet.json` | Fetches the new `UpgradeSectorQuality` messages from Filfox into `site/data/mainnet/upgrades.json`. |
 
 The contract addresses and the activation epoch in `config/calibnet.json` come from solstice `deployments.json`.

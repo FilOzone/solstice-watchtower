@@ -1,5 +1,8 @@
-# Runs the reader every 10 minutes and commits the record, then the backup cranker. The reader only reads from the
-# public endpoints and holds no key; the cranker step holds CRANK_KEY. Rules for when it fails are in DESIGN.md.
+# Runs the reader every 10 minutes and commits the record, then the backup cranker and the Claim keeper. The reader
+# only reads from the public endpoints and holds no key; the crank and Claim steps hold the network's sender key
+# (SENDER_KEY_CALIBRATION, SENDER_KEY_MAINNET). Rules for when it fails are in DESIGN.md.
+# Calibnet and mainnet are independent: every network step goes on after a failure (continue-on-error), the record is
+# committed, and the last step fails the run if any network step failed, so a failure is neither hidden nor blocking.
 
 
 name: read
@@ -14,6 +17,10 @@ on:
         description: 'post one marked test line to Slack before reading'
         type: boolean
         default: false
+      crank_test_calibnet:
+        description: 'instead of the reader: run the calibnet cranker from the chosen branch, without the delay'
+        type: boolean
+        default: false
 
 permissions:
   contents: write # to commit the record
@@ -24,6 +31,7 @@ concurrency:
 
 jobs:
   read:
+    if: ${{ !inputs.crank_test_calibnet }}
     runs-on: ubuntu-latest
     timeout-minutes: 20 # two networks; butterfly took about 5 minutes per 720 epochs on 2026-09-18
     steps:
@@ -43,43 +51,49 @@ jobs:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
       # SLACK_WEBHOOK (a repository secret, optional): the reader posts one Slack message per run that found something
       # new. Without the secret nothing is sent. Butterflynet opts out in its config.
-      - run: node bin/reader.js config/calibnet.json
+      - id: read_calibnet
+        run: node bin/reader.js config/calibnet.json
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
-      # Mainnet: the contracts are deployed (2026-09-22); the upgrade date is not confirmed. Reads only the endpoint.
-      - run: node bin/reader.js config/mainnet.json
+        continue-on-error: true
+      - id: read_mainnet
+        run: node bin/reader.js config/mainnet.json
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
         continue-on-error: true
       # Butterflynet gamma (the nv29 test network) was read here until 2026-10-15; its endpoint no longer resolves.
       # Its record stays in site/data/butterfly-gamma and on the page.
-      # Backup cranker (bin/crank.js): sends submitShares / quarterlyGateCheck on calibnet when a call has been
-      # possible for 30 minutes and is still missing. Needs the repository secret CRANK_KEY (a calibnet account
-      # with tFIL, used for nothing else); without it the step is a dry run. Its state file lands in the commit below.
-      - run: node bin/crank.js config/calibnet.json
+      # Backup cranker (bin/crank.js): sends submitShares / quarterlyGateCheck when a call has been possible for
+      # crankDelayEpochs (30 minutes on calibnet, one day on mainnet) and is still missing. Daily Claim keeper
+      # (bin/claim.js): once a day, Claim for every wallet f02 owes something to. Both send from the network's one f1
+      # sender account (cfg.wallets "sender (watchtower backup)"), whose key is the repository secret
+      # SENDER_KEY_CALIBRATION or SENDER_KEY_MAINNET. Without the secret, with a placeholder address in the config, or
+      # while the sender has no FIL, they are dry runs. Their state files land in the commit below.
+      - id: crank_calibnet
+        run: node bin/crank.js config/calibnet.json
         env:
-          CRANK_KEY: ${{ secrets.CRANK_KEY }}
+          SENDER_KEY: ${{ secrets.SENDER_KEY_CALIBRATION }}
         continue-on-error: true
-      # Daily Claim keeper (bin/claim.js): once a day, Claim for every wallet f02 owes something to. Needs the
-      # repository secret CLAIM_KEY (an f1 calibnet account with tFIL, used for nothing else); without it, a dry run.
-      - run: node bin/claim.js config/calibnet.json
+      - id: claim_calibnet
+        run: node bin/claim.js config/calibnet.json
         env:
-          CLAIM_KEY: ${{ secrets.CLAIM_KEY }}
+          SENDER_KEY: ${{ secrets.SENDER_KEY_CALIBRATION }}
         continue-on-error: true
-      # The same two steps on mainnet, with their own keys (real FIL): CRANK_KEY_MAINNET and CLAIM_KEY_MAINNET.
-      # Without the secrets they are dry runs. The mainnet delay is one day (config crankDelayEpochs).
-      - run: node bin/crank.js config/mainnet.json
+      - id: crank_mainnet
+        run: node bin/crank.js config/mainnet.json
         env:
-          CRANK_KEY: ${{ secrets.CRANK_KEY_MAINNET }}
+          SENDER_KEY: ${{ secrets.SENDER_KEY_MAINNET }}
         continue-on-error: true
-      - run: node bin/claim.js config/mainnet.json
+      - id: claim_mainnet
+        run: node bin/claim.js config/mainnet.json
         env:
-          CLAIM_KEY: ${{ secrets.CLAIM_KEY_MAINNET }}
+          SENDER_KEY: ${{ secrets.SENDER_KEY_MAINNET }}
         continue-on-error: true
       # Sector upgrades (bin/upgrades.js, 2026-11-10): the UpgradeSectorQuality messages and what they added, from
       # Filfox's public API, into site/data/mainnet/upgrades.json. Only new messages are fetched; a failed read keeps
       # the last file.
-      - run: node bin/upgrades.js config/mainnet.json
+      - id: upgrades
+        run: node bin/upgrades.js config/mainnet.json
         continue-on-error: true
       - name: Commit the record if it changed
         run: |
@@ -88,3 +102,36 @@ jobs:
           git add site/data/calibnet site/data/mainnet
           git diff --cached --quiet || git commit -m "record: $(jq -r .lastEpoch site/data/calibnet/status.json)"
           git push
+      # continue-on-error above keeps one network's failure from stopping the other and the commit; this step makes the
+      # run end as failed anyway, so a failure shows on the Actions tab (until 2026-11, a mainnet failure did not).
+      - name: Fail the run if a network step failed
+        if: ${{ !cancelled() }}
+        env:
+          OUTCOMES: >-
+            read_calibnet=${{ steps.read_calibnet.outcome }} read_mainnet=${{ steps.read_mainnet.outcome }}
+            crank_calibnet=${{ steps.crank_calibnet.outcome }} claim_calibnet=${{ steps.claim_calibnet.outcome }}
+            crank_mainnet=${{ steps.crank_mainnet.outcome }} claim_mainnet=${{ steps.claim_mainnet.outcome }}
+            upgrades=${{ steps.upgrades.outcome }}
+        run: |
+          echo "$OUTCOMES"
+          if echo "$OUTCOMES" | grep -q '=failure'; then echo "a step failed (see above)"; exit 1; fi
+
+  # A manual test of the cranker on calibnet from a branch (workflow_dispatch with crank_test_calibnet, "Use workflow
+  # from" the branch): checks out that branch, runs bin/crank.js with --now (no delay, so it sends as soon as the
+  # simulation passes) and commits nothing. The read job above is skipped in such a run.
+  crank-test-calibnet:
+    if: ${{ inputs.crank_test_calibnet }}
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: node bin/crank.js config/calibnet.json --now
+        env:
+          SENDER_KEY: ${{ secrets.SENDER_KEY_CALIBRATION }}

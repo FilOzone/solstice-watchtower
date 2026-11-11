@@ -9,6 +9,7 @@ import { makeRpc, toHex, epochToTime, quarterOf } from '../lib/chain.js'
 import { decodeActorEvent, decodeStreamsState, decodeF02Params, idToEthAddress, slotOf, writeOutcome, computeWeight } from '../site/lib/f02.js'
 import { abi, decodeLog, decodeCall, decodeRevert, plain } from '../lib/evm.js'
 import { notify, lateLine } from '../lib/notify.js'
+import { isPlaceholder } from '../lib/sender.js'
 
 // ponytail: no reorg handling. The reader stays LAG epochs behind the head; a deeper reorg can leave an
 // orphaned line in the append-only record. Upgrade: re-check the last N epochs on every run.
@@ -316,7 +317,8 @@ for (const [key, write] of Object.entries(status.pending)) {
   delete status.pending[key]
 }
 for (const [label, address] of Object.entries(cfg.wallets)) {
-  // an f1 wallet (the claimer) has no 0x form that eth_getBalance accepts; the native call takes both
+  if (isPlaceholder(address)) continue // a wallet whose address is not known yet (lib/sender.js)
+  // an f1 wallet (the sender) has no 0x form that eth_getBalance accepts; the native call takes both
   await read('balance', `balance of ${label}`, async () => ({ address, attoFil: BigInt(address.startsWith('0x') ? await rpc('eth_getBalance', [address, 'latest']) : await rpc('Filecoin.WalletBalance', [address])).toString() }))
 }
 const sra = [...contracts].find(([, n]) => n === 'SRA')?.[0]
