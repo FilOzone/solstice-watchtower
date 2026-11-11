@@ -27,10 +27,10 @@
   "wallets": {
     "initialOrchestrator": "0x97A90f5696be5E3C8d3752C92Adac287c2b4484e",
     "cranker (decentramike)": "0x170356558bd57623d3df9877319014ec9de6e263",
-    "cranker (watchtower backup)": "0x049Ba5f9551c4372E1F9dCde82146E39D6689c7E",
-    "claimer (watchtower backup)": "t17onisyvqkb5h6ix43jplk45x7xfpbydvs34encq"
+    "sender (watchtower backup)": "PLACEHOLDER: the f1 address printed by bin/newkey.js calibration"
   },
   "crankDelayEpochs": 60,
+  "crankNote": "backup cranker and Claim keeper send from one f1 account, label 'sender (watchtower backup)', key in the secret SENDER_KEY_CALIBRATION; while the label holds a placeholder, the secret is missing or the account has no tFIL, the steps are dry runs. Until 2026-11 they used two accounts: the f410 cranker 0x049Ba5f9551c4372E1F9dCde82146E39D6689c7E and the f1 claimer t17onisyvqkb5h6ix43jplk45x7xfpbydvs34encq",
   "dataDir": "site/data/calibnet",
   "startEpoch": 4092521,
   "source": "solstice deployments.json on main at 0006edc (PR #83 'deploy v1', 2026-09-22, chain 314159): the contracts were REDEPLOYED at new addresses; activationEpoch 4109134 = Mon 2026-09-28 13:00 UTC (Lotus UpgradeSolsticeHeight 4109133, PR lotus #13809). startEpoch is three epochs before the new SRA deployment block 4092524 (Upgraded event, tx 0x20ed9f5b...); the SWA followed at 4092528. The record of the 2026-09-17 deployment (SRA 0xeDfC..., SWA 0xDE4f..., activation 4094734) is frozen in site/data/calibnet-2026-09-17/.",
