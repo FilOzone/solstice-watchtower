@@ -1,0 +1,28 @@
+name: publish
+on:
+  workflow_dispatch:
+    inputs:
+      dry_run:
+        description: 'pack the page and report its CID without publishing'
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: publish
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+      - uses: FilOzone/filoz-webmaster@v0
+        with:
+          path: site
+          ens-name: solsticewatchtower.eth
+          private-key: ${{ secrets.FOC_PUBLISH_KEY }}
+          dry-run: ${{ inputs.dry_run }}
