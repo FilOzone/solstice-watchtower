@@ -276,10 +276,14 @@ calls are permissionless, so the sender does not matter to the contracts. So:
   simulations run as the f099 burn account, which every network has; the result is the same for permissionless calls.
 - The record shows the crank messages as before: Lotus lists a native message to a contract in the Ethereum block
   view, with the f1's ID-masked `0xff…` address as `from` (checked 2026-11-11 on a mainnet message).
-- Moving the old FIL: a one-time workflow (`.github/workflows/sweep.yml`, `bin/sweep.js`, both deleted after use)
-  sends each old account's FIL, minus gas, to the new sender: first the old f1 (a native send, which creates the new
-  account's actor), then the old f410 through the FilForwarder contract (`0x2B3ef6906429b580b7b2080de5CA893BC282c225`,
-  same code on mainnet and calibnet, checked 2026-11-11), since an Ethereum transaction cannot name an f1 address.
+- Moving the old FIL (done 2026-11-11, PR #7; the workflow and script were removed afterwards and are in the git
+  history): a one-time workflow (`.github/workflows/sweep.yml`, `bin/sweep.js`) sent each old account's FIL, minus gas,
+  to the new sender: first the old f1 (a native send, which creates the new account's actor), then the old f410
+  through the FilForwarder contract (`0x2B3ef6906429b580b7b2080de5CA893BC282c225`, same code on mainnet and calibnet,
+  checked 2026-11-11), since an Ethereum transaction cannot name an f1 address. Calibnet: 99.999968 + 104.999909 tFIL
+  ([run](https://github.com/FilOzone/solstice-watchtower/actions/runs/43103406130)); mainnet: 0.999969 + 1.499999 FIL
+  ([run](https://github.com/FilOzone/solstice-watchtower/actions/runs/43104066847)). The old secrets `CRANK_KEY`,
+  `CLAIM_KEY`, `CRANK_KEY_MAINNET` and `CLAIM_KEY_MAINNET` were deleted after that.
 
 ## Sector upgrades (`bin/upgrades.js`, 2026-11-10)
 

@@ -41,5 +41,5 @@ Next:
 1. Paste the clipboard into 1Password now (a new item "Solstice watchtower sender, ${arg}", with the address above),
    then copy something else so the key leaves the clipboard.
 2. Put the address in ${net.config}, under wallets: "sender (watchtower backup)": "${address}"
-3. Send it some FIL (the sweep workflow does this from the old accounts, see DESIGN.md); until it has FIL, the
+3. Send it some FIL; until it has FIL, the
    crank and Claim steps are dry runs.`)
