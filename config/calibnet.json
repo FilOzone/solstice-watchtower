@@ -27,7 +27,7 @@
   "wallets": {
     "initialOrchestrator": "0x97A90f5696be5E3C8d3752C92Adac287c2b4484e",
     "cranker (decentramike)": "0x170356558bd57623d3df9877319014ec9de6e263",
-    "sender (watchtower backup)": "PLACEHOLDER: the f1 address printed by bin/newkey.js calibration"
+    "sender (watchtower backup)": "t1njhcrrzo6sggv36oxe5dk6errbt7oee6dp5snba"
   },
   "crankDelayEpochs": 60,
   "crankNote": "backup cranker and Claim keeper send from one f1 account, label 'sender (watchtower backup)', key in the secret SENDER_KEY_CALIBRATION; while the label holds a placeholder, the secret is missing or the account has no tFIL, the steps are dry runs. Until 2026-11 they used two accounts: the f410 cranker 0x049Ba5f9551c4372E1F9dCde82146E39D6689c7E and the f1 claimer t17onisyvqkb5h6ix43jplk45x7xfpbydvs34encq",
