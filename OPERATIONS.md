@@ -2,7 +2,7 @@
 
 How to keep the watchtower running. Tracked in [FilOzone/infra#400](https://github.com/FilOzone/infra/issues/400).
 
-This page covers publishing the page and the ENS name. The reader, its trigger, its alerts and the sending wallets are still to be added here.
+This page covers publishing the page and the ENS name. The reader and the sending wallets are still to be added here. The hourly trigger for the reader and its alert run in FilOz's cluster; see the [trigger runbook in FilOzone/infra](https://github.com/FilOzone/infra/blob/main/base/apps/solstice-watchtower-trigger/README.md) (added in [FilOzone/infra#454](https://github.com/FilOzone/infra/pull/454)).
 
 ## Publishing the page
 
