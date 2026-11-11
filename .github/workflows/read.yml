@@ -36,7 +36,7 @@ jobs:
         with:
           node-version: 22
           cache: npm
-      - run: npm ci
+      - run: npm ci --ignore-scripts
       - if: ${{ inputs.test_slack }}
         run: node bin/slack-test.js
         env:
