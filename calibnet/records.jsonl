@@ -2226,3 +2226,5 @@
 {"kind":"read","epoch":4236396,"time":"2026-11-11T17:31:00.000Z","quarter":45,"source":"SRA","name":"SRA fpvOf(44, 0xfF0000000000000000000000000000000000005a)","fields":{"fpv":{"usd":"0"}}}
 {"kind":"read","epoch":4236396,"time":"2026-11-11T17:31:00.000Z","quarter":45,"source":"SRA","name":"SRA fpvOf(44, 0x72ad7C4d27fC9C2bDF8fde34ddd9BcbE34648AF3)","fields":{"fpv":{"usd":"0"}}}
 {"kind":"read","epoch":4236396,"time":"2026-11-11T17:31:00.000Z","quarter":45,"source":"SRA","name":"SRA fpvOf(44, 0x22B1a2668fbFcb38AaD33E2d1e0b157216a22421)","fields":{"fpv":{"usd":"0"}}}
+{"kind":"read","epoch":4236885,"time":"2026-11-11T21:35:30.000Z","quarter":45,"source":"balance","name":"balance of sender (watchtower backup)","fields":{"address":"t1njhcrrzo6sggv36oxe5dk6errbt7oee6dp5snba","attoFil":"204999877712313012414"}}
+{"kind":"read","epoch":4236885,"time":"2026-11-11T21:35:30.000Z","quarter":45,"source":"SRA","name":"SRA aggregatedFilecoinPayVolume(44)","fields":{"usd":"0"}}
