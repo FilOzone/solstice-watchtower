@@ -231,29 +231,55 @@ Decisions (Irene, 2026-09-23):
 ## The backup cranker (`bin/crank.js`, 2026-10-08)
 
 Irene's ask: a second, independent cranker, so the two permissionless calls do not depend on one system.
-A step of the read workflow runs it on calibnet after the readers:
+A step of the read workflow runs it after the readers, for calibnet and mainnet:
 
 - What it sends: `submitShares(q)` on the SRA for a bound quarter the SRA has not submitted
   (`lastSubmittedQuarter` from the SRA's `QUARTER_SLOT`), and `quarterlyGateCheck()` on the SWA when the
   quarter it reads (`lastCheckedQuarter + 1`, from `GATE_PARAMS_SLOT`) is bound and `steps < 8`.
-- Simulate first: every call is tried with `eth_call`; a call that would revert is not sent (the reason is logged).
+- Simulate first: every call is tried with `Filecoin.StateCall`, as the exact message that would be sent; a call
+  that would revert is not sent (the revert data is decoded with the contracts' ABI and logged).
 - Backup, not a race: a call is sent only when its simulation has passed for `crankDelayEpochs` (60 = 30 minutes),
   so the primary cranker (decentramike/solstice-cranker) has time to act. The first passing epoch is kept in
   `site/data/calibnet/crank.json`, committed with the record.
-- The key: repository secret `CRANK_KEY`, a calibnet MetaMask account with tFIL and no other use; without it the
-  step is a dry run. The run refuses a key whose address is not the configured `cranker (watchtower backup)` wallet.
+- The key: see "One sender per network" below. The run refuses a key whose address is not the configured
+  `sender (watchtower backup)` wallet.
 - Mainnet (2026-10-15, Irene's decision): the cranker and the Claim keeper run for `config/mainnet.json` too, with
-  their own secrets `CRANK_KEY_MAINNET` (f410) and `CLAIM_KEY_MAINNET` (f1), real FIL, and a one-day delay
-  (`crankDelayEpochs` 2880) before a crank is sent. Dry runs until the secrets and the wallet addresses are in place.
+  real FIL and a one-day delay (`crankDelayEpochs` 2880) before a crank is sent.
 - The daily `Claim` is a second step, `bin/claim.js` (2026-10-12): once a day it reads the f02 state, lists every
   wallet in a live stream's share map or payable rows and every tombstone's payable rows, simulates `Claim(id,
   wallets)` per stream with `Filecoin.StateCall`, and sends only a batch that would pay something. `Claim` is a native
-  f02 message, so its key is a separate f1 account (repository secret `CLAIM_KEY`; the run checks that the key's
-  address is the configured `claimer (watchtower backup)` wallet, after a secret mix-up on 2026-10-12). A backup: Claims
-  are already sent on calibnet from another f1 address (t15gfg…), daily for A's wallet; the public solstice-cranker
-  repo has no Claim step, so who sends them is not known here. State: `site/data/calibnet/claim.json`.
+  f02 message, so it needs an f1 (or f3) sender; the run checks that the key's address is the configured sender, after
+  a secret mix-up on 2026-10-12. A backup: Claims are already sent on calibnet from another f1 address (t15gfg…),
+  daily for A's wallet; the public solstice-cranker repo has no Claim step, so who sends them is not known here.
+  State: `site/data/calibnet/claim.json`.
 - Limit: both crankers run on GitHub Actions. They differ in code, key, operator and trigger, but a GitHub outage
   stops both; said to Phi-rjan for the operational setup.
+
+### One sender per network (2026-11)
+
+Until 2026-11 each network had two watchtower accounts: an f410 (MetaMask) account for the crank, which signed
+Ethereum transactions with viem (secrets `CRANK_KEY`, `CRANK_KEY_MAINNET`), and an f1 account for the Claim, which
+signed native messages (`CLAIM_KEY`, `CLAIM_KEY_MAINNET`). Two balances to watch and top up per network, four
+secrets. An f1 can do both: a native message with method InvokeEVM (3844450837) and the calldata as one CBOR byte
+string for params is how Lotus itself carries an Ethereum call, and Irene checked on mainnet (FilOzone/infra#400,
+2026-11-11) that the f1 Claim account's InvokeEVM read of the SRA gave the same result as `eth_call`. The two crank
+calls are permissionless, so the sender does not matter to the contracts. So:
+
+- One f1 account per network, label `sender (watchtower backup)` in the config's `wallets`; its key is the
+  repository secret `SENDER_KEY_CALIBRATION` or `SENDER_KEY_MAINNET`, passed to both steps as `SENDER_KEY`
+  (`lib/sender.js` holds what the two steps share).
+- `bin/newkey.js mainnet|calibration` makes the key, run by a person in their own terminal: it sets the secret with
+  `gh secret set` (the key on stdin), copies the key to the clipboard for 1Password and prints only the address.
+  It refuses to replace an existing secret without `--overwrite`.
+- Dry runs: no secret, a `PLACEHOLDER` address in the config, or a sender with no FIL (it has no actor until its
+  first incoming FIL, and `Filecoin.StateCall` refuses a sender without one). Until the sender has FIL, the
+  simulations run as the f099 burn account, which every network has; the result is the same for permissionless calls.
+- The record shows the crank messages as before: Lotus lists a native message to a contract in the Ethereum block
+  view, with the f1's ID-masked `0xff…` address as `from` (checked 2026-11-11 on a mainnet message).
+- Moving the old FIL: a one-time workflow (`.github/workflows/sweep.yml`, `bin/sweep.js`, both deleted after use)
+  sends each old account's FIL, minus gas, to the new sender: first the old f1 (a native send, which creates the new
+  account's actor), then the old f410 through the FilForwarder contract (`0x2B3ef6906429b580b7b2080de5CA893BC282c225`,
+  same code on mainnet and calibnet, checked 2026-11-11), since an Ethereum transaction cannot name an f1 address.
 
 ## Sector upgrades (`bin/upgrades.js`, 2026-11-10)
 
@@ -275,7 +301,7 @@ height 6531055) replayed on Glif with `Filecoin.StateReplay` gave the same 2.81 
    the `publish` skill (mainnet only). Each publish gives a new link; the current one is in the README.
 2. The scheduled job: GitHub Actions runs the reader every 10 minutes and commits the record to this repo
    (`.github/workflows/read.yml`; it holds no key and no secret, and starts running once it is on GitHub).
-   Three rules for when it fails (decided 2026-09-18); a watchtower that stops silently is worse than none:
+   Rules for when it fails (the first three decided 2026-09-18); a watchtower that stops silently is worse than none:
    - The page warns. If the newest read in the record is more than 30 minutes old, the header turns red:
      "The reader has not run since HH:MM UTC. The history below may be incomplete." The live read of f02
      keeps working, it does not depend on the job.
@@ -290,6 +316,9 @@ height 6531055) replayed on Glif with `Filecoin.StateReplay` gave the same 2.81 
    - A gap that cannot be healed is recorded, not hidden. If the endpoint no longer serves the blocks of the
      gap (limit 2 above), the job writes one record "epochs X to Y could not be read", and the page shows it
      in the history, so silence is never taken for "nothing happened".
+   - One network does not stop the other (2026-11). Every network step (readers, crank, Claim, upgrades) goes on
+     after a failure (`continue-on-error`), the record is committed, and a last step fails the run if any of them
+     failed. Before, a calibnet reader failure skipped everything after it, and a mainnet failure left the run green.
    Telling a person that the job stopped is the alert, which is outside the PoC.
 3. Hosting (decided 2026-09-17 and 2026-09-18): the website is served from IPFS/Filecoin through Filecoin
    Pin, not from GitHub Pages. The page is fixed and is re-published only when the page itself changes, so it
