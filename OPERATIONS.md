@@ -27,7 +27,7 @@ The networks are independent: a failing step doesn't stop the others or the comm
 Open the failed run on the [Actions tab](https://github.com/FilOzone/solstice-watchtower/actions/workflows/read.yml). The last step lists each step's outcome (`read_calibnet=success crank_mainnet=failure ...`); open the failed step's log.
 
 - A reader step: usually an RPC endpoint problem. The next run catches up from the last epoch it recorded.
-- A crank or Claim step: usually the sender is out of FIL (see below) or the simulation reverted; the log shows the reason.
+- A crank or Claim step: an RPC error, a key that doesn't match the sender address in the config, or a message that couldn't be pushed or didn't land; the log shows which. A sender with no FIL, or a call that isn't possible yet, is not a failure: the step logs it and succeeds.
 - The commit step: a push conflict. The next run starts from the latest `main`.
 
 ## Sending wallets
@@ -42,11 +42,11 @@ Each network has one sender account that pays gas for the crank and the Claim. N
 - The keys are [repository secrets](https://github.com/FilOzone/solstice-watchtower/settings/secrets/actions) and are in the infra 1Password vault.
 - They only pay gas, so they drain slowly. infra's [`wallet-balance-exporter`](https://github.com/FilOzone/infra/tree/main/base/apps/wallet-balance-exporter) alerts in #foc-wg-alerts below 0.5 FIL on mainnet and 5 tFIL on calibnet. To top up, send FIL (or tFIL from a faucet) to the address above.
 - While a sender has no FIL, its crank and Claim steps run as dry runs and log why.
-- To replace a key, run `node bin/newkey.js mainnet` (or `calibration`) in your own terminal: it sets the secret, copies the key to the clipboard for 1Password and prints only the new address. Then put the address in `config/<network>.json` under `"sender (watchtower backup)"` and move the old account's FIL across.
+- To replace a key: first move the old account's FIL somewhere safe (its key is in 1Password), then run `node bin/newkey.js mainnet --overwrite` (or `calibration --overwrite`) in your own terminal. It sets the secret, copies the new key to the clipboard for 1Password and prints only the new address. Put that address in `config/mainnet.json` (or `config/calibnet.json`) under `"sender (watchtower backup)"` and send the FIL to it.
 
 ## Slack
 
-The reader posts one line per run that found something new on mainnet to [#fil-solstice-watchtower](https://filecoinproject.slack.com/archives/C0C436Q8X6Z) (calibnet lines are off). It posts through an Incoming WebHook of the Slack app `solstice-watchtower`, created by @TippyFlitsUK; the URL is the `SLACK_WEBHOOK` repository secret. Without the secret nothing is posted, and a failed post never fails the run.
+The reader posts to [#fil-solstice-watchtower](https://filecoinproject.slack.com/archives/C0C436Q8X6Z): one message per run that found something new on mainnet, summarizing the new records, plus a notice when a run starts late (calibnet is off). It posts through an Incoming WebHook of the Slack app `solstice-watchtower`, created by @TippyFlitsUK; the URL is the `SLACK_WEBHOOK` repository secret. Without the secret nothing is posted, and a failed post never fails the run.
 
 ## Publishing the page
 
@@ -69,7 +69,7 @@ The run takes a few minutes. It uses [FilOzone/filoz-webmaster](https://github.c
 5. Points `solsticewatchtower.eth` at the new CID.
 6. Waits up to 15 minutes until https://solsticewatchtower.eth.limo/ serves the new CID, and fails the run if it doesn't.
 
-The [run summary](https://github.com/FilOzone/solstice-watchtower/actions/workflows/publish.yml) lists the old CID, the new CID, the providers and the ENS transaction. A green run means the public address serves the new page.
+The [run summary](https://github.com/FilOzone/solstice-watchtower/actions/workflows/publish.yml) lists the old CID, the new CID, the providers and the ENS transaction. When a run publishes a new CID and passes, the public address serves the new page.
 
 To go back to an earlier page, revert the page change on `main`; the revert publishes itself.
 

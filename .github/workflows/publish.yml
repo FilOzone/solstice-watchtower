@@ -40,9 +40,13 @@ jobs:
         env:
           CID: ${{ steps.publish.outputs.cid }}
         run: |
-          # eth.limo can take a few minutes to pick up a new contenthash; wait up to 15 minutes.
-          for i in $(seq 1 30); do
-            roots=$(curl -sI https://solsticewatchtower.eth.limo/ | tr -d '\r' | awk 'tolower($1)=="x-ipfs-roots:"{print $2}')
+          # eth.limo can take a few minutes to pick up a new contenthash; wait up to 15 minutes. Each request is bounded,
+          # and a failed request just counts as "not yet".
+          deadline=$((SECONDS + 900))
+          i=0
+          while [ "$SECONDS" -lt "$deadline" ]; do
+            i=$((i + 1))
+            roots=$(curl -sI --connect-timeout 10 --max-time 20 https://solsticewatchtower.eth.limo/ | tr -d '\r' | awk 'tolower($1)=="x-ipfs-roots:"{print $2}' || true)
             if [ "$roots" = "$CID" ]; then
               echo "eth.limo serves $CID"
               echo "eth.limo serves the new CID \`$CID\`" >> "$GITHUB_STEP_SUMMARY"
