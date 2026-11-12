@@ -1,0 +1,31 @@
+# A manual test of the calibnet cranker from a branch, before a crank change merges. Run it from the Actions tab with
+# "Use workflow from" set to the branch: it checks out that branch, runs bin/crank.js with --now (no delay, so it sends
+# as soon as the simulation passes) and commits nothing.
+# It is a separate workflow from read.yml so that every successful read.yml run is a real read: FilOzone/infra's
+# solstice-watchtower-trigger alert counts successful read.yml runs.
+
+name: crank-test-calibnet
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: read # shared with read.yml: both send from the calibnet sender, and two runs sending from one account at once can pick the same nonce
+  cancel-in-progress: false
+
+jobs:
+  crank-test-calibnet:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: node bin/crank.js config/calibnet.json --now
+        env:
+          SENDER_KEY: ${{ secrets.SENDER_KEY_CALIBRATION }}

@@ -17,10 +17,6 @@ on:
         description: 'post one marked test line to Slack before reading'
         type: boolean
         default: false
-      crank_test_calibnet:
-        description: 'instead of the reader: run the calibnet cranker from the chosen branch, without the delay'
-        type: boolean
-        default: false
 
 permissions:
   contents: write # to commit the record
@@ -31,7 +27,6 @@ concurrency:
 
 jobs:
   read:
-    if: ${{ !inputs.crank_test_calibnet }}
     runs-on: ubuntu-latest
     timeout-minutes: 20 # two networks; butterfly took about 5 minutes per 720 epochs on 2026-09-18
     steps:
@@ -115,23 +110,3 @@ jobs:
         run: |
           echo "$OUTCOMES"
           if echo "$OUTCOMES" | grep -q '=failure'; then echo "a step failed (see above)"; exit 1; fi
-
-  # A manual test of the cranker on calibnet from a branch (workflow_dispatch with crank_test_calibnet, "Use workflow
-  # from" the branch): checks out that branch, runs bin/crank.js with --now (no delay, so it sends as soon as the
-  # simulation passes) and commits nothing. The read job above is skipped in such a run.
-  crank-test-calibnet:
-    if: ${{ inputs.crank_test_calibnet }}
-    runs-on: ubuntu-latest
-    timeout-minutes: 10
-    permissions:
-      contents: read
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version: 22
-          cache: npm
-      - run: npm ci --ignore-scripts
-      - run: node bin/crank.js config/calibnet.json --now
-        env:
-          SENDER_KEY: ${{ secrets.SENDER_KEY_CALIBRATION }}
