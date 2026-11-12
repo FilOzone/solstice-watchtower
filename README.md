@@ -14,7 +14,7 @@ Watches FIP-0118 on Filecoin mainnet and calibnet. Every hour it reads what land
 
 ## Local development
 
-Needs Node.js 22 or newer.
+Needs Node.js 22 or newer, and Python 3 for `npm run page`.
 
 ```bash
 npm install
@@ -24,7 +24,7 @@ git worktree add site/data data   # the record, where the scripts and the page e
 | Command | What it does |
 |---|---|
 | `npm test` | Decoder tests on hand-written samples, and sender tests (message building, key checks) on mocks. |
-| `npm run read` | One reader run against calibnet, from public endpoints only. Writes to `site/data/calibnet/`; don't push that to `data`. |
+| `npm run read` | One reader run against calibnet. Read-only: it sends nothing and needs no key. Writes to `site/data/calibnet/`; don't push that to `data`. |
 | `npm run page` | Serves the page at http://localhost:8000, reading the record from `site/data/`. |
 
 Each network's contract addresses, activation epoch and wallets are in `config/<network>.json`.
