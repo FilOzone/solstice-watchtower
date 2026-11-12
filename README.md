@@ -7,10 +7,9 @@ Watches FIP-0118 on Filecoin mainnet and calibnet. Every hour it reads what land
 
 ## Docs
 
-- [OPERATIONS.md](OPERATIONS.md): keeping it running: the `read` workflow, the record, the sending wallets, Slack, publishing the page, ENS.
 - [DESIGN.md](DESIGN.md): what the reader, the crank and the Claim do, how they behave when something fails, and why.
 - [OBSERVABILITY.md](OBSERVABILITY.md): how each FIP-0118 action can be observed on chain, by anyone.
-- Scope: [filecoin-project/solstice#69](https://github.com/filecoin-project/solstice/issues/69); operations: [filecoin-project/solstice#87](https://github.com/filecoin-project/solstice/issues/87).
+- [OPERATIONS.md](OPERATIONS.md): keeping it running: the `read` workflow, the record, the sending wallets, Slack, publishing the page, ENS.
 
 ## Local development
 
