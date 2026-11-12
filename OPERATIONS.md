@@ -1,6 +1,6 @@
 # Operations
 
-How to keep the watchtower running. Tracked in [FilOzone/infra#400](https://github.com/FilOzone/infra/issues/400).
+How to keep the watchtower running.
 
 This page covers running the reader and its transactions, the sending wallets, Slack, publishing the page, and the ENS name.
 
@@ -8,7 +8,7 @@ This page covers running the reader and its transactions, the sending wallets, S
 
 The [`read`](.github/workflows/read.yml) workflow does all the regular work. Each run, for calibnet and then mainnet:
 
-1. **Reads** FIP-0118 chain state from public endpoints ([`bin/reader.js`](bin/reader.js)) and writes it to [`site/data/`](site/data/). The page fetches this record when it opens.
+1. **Reads** FIP-0118 chain state from public endpoints ([`bin/reader.js`](bin/reader.js)) and writes it to [`site/data/`](site/data/). The static site fetches this record when it opens.
 2. **Cranks** as a backup ([`bin/crank.js`](bin/crank.js)): when `submitShares` or `quarterlyGateCheck` has been possible for `crankDelayEpochs` and nobody has sent it, the watchtower sends it. The delay leaves room for the primary cranker: 60 epochs (30 minutes) on calibnet, 2880 epochs (one day) on mainnet.
 3. **Claims** once a day ([`bin/claim.js`](bin/claim.js)): sends the f02 `Claim` for every wallet f02 owes something to. On mainnet that pays the Orchestrator; on calibnet it funds the tFIL and USDFC faucets.
 
@@ -19,7 +19,7 @@ The networks are independent: a failing step doesn't stop the others or the comm
 ### When it runs
 
 - Every hour, dispatched by a CronJob in FilOz's cluster. It alerts in #foc-wg-alerts when no `read` run has succeeded for 6 hours. Runbook: [solstice-watchtower-trigger in FilOzone/infra](https://github.com/FilOzone/infra/blob/main/base/apps/solstice-watchtower-trigger/README.md).
-- GitHub's own schedule (every 10 minutes in the workflow file) as a backup. GitHub treats it as best effort and in practice starts a run every few hours.
+- GitHub's own schedule, as a backup. GitHub treats it as best effort and in practice starts a run every few hours.
 - By hand: **Run workflow** on the [`read` workflow](https://github.com/FilOzone/solstice-watchtower/actions/workflows/read.yml), or `gh workflow run read.yml --repo FilOzone/solstice-watchtower --ref main`. This is always safe: runs share a concurrency group, so a new run waits for the one in progress. Options: `test_slack` posts one marked test line to Slack first; `crank_test_calibnet` runs only the calibnet cranker from the chosen branch, without the delay (for testing a crank change before merge).
 
 ### When a run fails
@@ -96,6 +96,10 @@ One wallet, the FilOz PIN wallet, pays for storage and signs the ENS update: [`0
 - Its key is the `FOC_PUBLISH_KEY` [repository secret](https://github.com/FilOzone/solstice-watchtower/settings/secrets/actions), stored without the `0x` prefix. The key is in 1Password, `Eng Infra`.
 - On Filecoin it pays for storage in USDFC through Filecoin Pay, about 0.24 USDFC a month for the two data sets ([1919](https://pdp.filecoin.cloud/mainnet/dataset/1919) on provider 5, [1920](https://pdp.filecoin.cloud/mainnet/dataset/1920) on provider 1), plus a little FIL for gas. When the payment account runs short, a publish tops it up from the wallet's own USDFC and fails if there is not enough. Storage keeps drawing on the payment account between publishes, so its balance is what keeps the page stored.
 - On Ethereum it pays gas for the ENS update, about 0.000025 ETH each at 202611 gas prices.
-- Balances are monitored by infra's [`wallet-balance-exporter`](https://github.com/FilOzone/infra/tree/main/base/apps/wallet-balance-exporter), with alerts for low ETH, low FIL and less than 30 days of Filecoin Pay runway ([FilOzone/infra#453](https://github.com/FilOzone/infra/pull/453), in progress).
+- Balances are monitored by infra's [`wallet-balance-exporter`](https://github.com/FilOzone/infra/tree/main/base/apps/wallet-balance-exporter), with alerts for low ETH, low FIL and less than 30 days of Filecoin Pay runway.
 
 To top it up, send USDFC or FIL on Filecoin, or ETH on Ethereum, to the address above.
+
+## References
+
+- This page started as part of [FilOzone/infra#400](https://github.com/FilOzone/infra/issues/400), moving the watchtower into FilOz team ownership.
