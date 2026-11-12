@@ -1,5 +1,12 @@
 name: publish
 on:
+  # Publish automatically when the page itself changes on main. The reader's hourly record commits only touch
+  # site/data/, which the page fetches at load time, so they never need a publish.
+  push:
+    branches: [main]
+    paths:
+      - 'site/**'
+      - '!site/data/**'
   workflow_dispatch:
     inputs:
       dry_run:
@@ -17,12 +24,36 @@ concurrency:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    timeout-minutes: 30
+    timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
-      - uses: FilOzone/filoz-webmaster@v0
+      - id: publish
+        # Pinned to a commit: this step receives FOC_PUBLISH_KEY, so a moved tag must not change the code it runs.
+        uses: FilOzone/filoz-webmaster@efa2bd3bd72b4368f0ee4990b7d9636345f3b0d8 # v0
         with:
           path: site
           ens-name: solsticewatchtower.eth
           private-key: ${{ secrets.FOC_PUBLISH_KEY }}
-          dry-run: ${{ inputs.dry_run }}
+          dry-run: ${{ inputs.dry_run == true }}
+      - name: Check that solsticewatchtower.eth.limo serves the new CID
+        if: steps.publish.outputs.changed == 'true'
+        env:
+          CID: ${{ steps.publish.outputs.cid }}
+        run: |
+          # eth.limo can take a few minutes to pick up a new contenthash; wait up to 15 minutes. Each request is bounded,
+          # and a failed request just counts as "not yet".
+          deadline=$((SECONDS + 900))
+          i=0
+          while [ "$SECONDS" -lt "$deadline" ]; do
+            i=$((i + 1))
+            roots=$(curl -sI --connect-timeout 10 --max-time 20 https://solsticewatchtower.eth.limo/ | tr -d '\r' | awk 'tolower($1)=="x-ipfs-roots:"{print $2}' || true)
+            if [ "$roots" = "$CID" ]; then
+              echo "eth.limo serves $CID"
+              echo "eth.limo serves the new CID \`$CID\`" >> "$GITHUB_STEP_SUMMARY"
+              exit 0
+            fi
+            echo "attempt $i: eth.limo serves '${roots}', waiting for $CID"
+            sleep 30
+          done
+          echo "::error::eth.limo still does not serve $CID after 15 minutes"
+          exit 1
