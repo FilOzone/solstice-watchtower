@@ -2241,3 +2241,4 @@
 {"kind":"read","epoch":4239470,"time":"2026-11-12T19:08:00.000Z","quarter":46,"source":"SRA","name":"SRA fpvOf(45, 0xfF0000000000000000000000000000000000005a)","fields":{"fpv":{"usd":"0"}}}
 {"kind":"read","epoch":4239470,"time":"2026-11-12T19:08:00.000Z","quarter":46,"source":"SRA","name":"SRA fpvOf(45, 0x72ad7C4d27fC9C2bDF8fde34ddd9BcbE34648AF3)","fields":{"fpv":{"usd":"0"}}}
 {"kind":"read","epoch":4239470,"time":"2026-11-12T19:08:00.000Z","quarter":46,"source":"SRA","name":"SRA fpvOf(45, 0x22B1a2668fbFcb38AaD33E2d1e0b157216a22421)","fields":{"fpv":{"usd":"0"}}}
+{"kind":"read","epoch":4239639,"time":"2026-11-12T20:32:30.000Z","quarter":46,"source":"balance","name":"balance of sender (watchtower backup)","fields":{"address":"t1njhcrrzo6sggv36oxe5dk6errbt7oee6dp5snba","attoFil":"204999871082624410810"}}
