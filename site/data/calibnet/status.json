@@ -11,8 +11,8 @@
   "postPeriod": 240,
   "verificationWindow": 480,
   "swa": "0x66C11A9F6dfEC3c1557958cF9f575a023EB01421",
-  "lastEpoch": 4238399,
-  "lastRun": "2026-11-12T12:50:46.142Z",
+  "lastEpoch": 4239119,
+  "lastRun": "2026-11-12T19:13:01.961Z",
   "reads": {
     "f02 state": "{\"SWAActor\":\"t0200118\",\"SWATimelockEpochs\":720,\"StreamsRoot\":{\"/\":\"bafy2bzacecobmyjpmjwmvunymchrmxg6groerqraty26gfvoldivlcnho4qf6\"}}",
     "balance of f099 (burn)": "{\"address\":\"0xff00000000000000000000000000000000000063\",\"attoFil\":\"48716952490984598903145205\"}",
@@ -178,7 +178,11 @@
     "SRA fpvOf(44, 0xfF0000000000000000000000000000000000005a)": "{\"fpv\":{\"usd\":\"0\"}}",
     "SRA fpvOf(44, 0x72ad7C4d27fC9C2bDF8fde34ddd9BcbE34648AF3)": "{\"fpv\":{\"usd\":\"0\"}}",
     "SRA fpvOf(44, 0x22B1a2668fbFcb38AaD33E2d1e0b157216a22421)": "{\"fpv\":{\"usd\":\"0\"}}",
-    "balance of sender (watchtower backup)": "{\"address\":\"t1njhcrrzo6sggv36oxe5dk6errbt7oee6dp5snba\",\"attoFil\":\"204999874900652025081\"}"
+    "balance of sender (watchtower backup)": "{\"address\":\"t1njhcrrzo6sggv36oxe5dk6errbt7oee6dp5snba\",\"attoFil\":\"204999874900652025081\"}",
+    "SRA aggregatedFilecoinPayVolume(45)": "{\"usd\":\"0\"}",
+    "SRA fpvOf(45, 0xfF0000000000000000000000000000000000005a)": "{\"fpv\":{\"usd\":\"0\"}}",
+    "SRA fpvOf(45, 0x72ad7C4d27fC9C2bDF8fde34ddd9BcbE34648AF3)": "{\"fpv\":{\"usd\":\"0\"}}",
+    "SRA fpvOf(45, 0x22B1a2668fbFcb38AaD33E2d1e0b157216a22421)": "{\"fpv\":{\"usd\":\"0\"}}"
   },
   "pending": {},
   "slackPending": []
