@@ -21,7 +21,7 @@ The networks are independent: a failing step doesn't stop the others or the comm
 - Every hour, dispatched by a CronJob in FilOz's cluster. It alerts in #foc-wg-alerts when no `read` run has succeeded for 6 hours. Runbook: [solstice-watchtower-trigger in FilOzone/infra](https://github.com/FilOzone/infra/blob/main/base/apps/solstice-watchtower-trigger/README.md).
 - GitHub's own schedule, as a backup. GitHub treats it as best effort and in practice starts a run every few hours.
 - By hand: **Run workflow** on the [`read` workflow](https://github.com/FilOzone/solstice-watchtower/actions/workflows/read.yml), or `gh workflow run read.yml --repo FilOzone/solstice-watchtower --ref main`. This is always safe: runs share the `read` concurrency group, so a run never starts while another is in progress. At most one run waits; a newer waiting run replaces it, which is harmless because the reader catches up from its last epoch. Option: `test_slack` posts one marked test line to Slack first.
-- To test a crank change before merge: run the [`crank-test-calibnet` workflow](https://github.com/FilOzone/solstice-watchtower/actions/workflows/crank-test.yml) with "Use workflow from" set to the branch. It runs only the calibnet cranker from that branch, without the delay, and commits nothing. It shares the `read` concurrency group, since it sends from the same calibnet sender.
+- To test a crank change before merge, run `node bin/crank.js config/calibnet.json --now` locally without `SENDER_KEY`. It is a dry run: it simulates each call that is due, without the delay, and logs what it would send. It updates `site/data/calibnet/crank.json`; don't commit that. The real send happens in the first hourly `read` run after merge.
 
 ### When a run fails
 
