@@ -1,71 +1,29 @@
-# Solstice watchtower (PoC)
+# Solstice watchtower
 
-Reads what landed on chain in f02, the SWA and the SRA (FIP-0118) and shows it on one page.
+Watches FIP-0118 on Filecoin mainnet and calibnet. Every hour it reads what landed on chain in f02, the SWA and the SRA, adds it to a public record, and sends the backup crank (`submitShares`, `quarterlyGateCheck`) and the daily f02 `Claim` when they are due. One page shows the record and reads f02 live.
 
-> **Disclaimer: this is a vibe-coded PoC.** All the code, and OBSERVABILITY.md, were written by an AI agent
-> (Claude Code). Irene directed the scope and the design. William (wjmelements) looked at it on 2026-09-19 and opened
-> issue #1; nobody has done a full code review. Treat what the page shows as unverified until someone checks it. What
-> has been checked: 12 automated tests on hand-written samples, two records compared by hand with a block explorer, and
-> one day of butterflynet test data (2026-09-21) compared with the test plan of the person who ran it (see DESIGN.md).
+- Page: https://solsticewatchtower.eth.limo/ (mainnet; calibnet at `?data=calibnet`)
+- Record: the [`data`](https://github.com/FilOzone/solstice-watchtower/tree/data) branch, one folder per network
 
-- Live page, hosted on Filecoin (Filecoin Pin), stable address through ENS: **https://solsticewatchtower.eth.limo/**
-  Views: mainnet (default since 2026-10-16), `?data=calibnet`. The butterfly gamma view was removed on 2026-10-16 (its network is gone; the record stays on the `data` branch in `butterfly-gamma/`). The ENS name `solsticewatchtower.eth` points to the
-  current version's CID and is updated at each publish; the data stays fresh because the page fetches the record from
-  this repo's `data` branch.
-- Older versions, fixed to their CID (they keep working, but show only what their view list had):
+## Docs
 
-  | Published | Link | Views |
-  |---|---|---|
-  | 2026-10-16 | https://inbrowser.link/ipfs/bafybeibpjdfax3e62ivmkoi47rk2izepkcbxzwrycrvfzwxej7wwn7ffxa/ | mainnet (default), calibnet; restyle, activation banner; replaced on 2026-11-10 by the version with the fpv-indexer count on the gate line and part 4 (sector upgrades) |
-  | 2026-10-08 | https://inbrowser.link/ipfs/bafybeidkctdb4tvrzaxo4frph2bljl5mnnizwvciziakfxlaxt7jbsjsqu/ | calibnet (default), mainnet, butterfly gamma; pending governance tasks list, gate line |
-  | 2026-09-30 | https://inbrowser.link/ipfs/bafybeihynojfvudvqsjisgqvlkhcx2fw7my4he4k6qdv5z6sjgjjayxpzm/ | calibnet (default), mainnet, butterfly gamma; gate line, "failed" label |
-  | 2026-09-28 (afternoon) | https://inbrowser.link/ipfs/bafybeicy5n4zdzhnycdjktlscdxxapziqdhkvq5fyuzhztwcxpxgivya5u/ | calibnet, mainnet, butterfly gamma, with the "At a glance" block |
-  | 2026-09-28 (morning) | https://inbrowser.link/ipfs/bafybeicjzly5sefxz7nyhhregr3yqfojvqusaukfvegmeqz3tc5iu527nu/ | the same |
-  | 2026-09-23 (second) | https://inbrowser.link/ipfs/bafybeiemqoau7laiv2dsd62oud5ir5ufzapa2gm3g3rbfgbots43traeti/ | calibnet, mainnet, butterfly gamma |
-  | 2026-09-23 (first) | https://inbrowser.link/ipfs/bafybeihrtha7j3z65six4cos4ozvhi35ijiir6o4s75zengtqji5ur4ftq/ | calibnet (first deployment, 2026-09-17), butterfly gamma, butterfly alpha |
-  | 2026-09-20 | https://inbrowser.link/ipfs/bafybeihk4odsbmor5dbsjtt5uk4d3yl6z4hi3nadjqtzdpqrqlp25uylye/ | the same, plus the sample and real-test views |
-  | 2026-09-18 | https://inbrowser.link/ipfs/bafybeiaalkk7ullf4rrllipm3wuvry7ebv7yuzwmecmplz4iqap2th5edi/ | calibnet (first deployment), sample, real test |
+- [DESIGN.md](DESIGN.md): what the reader, the crank and the Claim do, how they behave when something fails, and why.
+- [OBSERVABILITY.md](OBSERVABILITY.md): how each FIP-0118 action can be observed on chain, by anyone.
+- [OPERATIONS.md](OPERATIONS.md): keeping it running: the `read` workflow, the record, the sending wallets, Slack, publishing the page, ENS.
 
-  The butterfly alpha record now lives in `archive/butterfly-alpha/`; the first calibnet deployment's record in
-  `calibnet-2026-09-17/` on the `data` branch (frozen, shown at the bottom of the calibnet history).
-- Scope and discussion: https://github.com/filecoin-project/solstice/issues/69
-- Design and its decisions: [DESIGN.md](DESIGN.md)
-- How each FIP-0118 action can be observed on chain, by anyone: [OBSERVABILITY.md](OBSERVABILITY.md)
+## Local development
 
-![The page with SAMPLE data, 2026-09-17](screenshots/sample-view.png)
+Needs Node.js 22 or newer, and Python 3 for `npm run page`.
 
-*The page with SAMPLE data, written by hand to test it. Nothing in this screenshot happened on chain. The SRA and
-the SWA were deployed on calibnet on 2026-09-17 and redeployed on 2026-09-22; the network upgrade that activates FIP-0118 there is on
-Mon 2026-09-28 13:00 UTC. Until then the real record holds the deployment events and the reads, and f02 has no queue. The
-"sample" and "real test" views were removed from the page on 2026-09-22; the real views are calibnet and the two butterflynet test networks.*
-
-A scheduled job (`.github/workflows/read.yml`) runs the reader every hour (started by a CronJob in FilOzone/infra) and commits the records to
-`calibnet/` and `mainnet/` on the `data` branch. The reader only reads from a public endpoint and holds no key.
-
-The same job ends with a backup cranker (`bin/crank.js`, since 2026-10-08): it sends `submitShares(q)` and
-`quarterlyGateCheck()` when a call has been possible for 30 minutes (one day on mainnet) and nobody sent it, so the
-primary cranker (https://github.com/decentramike/solstice-cranker) goes first. A second step (`bin/claim.js`, since
-2026-10-12) sends the f02 `Claim` once a day for every wallet that has something to collect. Since 2026-11 both steps
-send from one f1 account per network, label `sender (watchtower backup)` in the config, whose key is the repository
-secret `SENDER_KEY_CALIBRATION` or `SENDER_KEY_MAINNET`; the crank calls go out as native InvokeEVM messages. Without the
-secret, with a placeholder address in the config, or while the account has no FIL, the steps only simulate. New keys
-come from `node bin/newkey.js mainnet|calibration`, run in your own terminal. Details in DESIGN.md.
-
-A last step (`bin/upgrades.js`, since 2026-11-10) collects the mainnet `UpgradeSectorQuality` messages (FIP-0118 §1.2:
-committed-capacity sectors raised to the 10x quality against a pledge top-up) from Filfox's public API, with the power
-and pledge each one added, into `site/data/mainnet/upgrades.json`; the page sums them in part 4.
-
-Needs Node.js 22 or newer.
+```bash
+npm install
+git worktree add site/data data   # the record, where the scripts and the page expect it
+```
 
 | Command | What it does |
 |---|---|
-| `npm install` | Installs the libraries. Once. |
-| `git worktree add site/data data` | Checks the record out where the scripts and the page expect it. Once. |
-| `npm run read` | One run of the reader against calibnet. Only reads from the public RPC endpoint. Appends to `site/data/calibnet/records.jsonl`. |
-| `npm run sample` | Writes a SAMPLE record to `site/data/sample/` for local development (`?data=sample` is no longer linked from the page). |
-| `npm run page` | Serves the page at http://localhost:8000 (sample view: http://localhost:8000/?data=sample). Stop with Ctrl+C. |
-| `npm test` | Runs the decoder tests on hand-written sample inputs, and the sender tests (message building, key checks) on mocks. |
-| `node bin/newkey.js mainnet\|calibration` | Creates the network's sender key, stores it in the repo secret and on the clipboard (for 1Password), prints only the address. Needs `gh` and macOS `pbcopy`; refuses to replace an existing secret without `--overwrite`. |
-| `node bin/upgrades.js config/mainnet.json` | Fetches the new `UpgradeSectorQuality` messages from Filfox into `site/data/mainnet/upgrades.json`. |
+| `npm test` | Decoder tests on hand-written samples, and sender tests (message building, key checks) on mocks. |
+| `npm run read` | One reader run against calibnet. Read-only: it sends nothing and needs no key. Writes to `site/data/calibnet/`; don't push that to `data`. |
+| `npm run page` | Serves the page at http://localhost:8000, reading the record from `site/data/`. |
 
-The contract addresses and the activation epoch in `config/calibnet.json` come from solstice `deployments.json`.
+Each network's contract addresses, activation epoch and wallets are in `config/<network>.json`.
