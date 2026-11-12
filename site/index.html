@@ -87,9 +87,10 @@
 // The f02 decoder is the same file the reader uses.
 import { decodeStreamsState, computeWeight as weightNow, fromBase64 } from './lib/f02.js'
 
-// The repo the scheduled job commits the record to. The page asks it first, so the record is fresh even when
-// this page was published long ago; the copy bundled next to the page is the fallback.
-const REPO_RAW = 'https://raw.githubusercontent.com/FilOzone/solstice-watchtower/main/site/'
+// The repo's data branch, where the scheduled job commits the record; it holds what is site/data/ here, at its root.
+// The page asks it first, so the record is fresh even when this page was published long ago; the copy bundled next
+// to the page (data/) is the fallback.
+const REPO_RAW = 'https://raw.githubusercontent.com/FilOzone/solstice-watchtower/refs/heads/data/'
 // The reader runs hourly (dispatched from FilOz's cluster; see OPERATIONS.md), so a single late or failed run doesn't
 // show the warning; two missed runs do.
 const STALE_MINUTES = 150
@@ -102,7 +103,7 @@ const LIVE = ['mainnet', 'calibnet']
 const VIEWS = { mainnet: 'mainnet', calibnet: 'calibnet' }
 // The calibnet contracts were redeployed on 2026-09-22 (solstice PR #83). The record of the first deployment is frozen in
 // this folder and shown at the bottom of the calibnet history.
-const OLD_CALIBNET = { dir: 'data/calibnet-2026-09-17/', label: 'Deploy of 2026-09-17, replaced on 2026-09-22 (solstice PR #83)',
+const OLD_CALIBNET = { dir: 'calibnet-2026-09-17/', label: 'Deploy of 2026-09-17, replaced on 2026-09-22 (solstice PR #83)',
   note: 'These rows are from the SRA 0xeDfCd0947F7E9d58E0035f032520d75ce8eCA451 and SWA 0xDE4fBd083F18f96C241DdE0A83C3EDC422Be9BA6 deployed on 2026-09-17 ' +
     'and replaced by a redeploy at new addresses on 2026-09-22. Nothing carries over: the admitted lists and pricing params set here on 2026-09-21 must be set again on the new contracts.' }
 const NOTES = {
@@ -113,7 +114,9 @@ const NOTES = {
 }
 const requested = new URLSearchParams(location.search).get('data')
 const dataset = requested in NOTES ? requested : 'mainnet'
-const dir = `data/${dataset}/`
+const dir = `${dataset}/`
+// Where the bundled copy sits next to the page.
+const BUNDLED = 'data/'
 const $ = (id) => document.getElementById(id)
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]))
 const utc = (iso) => iso.replace('T', ' ').slice(0, 16) + ' UTC'
@@ -146,13 +149,13 @@ async function main() {
   const load = (base) => Promise.all([fetch(base + dir + 'status.json').then((r) => r.ok ? r.json() : Promise.reject(r.status)), fetch(base + dir + 'records.jsonl').then((r) => r.ok ? r.text() : Promise.reject(r.status))])
   const useRepo = LIVE.includes(dataset) && !['localhost', '127.0.0.1'].includes(location.hostname)
   let from = 'the copy published with this page'
-  const [status, text] = await (useRepo ? load(REPO_RAW).then((x) => (from = 'the repo', x)).catch(() => load('')) : load(''))
+  const [status, text] = await (useRepo ? load(REPO_RAW).then((x) => (from = 'the repo', x)).catch(() => load(BUNDLED)) : load(BUNDLED))
   const records = text.split('\n').filter(Boolean).map((l) => JSON.parse(l)).sort((a, b) => a.epoch - b.epoch)
   // The frozen record of the replaced calibnet deployment, shown as the last group of part 2 (repo first, else bundled).
   let oldRecords = []
   if (dataset === 'calibnet') {
     const loadOld = (base) => fetch(base + OLD_CALIBNET.dir + 'records.jsonl').then((r) => r.ok ? r.text() : Promise.reject(r.status))
-    const oldText = await (useRepo ? loadOld(REPO_RAW).catch(() => loadOld('')) : loadOld('')).catch(() => '')
+    const oldText = await (useRepo ? loadOld(REPO_RAW).catch(() => loadOld(BUNDLED)) : loadOld(BUNDLED)).catch(() => '')
     oldRecords = oldText.split('\n').filter(Boolean).map((l) => JSON.parse(l)).sort((a, b) => a.epoch - b.epoch)
   }
   records0 = records
@@ -167,7 +170,7 @@ async function main() {
   $('views').innerHTML = 'You are looking at <b>' + esc(status.network) + '</b>. Other networks: ' +
     Object.entries(VIEWS).map(([k, v]) => k === dataset ? `<a class="here">${v}</a>` : `<a href="${k === 'mainnet' ? '?' : `?data=${k}`}">${v}</a>`).join(' | ')
   $('head').innerHTML = `last epoch read ${status.lastEpoch} (${utc(epochTime(status.lastEpoch))}) · ` +
-    (quarterNow ? `quarter ${quarterNow} now` : 'before activation') + ` · <a href="${dir}records.jsonl">record file</a>`
+    (quarterNow ? `quarter ${quarterNow} now` : 'before activation') + ` · <a href="${BUNDLED}${dir}records.jsonl">record file</a>`
   // The network note is background, not a warning: it sits in the footer. Only warnings (the stopped reader) go on top.
   if (NOTES[dataset]) $('netnote').innerHTML = `<p><b>About this network.</b> ${esc(NOTES[dataset])}</p>`
   $('head').innerHTML += ` · record from ${from}`
@@ -253,7 +256,7 @@ async function main() {
 
   // 4. sector upgrades, from upgrades.json (bin/upgrades.js); the section exists only where that file does (mainnet)
   const loadUp = (base) => fetch(base + dir + 'upgrades.json').then((r) => r.ok ? r.json() : Promise.reject(r.status))
-  const up = await (useRepo ? loadUp(REPO_RAW).catch(() => loadUp('')) : loadUp('')).catch(() => null)
+  const up = await (useRepo ? loadUp(REPO_RAW).catch(() => loadUp(BUNDLED)) : loadUp(BUNDLED)).catch(() => null)
   if (up) sectorUpgrades(up)
 }
 

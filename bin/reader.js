@@ -14,7 +14,7 @@ import { isPlaceholder } from '../lib/sender.js'
 // ponytail: no reorg handling. The reader stays LAG epochs behind the head; a deeper reorg can leave an
 // orphaned line in the append-only record. Upgrade: re-check the last N epochs on every run.
 const LAG = 5
-// ponytail: messages are found by downloading every block (~50 KB each). Fine at one run per 10 minutes;
+// ponytail: messages are found by downloading every block (~50 KB each). Fine at one run an hour;
 // if that gets slow, move to an indexer or Filecoin.StateListMessages on a node that allows it.
 // 720 epochs = 6 hours of chain. It was 120 (1 hour) until 2026-09-18: GitHub then started the job about once an
 // hour or less, so each run read less chain than had passed and the record fell behind after every late run.

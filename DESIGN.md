@@ -4,7 +4,7 @@ Approved by Irene 2026-09-17. Scope issue: https://github.com/filecoin-project/s
 
 ## What it is
 
-A reader runs every 10 minutes against calibnet and appends what it finds to a public record.
+A reader runs every hour against calibnet and mainnet and appends what it finds to a public record.
 One page shows that record in three parts:
 
 1. Queued writes: every write waiting in the f02 pending-write queue, with its decoded payload,
@@ -108,7 +108,7 @@ calls from a web page (`access-control-allow-origin: *`, checked 2026-09-18 on t
   message was checked by hand on Filfox: height 4078418, status OK, method `CreateExternal`.
 - First real f02 data, 2026-09-18: the reader was run once over butterflynet "alpha" (lotus-infra issue #1654;
   genesis 2026-09-17 20:04 UTC, FIP-0118 active from epoch 90, rvagg's test run; overwritten by a reset the same
-  evening), with the ok of BigLep (lotus-infra PR #1655). 318 records, kept in `site/data/butterfly-alpha/` as
+  evening), with the ok of BigLep (lotus-infra PR #1655). 318 records, kept in `archive/butterfly-alpha/` as
   the only copy, shown as the page's view `?data=butterfly-alpha`. What it proved on real data: the decoding of
   the state behind `streams_root` (three streams, share maps, accrued amounts); messages sent to f02 itself
   (7 `Claim`, 3 `SetShares`, 1 `ReplaceAddress`); the two-multisig pattern (`Submitted`, `Approved`, `Rejected`);
@@ -196,7 +196,7 @@ of 2026-09-21 went to the old SRA and must be sent again on the new one.
 
 Decisions (Irene, 2026-09-23):
 - `config/calibnet.json` points to the new contracts, from epoch 4092521 (three before the new SRA deployment); the
-  record of the first deployment is frozen in `site/data/calibnet-2026-09-17/` and the page shows it as the last group
+  record of the first deployment is frozen in `calibnet-2026-09-17/` on the `data` branch and the page shows it as the last group
   of the calibnet history, with a note. One calibnet view, not two.
 - A `mainnet` view from day one: the same two addresses were deployed on mainnet on 2026-09-22 (SRA at epoch 6393228,
   SWA at 6393232); `deployments.json` carries `activationEpoch` 6450120, but the mainnet upgrade date is not confirmed
@@ -303,10 +303,10 @@ height 6531055) replayed on Glif with `Filecoin.StateReplay` gave the same 2.81 
 
 1. Done 2026-09-18, again 2026-09-20 (adds the butterfly views): one manual publish of `site/` to Filecoin with
    the `publish` skill (mainnet only). Each publish gives a new link; the current one is in the README.
-2. The scheduled job: GitHub Actions runs the reader every 10 minutes and commits the record to this repo
-   (`.github/workflows/read.yml`; it holds no key and no secret, and starts running once it is on GitHub).
+2. The scheduled job: GitHub Actions runs the reader every hour and commits the record to this repo's `data`
+   branch (`.github/workflows/read.yml`). The reader holds no key; the crank and Claim steps added later do.
    Rules for when it fails (the first three decided 2026-09-18); a watchtower that stops silently is worse than none:
-   - The page warns. If the newest read in the record is more than 30 minutes old, the header turns red:
+   - The page warns. If the newest read in the record is more than 150 minutes old (two missed hourly runs), the header turns red:
      "The reader has not run since HH:MM UTC. The history below may be incomplete." The live read of f02
      keeps working, it does not depend on the job.
    - The job catches up by itself. Each run starts from the last epoch it finished and reads at most 720
@@ -326,12 +326,13 @@ height 6531055) replayed on Glif with `Filecoin.StateReplay` gave the same 2.81 
    Telling a person that the job stopped is the alert, which is outside the PoC.
 3. Hosting (decided 2026-09-17 and 2026-09-18): the website is served from IPFS/Filecoin through Filecoin
    Pin, not from GitHub Pages. The page is fixed and is re-published only when the page itself changes, so it
-   has one stable link. When it opens, it fetches the record from this repo, where the scheduled job commits
-   it; if the repo does not answer, it falls back to the record bundled at publish time. This is the shape of
+   has one stable link. When it opens, it fetches the record from this repo's `data` branch, where the scheduled
+   job commits it; if the repo does not answer, it falls back to the record bundled at publish time. This is the shape of
    the PDP explorer (`pdp.filecoin.cloud`): fixed page files, data fetched by the browser on load (there from
-   a Goldsky index; checked 2026-09-18 by listing the page's requests). Known delay: up to about 15 to 20
-   minutes (10-minute schedule, GitHub starting scheduled jobs late, and a 5-minute cache on raw files,
-   `cache-control: max-age=300`, measured 2026-09-18).
+   a Goldsky index; checked 2026-09-18 by listing the page's requests). Known delay: up to about 65 minutes
+   (hourly runs, plus a 5-minute cache on raw files, `cache-control: max-age=300`).
+   The record has its own branch so that `main` holds only code: every change to `main` goes through a PR, and
+   a merge to `main` during a run can't refuse the run's push.
    Rejected for now: re-uploading the whole folder on every change and re-pointing a name (ENS or a domain)
    to the newest CID. It adds the upload time and the gateway lag to the delay, needs a name someone has to
    give us and two secrets in CI, and none of the team's explorers works that way. It stays the later option
@@ -347,9 +348,9 @@ height 6531055) replayed on Glif with `Filecoin.StateReplay` gave the same 2.81 
    posts one marked test line (`bin/slack-test.js`). No judgment: people compare the lines with the rehearsal
    plan's watchtower column and answer in the thread. Lesson from the same day: in a workflow file, `env` with
    `${{ }}` must be in block form; the inline `{ }` form is invalid YAML and stopped the job for two minutes.
-5. A proper timer for the reader (decided 2026-09-21). GitHub starts the scheduled job only every 2 to 5 hours
-   (measured 2026-09-18 to 2026-09-21). Stopgap for the PoC: an outside timer (cron-job.org) starts the job every
-   15 minutes through the GitHub API, with a token limited to this repo and the Actions permission, held by
-   Irene. To fix after the PoC, one of: (a) a timer on a FilOz machine, set up by infra, so the token is in team
-   hands; (b) remove the need for a job for the contract events with an index like the PDP explorer's Goldsky
-   subgraph. (b) cannot cover f02 or failed messages, so the reader stays for those.
+5. A proper timer for the reader. GitHub starts the scheduled job only every few hours (measured 2026-09-18 to
+   2026-09-21, and again after the 2026-11-05 transfer). A CronJob in FilOzone/infra (`solstice-watchtower-trigger`)
+   starts the job every hour through the GitHub API, with a token limited to this repo, and alerts when no run has
+   succeeded for 6 hours; GitHub's schedule stays as a backup. Details in OPERATIONS.md. A later option for the
+   contract events is an index like the PDP explorer's Goldsky subgraph; it cannot cover f02 or failed messages,
+   so the reader stays for those.

@@ -1,12 +1,11 @@
 name: publish
 on:
-  # Publish automatically when the page itself changes on main. The reader's hourly record commits only touch
-  # site/data/, which the page fetches at load time, so they never need a publish.
+  # Publish automatically when the page itself changes on main. The reader commits the record to the data branch,
+  # which the page fetches at load time, so new data never needs a publish.
   push:
     branches: [main]
     paths:
       - 'site/**'
-      - '!site/data/**'
   workflow_dispatch:
     inputs:
       dry_run:
@@ -27,6 +26,13 @@ jobs:
     timeout-minutes: 45
     steps:
       - uses: actions/checkout@v4
+      # The record from the data branch, bundled with the page as its fallback copy (site/data/ is gitignored on main).
+      # git archive writes only the files: a checkout here would put a .git folder, with its token, into the page.
+      - name: Add the record from the data branch
+        run: |
+          git fetch --depth=1 origin data
+          mkdir -p site/data
+          git archive FETCH_HEAD | tar -x -C site/data
       - id: publish
         # Pinned to a commit: this step receives FOC_PUBLISH_KEY, so a moved tag must not change the code it runs.
         uses: FilOzone/filoz-webmaster@efa2bd3bd72b4368f0ee4990b7d9636345f3b0d8 # v0

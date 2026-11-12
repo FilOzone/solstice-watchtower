@@ -9,9 +9,9 @@ Reads what landed on chain in f02, the SWA and the SRA (FIP-0118) and shows it o
 > one day of butterflynet test data (2026-09-21) compared with the test plan of the person who ran it (see DESIGN.md).
 
 - Live page, hosted on Filecoin (Filecoin Pin), stable address through ENS: **https://solsticewatchtower.eth.limo/**
-  Views: mainnet (default since 2026-10-16), `?data=calibnet`. The butterfly gamma view was removed on 2026-10-16 (its network is gone; the record stays in `site/data/butterfly-gamma/`). The ENS name `solsticewatchtower.eth` points to the
+  Views: mainnet (default since 2026-10-16), `?data=calibnet`. The butterfly gamma view was removed on 2026-10-16 (its network is gone; the record stays on the `data` branch in `butterfly-gamma/`). The ENS name `solsticewatchtower.eth` points to the
   current version's CID and is updated at each publish; the data stays fresh because the page fetches the record from
-  this repo (`site/data/`).
+  this repo's `data` branch.
 - Older versions, fixed to their CID (they keep working, but show only what their view list had):
 
   | Published | Link | Views |
@@ -27,7 +27,7 @@ Reads what landed on chain in f02, the SWA and the SRA (FIP-0118) and shows it o
   | 2026-09-18 | https://inbrowser.link/ipfs/bafybeiaalkk7ullf4rrllipm3wuvry7ebv7yuzwmecmplz4iqap2th5edi/ | calibnet (first deployment), sample, real test |
 
   The butterfly alpha record now lives in `archive/butterfly-alpha/`; the first calibnet deployment's record in
-  `site/data/calibnet-2026-09-17/` (frozen, shown at the bottom of the calibnet history).
+  `calibnet-2026-09-17/` on the `data` branch (frozen, shown at the bottom of the calibnet history).
 - Scope and discussion: https://github.com/filecoin-project/solstice/issues/69
 - Design and its decisions: [DESIGN.md](DESIGN.md)
 - How each FIP-0118 action can be observed on chain, by anyone: [OBSERVABILITY.md](OBSERVABILITY.md)
@@ -39,8 +39,8 @@ the SWA were deployed on calibnet on 2026-09-17 and redeployed on 2026-09-22; th
 Mon 2026-09-28 13:00 UTC. Until then the real record holds the deployment events and the reads, and f02 has no queue. The
 "sample" and "real test" views were removed from the page on 2026-09-22; the real views are calibnet and the two butterflynet test networks.*
 
-A scheduled job (`.github/workflows/read.yml`) runs the reader every 15 minutes (started by an outside timer) and commits the records to
-`site/data/calibnet/`, `site/data/mainnet/` and `site/data/butterfly-gamma/`. The reader only reads from a public endpoint and holds no key.
+A scheduled job (`.github/workflows/read.yml`) runs the reader every hour (started by a CronJob in FilOzone/infra) and commits the records to
+`calibnet/` and `mainnet/` on the `data` branch. The reader only reads from a public endpoint and holds no key.
 
 The same job ends with a backup cranker (`bin/crank.js`, since 2026-10-08): it sends `submitShares(q)` and
 `quarterlyGateCheck()` when a call has been possible for 30 minutes (one day on mainnet) and nobody sent it, so the
@@ -59,7 +59,8 @@ Needs Node.js 22 or newer.
 
 | Command | What it does |
 |---|---|
-| `npm install` | Installs the two libraries (`viem`, `@ipld/dag-cbor`). Once. |
+| `npm install` | Installs the libraries. Once. |
+| `git worktree add site/data data` | Checks the record out where the scripts and the page expect it. Once. |
 | `npm run read` | One run of the reader against calibnet. Only reads from the public RPC endpoint. Appends to `site/data/calibnet/records.jsonl`. |
 | `npm run sample` | Writes a SAMPLE record to `site/data/sample/` for local development (`?data=sample` is no longer linked from the page). |
 | `npm run page` | Serves the page at http://localhost:8000 (sample view: http://localhost:8000/?data=sample). Stop with Ctrl+C. |
