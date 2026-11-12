@@ -1,1 +1,3 @@
 node_modules/
+# The record, from the data branch: git worktree add site/data data (see OPERATIONS.md)
+site/data/

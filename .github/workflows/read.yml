@@ -1,4 +1,4 @@
-# Runs the reader every 10 minutes and commits the record, then the backup cranker and the Claim keeper. The reader
+# Runs the reader, the backup cranker and the Claim keeper, then commits the record to the data branch. The reader
 # only reads from the public endpoints and holds no key; the crank and Claim steps hold the network's sender key
 # (SENDER_KEY_CALIBRATION, SENDER_KEY_MAINNET). Rules for when it fails are in DESIGN.md.
 # Calibnet and mainnet are independent: every network step goes on after a failure (continue-on-error), the record is
@@ -7,9 +7,11 @@
 
 name: read
 on:
+  # The hourly run is a workflow_dispatch on main from a CronJob in FilOzone/infra (solstice-watchtower-trigger); see
+  # OPERATIONS.md. This schedule is the backup: GitHub treats it as best effort and in practice starts a run every few
+  # hours, whatever the cron says. Off the round minutes, when GitHub's scheduler is busiest. The reader catches up
+  # from its last epoch.
   schedule:
-    # Every 10 minutes, but off the round minutes (:00, :10, ...): GitHub's scheduler is "best effort", delays or
-    # drops runs when it is busy, and is busiest at the top of the hour. The reader catches up from its last epoch.
     - cron: '7,17,27,37,47,57 * * * *'
   workflow_dispatch: # also startable by hand from the Actions tab
     inputs:
@@ -30,11 +32,17 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 20 # two networks; butterfly took about 5 minutes per 720 epochs on 2026-09-18
     steps:
-      # ref: main, not the commit that triggered the run: a run that waited in the concurrency queue must start from the
-      # previous run's push, or its own push is refused (seen 2026-09-28 00:30 UTC, two runs started at the same moment).
+      # The code from main, the record from the data branch into site/data (gitignored on main), so the run commits
+      # only to data and a merge to main during a run can't refuse its push. Both checkouts take the branch head, not
+      # the commit that triggered the run: a run that waited in the concurrency queue must start from the previous
+      # run's push to data.
       - uses: actions/checkout@v4
         with:
           ref: main
+      - uses: actions/checkout@v4
+        with:
+          ref: data
+          path: site/data
       - uses: actions/setup-node@v4
         with:
           node-version: 22
@@ -57,7 +65,7 @@ jobs:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK }}
         continue-on-error: true
       # Butterflynet gamma (the nv29 test network) was read here until 2026-10-15; its endpoint no longer resolves.
-      # Its record stays in site/data/butterfly-gamma and on the page.
+      # Its record stays on the data branch (butterfly-gamma/).
       # Backup cranker (bin/crank.js): sends submitShares / quarterlyGateCheck when a call has been possible for
       # crankDelayEpochs (30 minutes on calibnet, one day on mainnet) and is still missing. Daily Claim keeper
       # (bin/claim.js): once a day, Claim for every wallet f02 owes something to. Both send from the network's one f1
@@ -85,18 +93,19 @@ jobs:
           SENDER_KEY: ${{ secrets.SENDER_KEY_MAINNET }}
         continue-on-error: true
       # Sector upgrades (bin/upgrades.js, 2026-11-10): the UpgradeSectorQuality messages and what they added, from
-      # Filfox's public API, into site/data/mainnet/upgrades.json. Only new messages are fetched; a failed read keeps
+      # Filfox's public API, into site/data/mainnet/upgrades.json (mainnet/upgrades.json on the data branch). Only new messages are fetched; a failed read keeps
       # the last file.
       - id: upgrades
         run: node bin/upgrades.js config/mainnet.json
         continue-on-error: true
-      - name: Commit the record if it changed
+      - name: Commit the record to the data branch if it changed
+        working-directory: site/data
         run: |
           git config user.name "watchtower reader"
           git config user.email "actions@users.noreply.github.com"
-          git add site/data/calibnet site/data/mainnet
-          git diff --cached --quiet || git commit -m "record: $(jq -r .lastEpoch site/data/calibnet/status.json)"
-          git push
+          git add calibnet mainnet
+          git diff --cached --quiet || git commit -m "record: $(jq -r .lastEpoch calibnet/status.json)"
+          git push origin HEAD:data
       # continue-on-error above keeps one network's failure from stopping the other and the commit; this step makes the
       # run end as failed anyway, so a failure shows on the Actions tab (until 2026-11, a mainnet failure did not).
       - name: Fail the run if a network step failed

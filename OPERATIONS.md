@@ -2,17 +2,17 @@
 
 How to keep the watchtower running.
 
-This page covers running the reader and its transactions, the sending wallets, Slack, publishing the page, and the ENS name.
+This page covers running the reader and its transactions, the record, the sending wallets, Slack, publishing the page, and the ENS name.
 
 ## The reader
 
 The [`read`](.github/workflows/read.yml) workflow does all the regular work. Each run, for calibnet and then mainnet:
 
-1. **Reads** FIP-0118 chain state from public endpoints ([`bin/reader.js`](bin/reader.js)) and writes it to [`site/data/`](site/data/). The static site fetches this record when it opens.
+1. **Reads** FIP-0118 chain state from public endpoints ([`bin/reader.js`](bin/reader.js)) and writes it to `site/data/`. The static site fetches this record when it opens.
 2. **Cranks** as a backup ([`bin/crank.js`](bin/crank.js)): when `submitShares` or `quarterlyGateCheck` has been possible for `crankDelayEpochs` and nobody has sent it, the watchtower sends it. The delay leaves room for the primary cranker: 60 epochs (30 minutes) on calibnet, 2880 epochs (one day) on mainnet.
 3. **Claims** once a day ([`bin/claim.js`](bin/claim.js)): sends the f02 `Claim` for every wallet f02 owes something to. On mainnet that pays the Orchestrator; on calibnet it funds the tFIL and USDFC faucets.
 
-It also records mainnet sector upgrades ([`bin/upgrades.js`](bin/upgrades.js)), then commits the record to `main` as `record: <epoch>`.
+It also records mainnet sector upgrades ([`bin/upgrades.js`](bin/upgrades.js)), then commits the record to the `data` branch as `record: <epoch>`.
 
 The networks are independent: a failing step doesn't stop the others or the commit, but the run still ends as failed, so it shows on the Actions tab. How each step behaves when the chain or an endpoint misbehaves is in [DESIGN.md](DESIGN.md).
 
@@ -21,7 +21,7 @@ The networks are independent: a failing step doesn't stop the others or the comm
 - Every hour, dispatched by a CronJob in FilOz's cluster. It alerts in #foc-wg-alerts when no `read` run has succeeded for 6 hours. Runbook: [solstice-watchtower-trigger in FilOzone/infra](https://github.com/FilOzone/infra/blob/main/base/apps/solstice-watchtower-trigger/README.md).
 - GitHub's own schedule, as a backup. GitHub treats it as best effort and in practice starts a run every few hours.
 - By hand: **Run workflow** on the [`read` workflow](https://github.com/FilOzone/solstice-watchtower/actions/workflows/read.yml), or `gh workflow run read.yml --repo FilOzone/solstice-watchtower --ref main`. This is always safe: runs share the `read` concurrency group, so a run never starts while another is in progress. At most one run waits; a newer waiting run replaces it, which is harmless because the reader catches up from its last epoch. Option: `test_slack` posts one marked test line to Slack first.
-- To test a crank change before merge, run `node bin/crank.js config/calibnet.json --now` locally without `SENDER_KEY`. It is a dry run: it simulates each call that is due, without the delay, and logs what it would send. It updates `site/data/calibnet/crank.json`; don't commit that. The real send happens in the first hourly `read` run after merge.
+- To test a crank change before merge, run `node bin/crank.js config/calibnet.json --now` locally without `SENDER_KEY`. It is a dry run: it simulates each call that is due, without the delay, and logs what it would send. It updates `site/data/calibnet/crank.json`; don't commit that to `data`. The real send happens in the first hourly `read` run after merge.
 
 ### When a run fails
 
@@ -29,7 +29,15 @@ Open the failed run on the [Actions tab](https://github.com/FilOzone/solstice-wa
 
 - A reader step: usually an RPC endpoint problem. The next run catches up from the last epoch it recorded.
 - A crank or Claim step: an RPC error, a key that doesn't match the sender address in the config, or a message that couldn't be pushed or didn't land; the log shows which. A sender with no FIL, or a call that isn't possible yet, is not a failure: the step logs it and succeeds.
-- The commit step: a push conflict. The next run starts from the latest `main`.
+- The commit step: a push to `data` was refused. Nothing else pushes to `data`, so this should not happen; the next run starts from the latest `data`.
+
+## The record
+
+The record lives on the [`data`](https://github.com/FilOzone/solstice-watchtower/tree/data) branch, one folder per network: `mainnet/` and `calibnet/` (written by every run) and the frozen `butterfly-gamma/` and `calibnet-2026-09-17/`. Only the `read` workflow pushes to it. `main` holds only code, so merges to `main` never collide with a run.
+
+- The `read` workflow checks out `main` and then `data` into `site/data/`, where the scripts read their state and write the record (`dataDir` in each `config/*.json`).
+- The page fetches the record from `data` when it opens; the copy bundled at publish is its fallback.
+- To run the scripts or serve the page locally, check `data` out in the same place: `git worktree add site/data data`, then `npm run read` or `npm run page`. `site/data/` is ignored on `main`. Don't push local runs to `data`: the next `read` run would start from them.
 
 ## Sending wallets
 
@@ -51,9 +59,9 @@ The reader posts to [#fil-solstice-watchtower](https://filecoinproject.slack.com
 
 ## Publishing the page
 
-The page at https://solsticewatchtower.eth.limo/ is a fixed copy of [`site/`](site/) stored on Filecoin Onchain Cloud. It fetches the record from this repo when it opens, so new data needs no publish. Only changes to the page itself ([`site/index.html`](site/index.html), [`site/lib/`](site/lib/)) need one.
+The page at https://solsticewatchtower.eth.limo/ is a fixed copy of [`site/`](site/) stored on Filecoin Onchain Cloud. It fetches the record from the `data` branch when it opens, so new data needs no publish. Only changes to the page itself ([`site/index.html`](site/index.html), [`site/lib/`](site/lib/)) need one.
 
-Publishing is automatic: the [`publish`](.github/workflows/publish.yml) workflow runs on every push to `main` that changes `site/` outside [`site/data/`](site/data/). The reader's hourly record commits only touch `site/data/`, so they never trigger it. To change the page, open a PR; merging it publishes.
+Publishing is automatic: the [`publish`](.github/workflows/publish.yml) workflow runs on every push to `main` that changes `site/`. The reader commits to `data`, so it never triggers a publish. To change the page, open a PR; merging it publishes.
 
 To publish by hand (for example to retry a failed run), open the [`publish` workflow](https://github.com/FilOzone/solstice-watchtower/actions/workflows/publish.yml) and run it on `main`. Tick `dry_run` to see the new CID without publishing. Or from a terminal:
 
@@ -63,7 +71,7 @@ gh workflow run publish.yml --repo FilOzone/solstice-watchtower --ref main -f dr
 
 The run takes a few minutes. It uses [FilOzone/filoz-webmaster](https://github.com/FilOzone/filoz-webmaster), pinned to a commit because it receives the publishing key, and does this:
 
-1. Packs `site/` and works out its CID.
+1. Packs `site/`, with the record from `data` in `site/data/` as the page's fallback copy, and works out its CID.
 2. Stops if `solsticewatchtower.eth` already points at that CID.
 3. Stores the page on two storage providers.
 4. Waits until a provider serves the new CID.
