@@ -2,7 +2,51 @@
 
 How to keep the watchtower running. Tracked in [FilOzone/infra#400](https://github.com/FilOzone/infra/issues/400).
 
-This page covers publishing the page and the ENS name. The reader and the sending wallets are still to be added here. The hourly trigger for the reader and its alert run in FilOz's cluster; see the [trigger runbook in FilOzone/infra](https://github.com/FilOzone/infra/blob/main/base/apps/solstice-watchtower-trigger/README.md) (added in [FilOzone/infra#454](https://github.com/FilOzone/infra/pull/454)).
+This page covers running the reader and its transactions, the sending wallets, Slack, publishing the page, and the ENS name.
+
+## The reader
+
+The [`read`](.github/workflows/read.yml) workflow does all the regular work. Each run, for calibnet and then mainnet:
+
+1. **Reads** FIP-0118 chain state from public endpoints ([`bin/reader.js`](bin/reader.js)) and writes it to [`site/data/`](site/data/). The page fetches this record when it opens.
+2. **Cranks** as a backup ([`bin/crank.js`](bin/crank.js)): when `submitShares` or `quarterlyGateCheck` has been possible for `crankDelayEpochs` and nobody has sent it, the watchtower sends it. The delay leaves room for the primary cranker: 60 epochs (30 minutes) on calibnet, 2880 epochs (one day) on mainnet.
+3. **Claims** once a day ([`bin/claim.js`](bin/claim.js)): sends the f02 `Claim` for every wallet f02 owes something to. On mainnet that pays the Orchestrator; on calibnet it funds the tFIL and USDFC faucets.
+
+It also records mainnet sector upgrades ([`bin/upgrades.js`](bin/upgrades.js)), then commits the record to `main` as `record: <epoch>`.
+
+The networks are independent: a failing step doesn't stop the others or the commit, but the run still ends as failed, so it shows on the Actions tab. How each step behaves when the chain or an endpoint misbehaves is in [DESIGN.md](DESIGN.md).
+
+### When it runs
+
+- Every hour, dispatched by a CronJob in FilOz's cluster. It alerts in #foc-wg-alerts when no `read` run has succeeded for 6 hours. Runbook: [solstice-watchtower-trigger in FilOzone/infra](https://github.com/FilOzone/infra/blob/main/base/apps/solstice-watchtower-trigger/README.md).
+- GitHub's own schedule (every 10 minutes in the workflow file) as a backup. GitHub treats it as best effort and in practice starts a run every few hours.
+- By hand: **Run workflow** on the [`read` workflow](https://github.com/FilOzone/solstice-watchtower/actions/workflows/read.yml), or `gh workflow run read.yml --repo FilOzone/solstice-watchtower --ref main`. This is always safe: runs share a concurrency group, so a new run waits for the one in progress. Options: `test_slack` posts one marked test line to Slack first; `crank_test_calibnet` runs only the calibnet cranker from the chosen branch, without the delay (for testing a crank change before merge).
+
+### When a run fails
+
+Open the failed run on the [Actions tab](https://github.com/FilOzone/solstice-watchtower/actions/workflows/read.yml). The last step lists each step's outcome (`read_calibnet=success crank_mainnet=failure ...`); open the failed step's log.
+
+- A reader step: usually an RPC endpoint problem. The next run catches up from the last epoch it recorded.
+- A crank or Claim step: usually the sender is out of FIL (see below) or the simulation reverted; the log shows the reason.
+- The commit step: a push conflict. The next run starts from the latest `main`.
+
+## Sending wallets
+
+Each network has one sender account that pays gas for the crank and the Claim. Nothing else sends.
+
+| Network | Sender | Secret |
+|---|---|---|
+| Mainnet | [`f1hyxv2mezsmtbkf7s3osia2njsk2o2nwbs4jxqoi`](https://filfox.info/en/address/f1hyxv2mezsmtbkf7s3osia2njsk2o2nwbs4jxqoi) (`f03862811`) | `SENDER_KEY_MAINNET` |
+| Calibnet | [`t1njhcrrzo6sggv36oxe5dk6errbt7oee6dp5snba`](https://calibration.filfox.info/en/address/t1njhcrrzo6sggv36oxe5dk6errbt7oee6dp5snba) (`t0201450`) | `SENDER_KEY_CALIBRATION` |
+
+- The keys are [repository secrets](https://github.com/FilOzone/solstice-watchtower/settings/secrets/actions) and are in the infra 1Password vault.
+- They only pay gas, so they drain slowly. infra's [`wallet-balance-exporter`](https://github.com/FilOzone/infra/tree/main/base/apps/wallet-balance-exporter) alerts in #foc-wg-alerts below 0.5 FIL on mainnet and 5 tFIL on calibnet. To top up, send FIL (or tFIL from a faucet) to the address above.
+- While a sender has no FIL, its crank and Claim steps run as dry runs and log why.
+- To replace a key, run `node bin/newkey.js mainnet` (or `calibration`) in your own terminal: it sets the secret, copies the key to the clipboard for 1Password and prints only the new address. Then put the address in `config/<network>.json` under `"sender (watchtower backup)"` and move the old account's FIL across.
+
+## Slack
+
+The reader posts one line per run that found something new on mainnet to [#fil-solstice-watchtower](https://filecoinproject.slack.com/archives/C0C436Q8X6Z) (calibnet lines are off). It posts through an Incoming WebHook of the Slack app `solstice-watchtower`, created by @TippyFlitsUK; the URL is the `SLACK_WEBHOOK` repository secret. Without the secret nothing is posted, and a failed post never fails the run.
 
 ## Publishing the page
 
