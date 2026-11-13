@@ -1,6 +1,6 @@
 {
   "network": "mainnet",
-  "lastRun": "2026-11-13T19:35:08.412Z",
+  "lastRun": "2026-11-13T20:35:33.593Z",
   "source": "https://filfox.info/api/v1/message/list?method=UpgradeSectorQuality, then /message/<cid>/subcalls and /address/<miner>",
   "unread": 0,
   "messages": {
