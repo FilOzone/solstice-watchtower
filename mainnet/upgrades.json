@@ -1,6 +1,6 @@
 {
   "network": "mainnet",
-  "lastRun": "2026-11-16T02:33:59.029Z",
+  "lastRun": "2026-11-16T03:34:06.355Z",
   "source": "https://filfox.info/api/v1/message/list?method=UpgradeSectorQuality, then /message/<cid>/subcalls and /address/<miner>",
   "unread": 0,
   "messages": {
@@ -3611,6 +3611,70 @@
       "exitCode": 0,
       "qapDeltaBytes": "618475290624",
       "pledgeDeltaAttoFil": "4908309656757295917"
+    },
+    "bafy2bzacedq7s45okgiijzvftn2lwkoya5heumo7nrmejajg5fxo5x6ybksla": {
+      "height": 6549734,
+      "time": "2026-11-16T03:07:00.000Z",
+      "miner": "f02826371",
+      "exitCode": 0,
+      "qapDeltaBytes": "48859547959296",
+      "pledgeDeltaAttoFil": "406767206277323100429"
+    },
+    "bafy2bzacedgdbx6q2um6ffkg7tijkjkpm2asvxow4zkcskhh7ibac55qmvisi": {
+      "height": 6549734,
+      "time": "2026-11-16T03:07:00.000Z",
+      "miner": "f02827667",
+      "exitCode": 0,
+      "qapDeltaBytes": "26594437496832",
+      "pledgeDeltaAttoFil": "220519213904360258840"
+    },
+    "bafy2bzaceavwh7tetr5mqbuaudwb7rfyg5qguaprncmeptxy7ma6ncrpusqgu": {
+      "height": 6549734,
+      "time": "2026-11-16T03:07:00.000Z",
+      "miner": "f02827667",
+      "exitCode": 0,
+      "qapDeltaBytes": "61847529062400",
+      "pledgeDeltaAttoFil": "514308095274898223833"
+    },
+    "bafy2bzaceaijz2ky72x5ft6kdrbhkz53dtvytmnougefd5pndnqpshlqh7prc": {
+      "height": 6549736,
+      "time": "2026-11-16T03:08:00.000Z",
+      "miner": "f02827493",
+      "exitCode": 0,
+      "qapDeltaBytes": "3401614098432",
+      "pledgeDeltaAttoFil": "28311972026187152820"
+    },
+    "bafy2bzaceagdxorv6dctkrzmexdhcft4pxmym37h6sakue5e5xgakznx7shn4": {
+      "height": 6549736,
+      "time": "2026-11-16T03:08:00.000Z",
+      "miner": "f02827493",
+      "exitCode": 0,
+      "qapDeltaBytes": "61847529062400",
+      "pledgeDeltaAttoFil": "514838278129533180432"
+    },
+    "bafy2bzacearpwna64txpvsez7atnsn5jbg7r4tqy32tw3ub7qu2gsolfj4ioc": {
+      "height": 6549736,
+      "time": "2026-11-16T03:08:00.000Z",
+      "miner": "f02827493",
+      "exitCode": 0,
+      "qapDeltaBytes": "61847529062400",
+      "pledgeDeltaAttoFil": "514839051368469775960"
+    },
+    "bafy2bzacedrmg34pstui7f7ksrq6tu74hd5ht6hmr7unf455ne6afg4lksehu": {
+      "height": 6549736,
+      "time": "2026-11-16T03:08:00.000Z",
+      "miner": "f02825740",
+      "exitCode": 0,
+      "qapDeltaBytes": "51024211476480",
+      "pledgeDeltaAttoFil": "424784910957295016631"
+    },
+    "bafy2bzaced6ehylembnqfzfvpef5cmc55kb7fibg64lmdlzsstxjkjsm4yt6s": {
+      "height": 6549736,
+      "time": "2026-11-16T03:08:00.000Z",
+      "miner": "f02827493",
+      "exitCode": 0,
+      "qapDeltaBytes": "61847529062400",
+      "pledgeDeltaAttoFil": "514834959161272541862"
     }
   },
   "miners": {
