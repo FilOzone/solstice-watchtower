@@ -1,6 +1,6 @@
 {
   "network": "mainnet",
-  "lastRun": "2026-11-16T13:34:21.910Z",
+  "lastRun": "2026-11-16T15:25:02.252Z",
   "source": "https://filfox.info/api/v1/message/list?method=UpgradeSectorQuality, then /message/<cid>/subcalls and /address/<miner>",
   "unread": 0,
   "messages": {
@@ -3691,6 +3691,14 @@
       "exitCode": 0,
       "qapDeltaBytes": "3092376453120",
       "pledgeDeltaAttoFil": "25918460967234656875"
+    },
+    "bafy2bzacedxmpzdtqptgvpkca3xotlfnqa4zpwp2i2vgjjqu2kx5wyzrqvx5q": {
+      "height": 6551077,
+      "time": "2026-11-16T14:18:30.000Z",
+      "miner": "f01083931",
+      "exitCode": 0,
+      "qapDeltaBytes": "2783138807808",
+      "pledgeDeltaAttoFil": "23321156981830083780"
     }
   },
   "miners": {
@@ -3884,6 +3892,10 @@
     },
     "f02827711": {
       "owner": "f1g3c5yjb5bhaz4hhxkkigsxfmtefaog5hxffazrq",
+      "sectorSize": 34359738368
+    },
+    "f01083931": {
+      "owner": "f410fjf7g7plogecbf66famhdlhekonsatkp2un7hxqq",
       "sectorSize": 34359738368
     }
   }
