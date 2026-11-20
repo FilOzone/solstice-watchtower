@@ -2361,3 +2361,5 @@
 {"kind":"read","epoch":4261839,"time":"2026-11-20T13:32:30.000Z","quarter":54,"source":"SRA","name":"SRA fpvOf(53, 0x72ad7C4d27fC9C2bDF8fde34ddd9BcbE34648AF3)","fields":{"fpv":{"usd":"0"}}}
 {"kind":"read","epoch":4261839,"time":"2026-11-20T13:32:30.000Z","quarter":54,"source":"SRA","name":"SRA fpvOf(53, 0x22B1a2668fbFcb38AaD33E2d1e0b157216a22421)","fields":{"fpv":{"usd":"0"}}}
 {"kind":"read","epoch":4262493,"time":"2026-11-20T18:59:30.000Z","quarter":54,"source":"SRA","name":"SRA aggregatedFilecoinPayVolume(53)","fields":{"usd":"0"}}
+{"kind":"message","epoch":4262563,"time":"2026-11-20T19:34:30.000Z","quarter":54,"source":"SRA","name":"submitShares","fields":{"q":"53"},"from":"0xff000000000000000000000000000000000312ea","ok":true,"tx":"0xe28fd0f4383932bdcee266fc2943f73e36945b50cf1e99b4fa0d4f86edf3e7ba","raw":{"input":"0x6e78e1d50000000000000000000000000000000000000000000000000000000000000035"}}
+{"kind":"read","epoch":4262679,"time":"2026-11-20T20:32:30.000Z","quarter":54,"source":"balance","name":"balance of sender (watchtower backup)","fields":{"address":"t1njhcrrzo6sggv36oxe5dk6errbt7oee6dp5snba","attoFil":"204999848678067842980"}}
