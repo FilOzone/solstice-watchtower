@@ -341,8 +341,9 @@ height 6531055) replayed on Glif with `Filecoin.StateReplay` gave the same 2.81 
    to shorten the delay for them. It cannot cover f02 (not a contract) or failed messages (no event).
 4. The alert, in its simplest form, built 2026-09-24 (Irene's ask, after the question how to follow the rehearsal
    without polling): the job posts one Slack message per run that found something new on mainnet (calibnet lines were switched off on 2026-10-22, `"notify": false` in its config, after the rehearsal)
-   (events, messages with their result, gaps, queued write outcomes, claim checks; routine reads left out; at most
-   40 lines) to `#fil-solstice-watchtower` (first to `#fil-upgrade-filplus`, moved the same day to a channel of its own),
+   (events, messages with their result, gaps, queued write outcomes; routine reads left out; at most 40 lines; Claim
+   lines, that is the Claim message, its claim-payout event and the claim check, left out since 2026-11-26 unless the
+   Claim failed or the check does not match, after the governance check-in of 2026-11-24) to `#fil-solstice-watchtower` (first to `#fil-upgrade-filplus`, moved the same day to a channel of its own),
    through an Incoming WebHook created by TippyFlits (app `solstice-watchtower`, Irene is app collaborator). The URL is the repository secret `SLACK_WEBHOOK`; without it nothing is sent; a
    failed post never fails the run; butterflynet is opted out (`notify: false`). A manual start with `test_slack`
    posts one marked test line (`bin/slack-test.js`). No judgment: people compare the lines with the rehearsal
