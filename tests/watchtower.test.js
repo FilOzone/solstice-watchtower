@@ -173,6 +173,12 @@ test('slack text: one message per run, notable records only, reverted and gap ma
   assert.doesNotMatch(text, /balance/)
   assert.match(text, /\?data=calibnet$/) // calibnet is a secondary view since 2026-10-16
   assert.equal(slackText([records[0]], { network: 'calibnet' }, 1, 5), null) // nothing notable: no message
+  const claim = (name, kind, extra) => ({ kind, epoch: 1, time: t, source: 'f02', name, fields: { wallets: ['f0123'] }, ...extra })
+  const claims = [claim('Claim', 'message', { ok: true }), claim('claim-payout', 'event'), claim('claim check', 'read', { fields: { matches: true } })]
+  assert.equal(slackText(claims, { network: 'mainnet' }, 1, 1), null) // a normal daily Claim: no message
+  assert.match(slackText([claim('Claim', 'message', { ok: false, error: 'x' })], { network: 'mainnet' }, 1, 1), /`Claim` FAILED x/)
+  assert.match(slackText([claim('claim check', 'read', { fields: { matches: false } })], { network: 'mainnet' }, 1, 1), /`claim check` DOES NOT MATCH/)
+  assert.match(slackText([claim('unclaimed wallet', 'read', { fields: { wallet: 'f0123', days: 10 } })], { network: 'mainnet' }, 1, 1), /`unclaimed wallet`  · wallet: f0123, days: 10/)
   assert.equal(lateLine({ epochSeconds: 30 }, 720, 0), null) // 6 hours unread at the start: not late
   const late = lateLine({ epochSeconds: 30 }, 1680, 960)
   assert.match(late, /14 h of chain were unread when it started, 8 h are still unread/)

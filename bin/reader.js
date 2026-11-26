@@ -356,10 +356,31 @@ function knownFromRecord() {
   return { orchestrators: [...orchestrators], pairs: [...pairs.values()] }
 }
 
+// 7. unclaimed wallets (Irene, 2026-11-26): a wallet in the f02 share map or payable rows with no claim-payout for
+// UNCLAIMED_DAYS gets one "unclaimed wallet" record (sent to Slack); the count then starts again, so a wallet that
+// stays unclaimed gets one line every UNCLAIMED_DAYS. A wallet first seen in the map counts from that run.
+const UNCLAIMED_DAYS = 10
+if (!status.lastClaim) { // first run with this check: start from the claims already in the record
+  status.lastClaim = {}
+  const past = existsSync(recordsPath) ? readFileSync(recordsPath, 'utf8').split('\n').filter(Boolean).map((l) => JSON.parse(l)) : []
+  for (const r of past) if (r.name === 'claim-payout') status.lastClaim[r.fields.recipient] = r.epoch
+}
+for (const r of records) if (r.name === 'claim-payout') status.lastClaim[r.fields.recipient] = Math.max(r.epoch, status.lastClaim[r.fields.recipient] ?? 0)
+if (headStreams) {
+  const rows = [...headStreams.streams.flatMap((s) => [...(s.distribution?.shares ?? []), ...(s.distribution?.payable ?? [])]), ...headStreams.tombstones.flatMap((t) => t.payable)]
+  const limit = UNCLAIMED_DAYS * 86400 / cfg.epochSeconds
+  for (const w of new Set(rows.map((r) => r.recipient))) {
+    const last = (status.lastClaim[w] ??= to)
+    if (to - last < limit) continue
+    rec('read', to, 'f02', 'unclaimed wallet', { wallet: w, days: Math.floor((to - last) * cfg.epochSeconds / 86400), lastClaimOrFirstSeenEpoch: last })
+    status.lastClaim[w] = to
+  }
+}
+
 records.sort((a, b) => a.epoch - b.epoch)
 if (records.length) appendFileSync(recordsPath, records.map((r) => JSON.stringify(r)).join('\n') + '\n')
 // rpcUrl, f02 and addressPrefix are here for the page's live read of f02
 const { network, rpcUrl, f02, addressPrefix, genesisTimestamp, epochSeconds, activationEpoch, epochsPerQuarter, swaTimelockEpochs, postPeriod, verificationWindow, swa } = cfg
 console.log(`epochs ${from}..${to} (chain head ${chainHead}): ${records.length} new records -> ${recordsPath}`)
 await notify(records, cfg, from, to, status, lateLine(cfg, chainHead - LAG - from + 1, chainHead - LAG - to)) // Slack, only when SLACK_WEBHOOK is set and the network is not opted out; a failed post waits in status.slackPending
-writeFileSync(statusPath, JSON.stringify({ network, rpcUrl, f02, addressPrefix, genesisTimestamp, epochSeconds, activationEpoch, epochsPerQuarter, swaTimelockEpochs, postPeriod, verificationWindow, swa, lastEpoch: to, lastRun: new Date().toISOString(), reads: status.reads, pending: status.pending, slackPending: status.slackPending }, null, 2))
+writeFileSync(statusPath, JSON.stringify({ network, rpcUrl, f02, addressPrefix, genesisTimestamp, epochSeconds, activationEpoch, epochsPerQuarter, swaTimelockEpochs, postPeriod, verificationWindow, swa, lastEpoch: to, lastRun: new Date().toISOString(), reads: status.reads, pending: status.pending, slackPending: status.slackPending, lastClaim: status.lastClaim }, null, 2))
